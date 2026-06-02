@@ -7,8 +7,8 @@
     <a href="https://github.com/colinhacks/zod" target="blank">Zod</a> and <a href="https://github.com/pinojs/pino" target="blank">Pino</a> logger.
   </p>
   <p>
-      <!-- TODO: add npm package badge -->
-      <a href="https://www.npmjs.com/@andreafspeziale/nestjs-search" target="_blank"><img src="https://img.shields.io/npm/l/@andreafspeziale/nestjs-search.svg" alt="Package License" /></a>
+      <a href="https://www.npmjs.com/package/@andreafspeziale/mxm-client" target="_blank"><img src="https://img.shields.io/npm/v/@andreafspeziale/mxm-client.svg" alt="NPM Version" /></a>
+      <a href="https://www.npmjs.com/package/@andreafspeziale/mxm-client" target="_blank"><img src="https://img.shields.io/npm/l/@andreafspeziale/mxm-client.svg" alt="Package License" /></a>
       <a href="https://github.com/andreafspeziale/mxm-client/actions" target="_blank"><img src="https://img.shields.io/github/actions/workflow/status/andreafspeziale/mxm-client/test.yml?label=test" alt="Test Status"/></a>
   </p>
 </div>
