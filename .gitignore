@@ -1,0 +1,5 @@
+.DS_Store
+.tap
+dist
+node_modules
+andreafspeziale-*

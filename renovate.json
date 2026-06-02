@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "semanticCommits": "enabled",
+  "minimumReleaseAge": "1 day",
+  "automerge": true,
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "dependencyDashboardApproval": true,
+      "automerge": false
+    }
+  ],
+  "extends": [
+    "config:base",
+    ":semanticCommitScopeDisabled"
+  ]
+}
