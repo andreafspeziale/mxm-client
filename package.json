@@ -1,6 +1,6 @@
 {
   "name": "@andreafspeziale/mxm-client",
-  "version": "1.0.0-rc.0",
+  "version": "1.0.0",
   "description": "Musixmatch API client for Node.js and TypeScript",
   "author": "Andrea Francesco Speziale",
   "private": false,
