@@ -52,11 +52,13 @@ import type {
   MxmClientRequestOptions,
   MxmClientResponse,
 } from './mxm-client.interfaces.js';
+import { MxmClientUnsafe } from './mxm-client.unsafe.js';
 
 export class MxmClient {
   private readonly client: Client;
   private readonly config?: MxmClientConfig;
   private readonly logger?: Logger;
+  private _unsafe?: MxmClientUnsafe;
 
   constructor({
     config,
@@ -96,6 +98,19 @@ export class MxmClient {
         this.config?.disableStatusCodeValidation ??
         false,
     };
+  }
+
+  get unsafe(): MxmClientUnsafe {
+    if (!this._unsafe) {
+      this._unsafe = new MxmClientUnsafe(
+        this.client,
+        this.config?.apiKey,
+        this.logger,
+        this.resolveOptions(),
+      );
+    }
+
+    return this._unsafe;
   }
 
   async matcherLyricsGet<

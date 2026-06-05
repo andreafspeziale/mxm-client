@@ -10,3 +10,4 @@ export * from './endpoints/track.subtitle.get/index.js';
 export * from './mxm-client.client.js';
 export * from './mxm-client.error.js';
 export * from './mxm-client.interfaces.js';
+export * from './mxm-client.unsafe.js';
