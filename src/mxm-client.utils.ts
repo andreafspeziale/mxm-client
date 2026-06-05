@@ -1,3 +1,4 @@
+import type { StandardSchemaV1 } from '@standard-schema/spec';
 import type { Logger } from 'pino';
 import type { z } from 'zod';
 import { fromError } from 'zod-validation-error';
@@ -169,7 +170,7 @@ export const handleResponse = async <T, R>({
   method: AllowedHTTPMethods;
   path: string;
   statusCodeSchema: z.ZodSchema<R>;
-  dataSchema?: z.ZodSchema<T> | undefined;
+  dataSchema: z.ZodSchema<T>;
   logger?: Logger | undefined;
   errorToBeInitialized: typeof MxmClientError;
   options?: MxmClientRequestOptions | undefined;
@@ -185,48 +186,128 @@ export const handleResponse = async <T, R>({
     'Handling response...',
   );
 
-  if (options?.disableStatusCodeValidation) {
-    logger?.debug(
-      {
-        fn: handleResponse.name,
+  await validateStatusCode({
+    statusCode,
+    statusCodeSchema,
+    method,
+    path,
+    logger,
+    errorToBeInitialized,
+    options,
+  });
+
+  return await dataSchema.parseAsync(data).catch((error: ZodError) =>
+    throwAPIError({
+      message: 'Unexpected response data shape',
+      details: {
         method,
         path,
         statusCode,
+        data,
+        cause: fromError(error),
       },
+      logger,
+      errorToBeInitialized,
+    }),
+  );
+};
+
+export const handleResponseWithSchema = async <T>({
+  method,
+  path,
+  statusCode,
+  data,
+  statusCodeSchema,
+  responseSchema,
+  logger,
+  errorToBeInitialized,
+  options,
+}: {
+  method: AllowedHTTPMethods;
+  path: string;
+  statusCodeSchema: z.ZodSchema;
+  responseSchema: StandardSchemaV1<unknown, T>;
+  logger?: Logger | undefined;
+  errorToBeInitialized: typeof MxmClientError;
+  options?: MxmClientRequestOptions | undefined;
+} & Response): Promise<T> => {
+  logger?.debug(
+    {
+      fn: handleResponseWithSchema.name,
+      method,
+      path,
+      statusCode,
+      data,
+    },
+    'Handling response with custom schema...',
+  );
+
+  await validateStatusCode({
+    statusCode,
+    statusCodeSchema,
+    method,
+    path,
+    logger,
+    errorToBeInitialized,
+    options,
+  });
+
+  const result = await responseSchema['~standard'].validate(data);
+
+  if (result.issues) {
+    return throwAPIError({
+      message: 'Unexpected response data shape',
+      details: {
+        method,
+        path,
+        statusCode,
+        data,
+        cause: result.issues,
+      },
+      logger,
+      errorToBeInitialized,
+    });
+  }
+
+  return result.value;
+};
+
+export const validateStatusCode = async ({
+  statusCode,
+  statusCodeSchema,
+  method,
+  path,
+  logger,
+  errorToBeInitialized,
+  options,
+}: {
+  statusCode: number;
+  statusCodeSchema: z.ZodSchema;
+  method: AllowedHTTPMethods;
+  path: string;
+  logger?: Logger | undefined;
+  errorToBeInitialized: typeof MxmClientError;
+  options?: MxmClientRequestOptions | undefined;
+}): Promise<void> => {
+  if (options?.disableStatusCodeValidation) {
+    logger?.debug(
+      { fn: validateStatusCode.name, method, path, statusCode },
       'Status code validation skipped',
     );
-  } else {
-    await statusCodeSchema.parseAsync(statusCode).catch((error: ZodError) =>
-      throwAPIError({
-        message: `Unexpected statusCode, received ${statusCode}`,
-        details: {
-          method,
-          path,
-          statusCode,
-          cause: fromError(error),
-        },
-        logger,
-        errorToBeInitialized,
-      }),
-    );
+    return;
   }
 
-  if (dataSchema) {
-    return await dataSchema.parseAsync(data).catch((error: ZodError) =>
-      throwAPIError({
-        message: 'Unexpected response data shape',
-        details: {
-          method,
-          path,
-          statusCode,
-          data,
-          cause: fromError(error),
-        },
-        logger,
-        errorToBeInitialized,
-      }),
-    );
-  }
-
-  return data as T;
+  await statusCodeSchema.parseAsync(statusCode).catch((error: ZodError) =>
+    throwAPIError({
+      message: `Unexpected statusCode, received ${statusCode}`,
+      details: {
+        method,
+        path,
+        statusCode,
+        cause: fromError(error),
+      },
+      logger,
+      errorToBeInitialized,
+    }),
+  );
 };

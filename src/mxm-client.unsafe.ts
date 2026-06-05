@@ -80,7 +80,11 @@ import type {
   MxmClientResponse,
 } from './mxm-client.interfaces.js';
 import { successStatusCodeSchema } from './mxm-client.schemas.js';
-import { buildUrl, handleRequest, handleResponse } from './mxm-client.utils.js';
+import {
+  buildUrl,
+  handleRequest,
+  validateStatusCode,
+} from './mxm-client.utils.js';
 
 export class MxmClientUnsafe {
   constructor(
@@ -131,16 +135,17 @@ export class MxmClientUnsafe {
       errorToBeInitialized: MxmClientError,
     });
 
-    return handleResponse<MxmClientResponse<TResponse>, unknown>({
+    await validateStatusCode({
+      statusCode,
+      statusCodeSchema: successStatusCodeSchema,
       method,
       path,
-      statusCode,
-      data,
-      statusCodeSchema: successStatusCodeSchema,
       logger: this.logger,
       errorToBeInitialized: MxmClientError,
       options: this.resolveOptions(options),
     });
+
+    return data as MxmClientResponse<TResponse>;
   }
 
   async matcherLyricsGet<

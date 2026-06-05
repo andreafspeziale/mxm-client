@@ -274,6 +274,50 @@ const track = await mxmClient.unsafe.trackGet<MyQuery, MyResponse>({
 });
 ```
 
+### Custom response schema
+
+For full runtime safety with extended response types, you can provide a custom schema via `options.responseSchema`. The response will be validated against your schema at runtime and the return type will be inferred from it.
+
+> [!NOTE]
+> The `responseSchema` option accepts any schema implementing the [Standard Schema](https://standardschema.dev) interface (Zod, Valibot, ArkType, etc.).
+
+```ts
+import { z } from 'zod';
+import {
+  MxmClient,
+  type MxmClientTrackGetResponse,
+} from '@andreafspeziale/mxm-client';
+
+const myTrackSchema = z.object({
+  message: z.object({
+    header: z.object({
+      status_code: z.literal(200),
+      execute_time: z.number(),
+    }),
+    body: z.object({
+      track: z.object({
+        track_id: z.number(),
+        track_name: z.string(),
+        my_custom_field: z.string(),
+      }),
+    }),
+  }),
+});
+
+type MyTrackResponse = z.infer<typeof myTrackSchema>['message']['body'];
+
+const mxmClient = new MxmClient({
+  config: { apiKey: 'your-api-key' },
+});
+
+const track = await mxmClient.trackGet<undefined, MyTrackResponse>({
+  query: { track_isrc: 'USUM72005901' },
+  options: { responseSchema: myTrackSchema },
+});
+
+track.message.body.my_custom_field; // typed AND validated at runtime
+```
+
 ## Available methods
 <!-- Matcher  -->
 - `matcherLyricsGet` ([matcher.lyrics.get](https://docs.musixmatch.com/lyrics-api/matcher/matcher-lyrics-get))

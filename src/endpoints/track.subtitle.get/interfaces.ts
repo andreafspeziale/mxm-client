@@ -1,5 +1,5 @@
 import type { z } from 'zod';
-import type { mxmClientTrackSubtitleGetResponse } from './schema.js';
+import type { mxmClientTrackSubtitleGetResponseSchema } from './schema.js';
 
 export type TrackSubtitleGetQuery =
   | {
@@ -54,5 +54,5 @@ export type TrackSubtitleGetQuery =
     };
 
 export type MxmClientTrackSubtitleGetResponse = z.infer<
-  typeof mxmClientTrackSubtitleGetResponse
+  typeof mxmClientTrackSubtitleGetResponseSchema
 >;

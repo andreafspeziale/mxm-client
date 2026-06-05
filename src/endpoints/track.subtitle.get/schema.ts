@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const mxmClientTrackSubtitleGetResponse = z.object({
+export const mxmClientTrackSubtitleGetResponseSchema = z.object({
   subtitle: z.object({
     lyrics_copyright: z.string(),
     pixel_tracking_url: z.string(),
