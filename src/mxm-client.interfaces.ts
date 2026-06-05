@@ -41,9 +41,14 @@ export interface MxmClientOptionalAPIKey {
   apiKey?: string | undefined;
 }
 
+export interface MxmClientRequestOptions {
+  disableStatusCodeValidation?: boolean;
+}
+
 export interface MxmClientConfig extends MxmClientOptionalAPIKey {
   enableLog?: boolean;
   defaultLoggerConfig?: LoggerOptions;
+  disableStatusCodeValidation?: boolean;
 }
 
 export interface BaseEndpointInput<
@@ -64,6 +69,7 @@ export interface EndpointPayload<
   input: BaseEndpointInput<TParams, TQuery & MxmClientOptionalAPIKey, TBody>;
   client: Client | Interceptable;
   logger?: Logger | undefined;
+  options?: MxmClientRequestOptions;
 }
 
 export interface MxmClientResponse<T> {

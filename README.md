@@ -125,6 +125,42 @@ const track = await mxmClient.trackGet({
 });
 ```
 
+### With status code validation disabled
+
+> When `disableStatusCodeValidation` is set to `true`, the client will not throw on unexpected HTTP status codes allowing the response body validation to still run.
+
+#### Via client configuration (global)
+
+```ts
+import { MxmClient } from '@andreafspeziale/mxm-client';
+
+const mxmClient = new MxmClient({
+  config: {
+    apiKey: 'your-api-key',
+    disableStatusCodeValidation: true,
+  },
+});
+
+const track = await mxmClient.trackGet({
+  query: { track_isrc: 'USUM72005901' },
+});
+```
+
+#### Via per-request options (override)
+
+```ts
+import { MxmClient } from '@andreafspeziale/mxm-client';
+
+const mxmClient = new MxmClient({
+  config: { apiKey: 'your-api-key' },
+});
+
+const track = await mxmClient.trackGet({
+  query: { track_isrc: 'USUM72005901' },
+  options: { disableStatusCodeValidation: true },
+});
+```
+
 ### Generic enrichment
 
 The SDK supports extending input types via generics for advanced use cases where the API accepts fields beyond the documented ones.

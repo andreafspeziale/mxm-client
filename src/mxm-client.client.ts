@@ -49,6 +49,7 @@ import {
 import { MUSIXMATCH_BASE_URL } from './mxm-client.constants.js';
 import type {
   MxmClientConfig,
+  MxmClientRequestOptions,
   MxmClientResponse,
 } from './mxm-client.interfaces.js';
 
@@ -86,11 +87,23 @@ export class MxmClient {
     }
   }
 
+  private resolveOptions(
+    perRequest?: MxmClientRequestOptions,
+  ): MxmClientRequestOptions {
+    return {
+      disableStatusCodeValidation:
+        perRequest?.disableStatusCodeValidation ??
+        this.config?.disableStatusCodeValidation ??
+        false,
+    };
+  }
+
   async matcherLyricsGet<
     TQuery extends MatcherLyricsGetQuery = MatcherLyricsGetQuery,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
+    options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<MxmClientMatcherLyricsGetResponse>> {
     return matcherLyricsGet({
       input: {
@@ -98,6 +111,7 @@ export class MxmClient {
       },
       client: this.client,
       logger: this.logger,
+      options: this.resolveOptions(input.options),
     });
   }
 
@@ -106,6 +120,7 @@ export class MxmClient {
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
+    options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<MxmClientMatcherSubtitleGetResponse>> {
     return matcherSubtitleGet({
       input: {
@@ -113,6 +128,7 @@ export class MxmClient {
       },
       client: this.client,
       logger: this.logger,
+      options: this.resolveOptions(input.options),
     });
   }
 
@@ -121,6 +137,7 @@ export class MxmClient {
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
+    options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<MxmClientMatcherTrackGetResponse>> {
     return matcherTrackGet({
       input: {
@@ -128,12 +145,14 @@ export class MxmClient {
       },
       client: this.client,
       logger: this.logger,
+      options: this.resolveOptions(input.options),
     });
   }
 
   async trackGet<TQuery extends TrackGetQuery = TrackGetQuery>(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
+    options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<MxmClientTrackGetResponse>> {
     return trackGet({
       input: {
@@ -141,6 +160,7 @@ export class MxmClient {
       },
       client: this.client,
       logger: this.logger,
+      options: this.resolveOptions(input.options),
     });
   }
 
@@ -149,6 +169,7 @@ export class MxmClient {
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
+    options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<MxmClientTrackLyricsGetResponse>> {
     return trackLyricsGet({
       input: {
@@ -156,6 +177,7 @@ export class MxmClient {
       },
       client: this.client,
       logger: this.logger,
+      options: this.resolveOptions(input.options),
     });
   }
 
@@ -164,6 +186,7 @@ export class MxmClient {
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
+    options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<MxmClientTrackSubtitleGetResponse>> {
     return trackSubtitleGet({
       input: {
@@ -171,6 +194,7 @@ export class MxmClient {
       },
       client: this.client,
       logger: this.logger,
+      options: this.resolveOptions(input.options),
     });
   }
 
@@ -179,6 +203,7 @@ export class MxmClient {
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
+    options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<MxmClientTrackRichSyncGetResponse>> {
     return trackRichSyncGet({
       input: {
@@ -186,12 +211,14 @@ export class MxmClient {
       },
       client: this.client,
       logger: this.logger,
+      options: this.resolveOptions(input.options),
     });
   }
 
   async trackSearch<TQuery extends TrackSearchQuery = TrackSearchQuery>(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
+    options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<MxmClientTrackSearchResponse>> {
     return trackSearch({
       input: {
@@ -199,6 +226,7 @@ export class MxmClient {
       },
       client: this.client,
       logger: this.logger,
+      options: this.resolveOptions(input.options),
     });
   }
 
@@ -211,6 +239,7 @@ export class MxmClient {
     query?: TQuery & { apiKey?: never };
     body: TBody;
     apiKey?: string;
+    options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<MxmClientTrackLyricsFingerprintPostResponse>> {
     return trackLyricsFingerprintPost({
       input: {
@@ -222,6 +251,7 @@ export class MxmClient {
       },
       client: this.client,
       logger: this.logger,
+      options: this.resolveOptions(input.options),
     });
   }
 }

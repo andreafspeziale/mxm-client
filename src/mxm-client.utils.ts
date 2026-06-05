@@ -7,6 +7,7 @@ import type {
   AllowedHTTPMethods,
   APIErrorDetails,
   MxmClientOptionalAPIKey,
+  MxmClientRequestOptions,
   Request,
   Response,
 } from './mxm-client.interfaces.js';
@@ -163,6 +164,7 @@ export const handleResponse = async <T, R>({
   dataSchema,
   logger,
   errorToBeInitialized,
+  options,
 }: {
   method: AllowedHTTPMethods;
   path: string;
@@ -170,6 +172,7 @@ export const handleResponse = async <T, R>({
   dataSchema: z.ZodSchema<T>;
   logger?: Logger | undefined;
   errorToBeInitialized: typeof MxmClientError;
+  options?: MxmClientRequestOptions | undefined;
 } & Response): Promise<T> => {
   logger?.debug(
     {
@@ -182,19 +185,31 @@ export const handleResponse = async <T, R>({
     'Handling response...',
   );
 
-  await statusCodeSchema.parseAsync(statusCode).catch((error: ZodError) =>
-    throwAPIError({
-      message: `Unexpected statusCode, received ${statusCode}`,
-      details: {
+  if (options?.disableStatusCodeValidation) {
+    logger?.debug(
+      {
+        fn: handleResponse.name,
         method,
         path,
         statusCode,
-        cause: fromError(error),
       },
-      logger,
-      errorToBeInitialized,
-    }),
-  );
+      'Status code validation skipped',
+    );
+  } else {
+    await statusCodeSchema.parseAsync(statusCode).catch((error: ZodError) =>
+      throwAPIError({
+        message: `Unexpected statusCode, received ${statusCode}`,
+        details: {
+          method,
+          path,
+          statusCode,
+          cause: fromError(error),
+        },
+        logger,
+        errorToBeInitialized,
+      }),
+    );
+  }
 
   return await dataSchema.parseAsync(data).catch((error: ZodError) =>
     throwAPIError({

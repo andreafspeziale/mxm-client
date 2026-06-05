@@ -23,6 +23,7 @@ export const matcherTrackGet = async ({
   input,
   client,
   logger,
+  options,
 }: EndpointPayload<Record<string, never>, MatcherTrackGetQuery>): Promise<
   MxmClientResponse<MxmClientMatcherTrackGetResponse>
 > => {
@@ -63,5 +64,6 @@ export const matcherTrackGet = async ({
     ),
     logger,
     errorToBeInitialized: MxmClientError,
+    options,
   });
 };

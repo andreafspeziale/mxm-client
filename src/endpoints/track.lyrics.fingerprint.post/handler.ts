@@ -24,6 +24,7 @@ export const trackLyricsFingerprintPost = async ({
   input,
   client,
   logger,
+  options,
 }: EndpointPayload<
   Record<string, never>,
   TrackLyricsFingerprintPostQuery,
@@ -67,5 +68,6 @@ export const trackLyricsFingerprintPost = async ({
     ),
     logger,
     errorToBeInitialized: MxmClientError,
+    options,
   });
 };
