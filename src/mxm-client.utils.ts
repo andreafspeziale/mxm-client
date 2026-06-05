@@ -186,31 +186,15 @@ export const handleResponse = async <T, R>({
     'Handling response...',
   );
 
-  if (options?.disableStatusCodeValidation) {
-    logger?.debug(
-      {
-        fn: handleResponse.name,
-        method,
-        path,
-        statusCode,
-      },
-      'Status code validation skipped',
-    );
-  } else {
-    await statusCodeSchema.parseAsync(statusCode).catch((error: ZodError) =>
-      throwAPIError({
-        message: `Unexpected statusCode, received ${statusCode}`,
-        details: {
-          method,
-          path,
-          statusCode,
-          cause: fromError(error),
-        },
-        logger,
-        errorToBeInitialized,
-      }),
-    );
-  }
+  await validateStatusCode({
+    statusCode,
+    statusCodeSchema,
+    method,
+    path,
+    logger,
+    errorToBeInitialized,
+    options,
+  });
 
   if (dataSchema) {
     return await dataSchema.parseAsync(data).catch((error: ZodError) =>
@@ -262,31 +246,15 @@ export const handleResponseWithSchema = async <T>({
     'Handling response with custom schema...',
   );
 
-  if (options?.disableStatusCodeValidation) {
-    logger?.debug(
-      {
-        fn: handleResponseWithSchema.name,
-        method,
-        path,
-        statusCode,
-      },
-      'Status code validation skipped',
-    );
-  } else {
-    await statusCodeSchema.parseAsync(statusCode).catch((error: ZodError) =>
-      throwAPIError({
-        message: `Unexpected statusCode, received ${statusCode}`,
-        details: {
-          method,
-          path,
-          statusCode,
-          cause: fromError(error),
-        },
-        logger,
-        errorToBeInitialized,
-      }),
-    );
-  }
+  await validateStatusCode({
+    statusCode,
+    statusCodeSchema,
+    method,
+    path,
+    logger,
+    errorToBeInitialized,
+    options,
+  });
 
   const result = await responseSchema['~standard'].validate(data);
 
@@ -306,4 +274,44 @@ export const handleResponseWithSchema = async <T>({
   }
 
   return result.value;
+};
+
+const validateStatusCode = async ({
+  statusCode,
+  statusCodeSchema,
+  method,
+  path,
+  logger,
+  errorToBeInitialized,
+  options,
+}: {
+  statusCode: number;
+  statusCodeSchema: z.ZodSchema;
+  method: AllowedHTTPMethods;
+  path: string;
+  logger?: Logger | undefined;
+  errorToBeInitialized: typeof MxmClientError;
+  options?: MxmClientRequestOptions | undefined;
+}): Promise<void> => {
+  if (options?.disableStatusCodeValidation) {
+    logger?.debug(
+      { fn: validateStatusCode.name, method, path, statusCode },
+      'Status code validation skipped',
+    );
+    return;
+  }
+
+  await statusCodeSchema.parseAsync(statusCode).catch((error: ZodError) =>
+    throwAPIError({
+      message: `Unexpected statusCode, received ${statusCode}`,
+      details: {
+        method,
+        path,
+        statusCode,
+        cause: fromError(error),
+      },
+      logger,
+      errorToBeInitialized,
+    }),
+  );
 };

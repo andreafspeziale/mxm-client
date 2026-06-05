@@ -1,64 +1,106 @@
 import { type Logger, pino } from 'pino';
 import { Client } from 'undici';
+import type { z } from 'zod';
 import {
-  type MatcherLyricsGetQuery,
-  type MxmClientMatcherLyricsGetResponse,
-  matcherLyricsGet,
+  MATCHER_LYRICS_GET_ENDPOINT,
+  METHOD as MATCHER_LYRICS_GET_METHOD,
+} from './endpoints/matcher.lyrics.get/constants.js';
+import type {
+  MatcherLyricsGetQuery,
+  MxmClientMatcherLyricsGetResponse,
 } from './endpoints/matcher.lyrics.get/index.js';
+import { mxmClientMatcherLyricsGetResponseSchema } from './endpoints/matcher.lyrics.get/schema.js';
 import {
-  type MatcherSubtitleGetQuery,
-  type MxmClientMatcherSubtitleGetResponse,
-  matcherSubtitleGet,
+  MATCHER_SUBTITLE_GET_ENDPOINT,
+  METHOD as MATCHER_SUBTITLE_GET_METHOD,
+} from './endpoints/matcher.subtitle.get/constants.js';
+import type {
+  MatcherSubtitleGetQuery,
+  MxmClientMatcherSubtitleGetResponse,
 } from './endpoints/matcher.subtitle.get/index.js';
+import { mxmClientMatcherSubtitleGetResponseSchema } from './endpoints/matcher.subtitle.get/schema.js';
 import {
-  type MatcherTrackGetQuery,
-  type MxmClientMatcherTrackGetResponse,
-  matcherTrackGet,
+  MATCHER_TRACK_GET_ENDPOINT,
+  METHOD as MATCHER_TRACK_GET_METHOD,
+} from './endpoints/matcher.track.get/constants.js';
+import type {
+  MatcherTrackGetQuery,
+  MxmClientMatcherTrackGetResponse,
 } from './endpoints/matcher.track.get/index.js';
+import { mxmClientMatcherTrackGetResponseSchema } from './endpoints/matcher.track.get/schema.js';
 import {
-  type MxmClientTrackGetResponse,
-  type TrackGetQuery,
-  trackGet,
+  TRACK_GET_ENDPOINT,
+  METHOD as TRACK_GET_METHOD,
+} from './endpoints/track.get/constants.js';
+import type {
+  MxmClientTrackGetResponse,
+  TrackGetQuery,
 } from './endpoints/track.get/index.js';
+import { mxmClientTrackGetResponseSchema } from './endpoints/track.get/schema.js';
 import {
-  type MxmClientTrackLyricsFingerprintPostResponse,
-  type TrackLyricsFingerprintPostBody,
-  type TrackLyricsFingerprintPostQuery,
-  trackLyricsFingerprintPost,
+  TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT,
+  METHOD as TRACK_LYRICS_FINGERPRINT_POST_METHOD,
+} from './endpoints/track.lyrics.fingerprint.post/constants.js';
+import type {
+  MxmClientTrackLyricsFingerprintPostResponse,
+  TrackLyricsFingerprintPostBody,
+  TrackLyricsFingerprintPostQuery,
 } from './endpoints/track.lyrics.fingerprint.post/index.js';
+import { mxmClientTrackLyricsFingerprintPostResponseSchema } from './endpoints/track.lyrics.fingerprint.post/schema.js';
 import {
-  type MxmClientTrackLyricsGetResponse,
-  type TrackLyricsGetQuery,
-  trackLyricsGet,
+  TRACK_LYRICS_GET_ENDPOINT,
+  METHOD as TRACK_LYRICS_GET_METHOD,
+} from './endpoints/track.lyrics.get/constants.js';
+import type {
+  MxmClientTrackLyricsGetResponse,
+  TrackLyricsGetQuery,
 } from './endpoints/track.lyrics.get/index.js';
+import { mxmClientTrackLyricsGetResponseSchema } from './endpoints/track.lyrics.get/schema.js';
 import {
-  type MxmClientTrackRichSyncGetResponse,
-  type TrackRichSyncGetQuery,
-  trackRichSyncGet,
+  TRACK_RICH_SYNC_GET_ENDPOINT,
+  METHOD as TRACK_RICHSYNC_GET_METHOD,
+} from './endpoints/track.richsync.get/constants.js';
+import type {
+  MxmClientTrackRichSyncGetResponse,
+  TrackRichSyncGetQuery,
 } from './endpoints/track.richsync.get/index.js';
+import { mxmClientTrackRichSyncGetResponse } from './endpoints/track.richsync.get/schema.js';
 import {
-  type MxmClientTrackSearchResponse,
-  type TrackSearchQuery,
-  trackSearch,
+  TRACK_SEARCH_ENDPOINT,
+  METHOD as TRACK_SEARCH_METHOD,
+} from './endpoints/track.search/constants.js';
+import type {
+  MxmClientTrackSearchResponse,
+  TrackSearchQuery,
 } from './endpoints/track.search/index.js';
+import { mxmClientTrackSearchResponse } from './endpoints/track.search/schema.js';
 import {
-  type MxmClientTrackSubtitleGetResponse,
-  type TrackSubtitleGetQuery,
-  trackSubtitleGet,
+  TRACK_SUBTITLE_GET_ENDPOINT,
+  METHOD as TRACK_SUBTITLE_GET_METHOD,
+} from './endpoints/track.subtitle.get/constants.js';
+import type {
+  MxmClientTrackSubtitleGetResponse,
+  TrackSubtitleGetQuery,
 } from './endpoints/track.subtitle.get/index.js';
+import { mxmClientTrackSubtitleGetResponse } from './endpoints/track.subtitle.get/schema.js';
 import { MUSIXMATCH_BASE_URL } from './mxm-client.constants.js';
 import { MxmClientError } from './mxm-client.error.js';
 import type {
+  AllowedHTTPMethods,
   MxmClientConfig,
   MxmClientRequestOptions,
   MxmClientRequestOptionsWithSchema,
   MxmClientResponse,
 } from './mxm-client.interfaces.js';
-import { successStatusCodeSchema } from './mxm-client.schemas.js';
+import {
+  buildLegacyAPIResponseSchema,
+  successStatusCodeSchema,
+} from './mxm-client.schemas.js';
 import { MxmClientUnsafe } from './mxm-client.unsafe.js';
 import {
   buildUrl,
   handleRequest,
+  handleResponse,
   handleResponseWithSchema,
 } from './mxm-client.utils.js';
 
@@ -108,19 +150,24 @@ export class MxmClient {
     };
   }
 
-  private async executeWithCustomSchema<T>({
+  private async execute<TResponse>({
     endpoint,
     method,
     query,
     body,
+    dataSchema,
     options,
   }: {
     endpoint: string;
-    method: 'GET' | 'POST';
+    method: AllowedHTTPMethods;
     query: Record<string, unknown>;
     body?: unknown;
-    options: MxmClientRequestOptionsWithSchema<T>;
-  }): Promise<MxmClientResponse<T>> {
+    dataSchema: z.ZodSchema;
+    options?:
+      | MxmClientRequestOptions
+      | MxmClientRequestOptionsWithSchema<TResponse>
+      | undefined;
+  }): Promise<MxmClientResponse<TResponse>> {
     const path = await buildUrl({
       endpoint,
       query: query as Record<string, string>,
@@ -138,13 +185,27 @@ export class MxmClient {
       errorToBeInitialized: MxmClientError,
     });
 
-    return handleResponseWithSchema<MxmClientResponse<T>>({
+    if (options && 'responseSchema' in options) {
+      return handleResponseWithSchema<MxmClientResponse<TResponse>>({
+        method,
+        path,
+        statusCode,
+        data,
+        statusCodeSchema: successStatusCodeSchema,
+        responseSchema: options.responseSchema,
+        logger: this.logger,
+        errorToBeInitialized: MxmClientError,
+        options: this.resolveOptions(options),
+      });
+    }
+
+    return handleResponse<MxmClientResponse<TResponse>, unknown>({
       method,
       path,
       statusCode,
       data,
       statusCodeSchema: successStatusCodeSchema,
-      responseSchema: options.responseSchema,
+      dataSchema: dataSchema as z.ZodSchema<MxmClientResponse<TResponse>>,
       logger: this.logger,
       errorToBeInitialized: MxmClientError,
       options: this.resolveOptions(options),
@@ -175,23 +236,15 @@ export class MxmClient {
       | MxmClientRequestOptions
       | MxmClientRequestOptionsWithSchema<TResponse>;
   }): Promise<MxmClientResponse<TResponse>> {
-    if (input.options && 'responseSchema' in input.options) {
-      return this.executeWithCustomSchema({
-        endpoint: '/ws/1.1/matcher.lyrics.get',
-        method: 'GET',
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-        options: input.options,
-      });
-    }
-
-    return matcherLyricsGet({
-      input: {
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-      },
-      client: this.client,
-      logger: this.logger,
-      options: this.resolveOptions(input.options),
-    }) as Promise<MxmClientResponse<TResponse>>;
+    return this.execute<TResponse>({
+      endpoint: MATCHER_LYRICS_GET_ENDPOINT,
+      method: MATCHER_LYRICS_GET_METHOD,
+      query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientMatcherLyricsGetResponseSchema,
+      ),
+      options: input.options,
+    });
   }
 
   async matcherSubtitleGet<
@@ -205,23 +258,15 @@ export class MxmClient {
       | MxmClientRequestOptions
       | MxmClientRequestOptionsWithSchema<TResponse>;
   }): Promise<MxmClientResponse<TResponse>> {
-    if (input.options && 'responseSchema' in input.options) {
-      return this.executeWithCustomSchema({
-        endpoint: '/ws/1.1/matcher.subtitle.get',
-        method: 'GET',
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-        options: input.options,
-      });
-    }
-
-    return matcherSubtitleGet({
-      input: {
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-      },
-      client: this.client,
-      logger: this.logger,
-      options: this.resolveOptions(input.options),
-    }) as Promise<MxmClientResponse<TResponse>>;
+    return this.execute<TResponse>({
+      endpoint: MATCHER_SUBTITLE_GET_ENDPOINT,
+      method: MATCHER_SUBTITLE_GET_METHOD,
+      query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientMatcherSubtitleGetResponseSchema,
+      ),
+      options: input.options,
+    });
   }
 
   async matcherTrackGet<
@@ -235,23 +280,15 @@ export class MxmClient {
       | MxmClientRequestOptions
       | MxmClientRequestOptionsWithSchema<TResponse>;
   }): Promise<MxmClientResponse<TResponse>> {
-    if (input.options && 'responseSchema' in input.options) {
-      return this.executeWithCustomSchema({
-        endpoint: '/ws/1.1/matcher.track.get',
-        method: 'GET',
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-        options: input.options,
-      });
-    }
-
-    return matcherTrackGet({
-      input: {
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-      },
-      client: this.client,
-      logger: this.logger,
-      options: this.resolveOptions(input.options),
-    }) as Promise<MxmClientResponse<TResponse>>;
+    return this.execute<TResponse>({
+      endpoint: MATCHER_TRACK_GET_ENDPOINT,
+      method: MATCHER_TRACK_GET_METHOD,
+      query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientMatcherTrackGetResponseSchema,
+      ),
+      options: input.options,
+    });
   }
 
   async trackGet<
@@ -264,23 +301,13 @@ export class MxmClient {
       | MxmClientRequestOptions
       | MxmClientRequestOptionsWithSchema<TResponse>;
   }): Promise<MxmClientResponse<TResponse>> {
-    if (input.options && 'responseSchema' in input.options) {
-      return this.executeWithCustomSchema({
-        endpoint: '/ws/1.1/track.get',
-        method: 'GET',
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-        options: input.options,
-      });
-    }
-
-    return trackGet({
-      input: {
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-      },
-      client: this.client,
-      logger: this.logger,
-      options: this.resolveOptions(input.options),
-    }) as Promise<MxmClientResponse<TResponse>>;
+    return this.execute<TResponse>({
+      endpoint: TRACK_GET_ENDPOINT,
+      method: TRACK_GET_METHOD,
+      query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
+      dataSchema: buildLegacyAPIResponseSchema(mxmClientTrackGetResponseSchema),
+      options: input.options,
+    });
   }
 
   async trackLyricsGet<
@@ -294,23 +321,15 @@ export class MxmClient {
       | MxmClientRequestOptions
       | MxmClientRequestOptionsWithSchema<TResponse>;
   }): Promise<MxmClientResponse<TResponse>> {
-    if (input.options && 'responseSchema' in input.options) {
-      return this.executeWithCustomSchema({
-        endpoint: '/ws/1.1/track.lyrics.get',
-        method: 'GET',
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-        options: input.options,
-      });
-    }
-
-    return trackLyricsGet({
-      input: {
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-      },
-      client: this.client,
-      logger: this.logger,
-      options: this.resolveOptions(input.options),
-    }) as Promise<MxmClientResponse<TResponse>>;
+    return this.execute<TResponse>({
+      endpoint: TRACK_LYRICS_GET_ENDPOINT,
+      method: TRACK_LYRICS_GET_METHOD,
+      query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientTrackLyricsGetResponseSchema,
+      ),
+      options: input.options,
+    });
   }
 
   async trackSubtitleGet<
@@ -324,23 +343,15 @@ export class MxmClient {
       | MxmClientRequestOptions
       | MxmClientRequestOptionsWithSchema<TResponse>;
   }): Promise<MxmClientResponse<TResponse>> {
-    if (input.options && 'responseSchema' in input.options) {
-      return this.executeWithCustomSchema({
-        endpoint: '/ws/1.1/track.subtitle.get',
-        method: 'GET',
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-        options: input.options,
-      });
-    }
-
-    return trackSubtitleGet({
-      input: {
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-      },
-      client: this.client,
-      logger: this.logger,
-      options: this.resolveOptions(input.options),
-    }) as Promise<MxmClientResponse<TResponse>>;
+    return this.execute<TResponse>({
+      endpoint: TRACK_SUBTITLE_GET_ENDPOINT,
+      method: TRACK_SUBTITLE_GET_METHOD,
+      query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientTrackSubtitleGetResponse,
+      ),
+      options: input.options,
+    });
   }
 
   async trackRichSyncGet<
@@ -354,23 +365,15 @@ export class MxmClient {
       | MxmClientRequestOptions
       | MxmClientRequestOptionsWithSchema<TResponse>;
   }): Promise<MxmClientResponse<TResponse>> {
-    if (input.options && 'responseSchema' in input.options) {
-      return this.executeWithCustomSchema({
-        endpoint: '/ws/1.1/track.richsync.get',
-        method: 'GET',
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-        options: input.options,
-      });
-    }
-
-    return trackRichSyncGet({
-      input: {
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-      },
-      client: this.client,
-      logger: this.logger,
-      options: this.resolveOptions(input.options),
-    }) as Promise<MxmClientResponse<TResponse>>;
+    return this.execute<TResponse>({
+      endpoint: TRACK_RICH_SYNC_GET_ENDPOINT,
+      method: TRACK_RICHSYNC_GET_METHOD,
+      query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientTrackRichSyncGetResponse,
+      ),
+      options: input.options,
+    });
   }
 
   async trackSearch<
@@ -384,23 +387,13 @@ export class MxmClient {
       | MxmClientRequestOptions
       | MxmClientRequestOptionsWithSchema<TResponse>;
   }): Promise<MxmClientResponse<TResponse>> {
-    if (input.options && 'responseSchema' in input.options) {
-      return this.executeWithCustomSchema({
-        endpoint: '/ws/1.1/track.search',
-        method: 'GET',
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-        options: input.options,
-      });
-    }
-
-    return trackSearch({
-      input: {
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-      },
-      client: this.client,
-      logger: this.logger,
-      options: this.resolveOptions(input.options),
-    }) as Promise<MxmClientResponse<TResponse>>;
+    return this.execute<TResponse>({
+      endpoint: TRACK_SEARCH_ENDPOINT,
+      method: TRACK_SEARCH_METHOD,
+      query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
+      dataSchema: buildLegacyAPIResponseSchema(mxmClientTrackSearchResponse),
+      options: input.options,
+    });
   }
 
   async trackLyricsFingerprintPost<
@@ -418,27 +411,15 @@ export class MxmClient {
       | MxmClientRequestOptions
       | MxmClientRequestOptionsWithSchema<TResponse>;
   }): Promise<MxmClientResponse<TResponse>> {
-    if (input.options && 'responseSchema' in input.options) {
-      return this.executeWithCustomSchema({
-        endpoint: '/ws/1.1/track.lyrics.fingerprint.post',
-        method: 'POST',
-        query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-        body: { data: { text: input.body.text } },
-        options: input.options,
-      });
-    }
-
-    return trackLyricsFingerprintPost({
-      input: {
-        query: {
-          ...input.query,
-          apiKey: input.apiKey || this.config?.apiKey,
-        },
-        body: input.body,
-      },
-      client: this.client,
-      logger: this.logger,
-      options: this.resolveOptions(input.options),
-    }) as Promise<MxmClientResponse<TResponse>>;
+    return this.execute<TResponse>({
+      endpoint: TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT,
+      method: TRACK_LYRICS_FINGERPRINT_POST_METHOD,
+      query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
+      body: { data: { text: input.body.text } },
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientTrackLyricsFingerprintPostResponseSchema,
+      ),
+      options: input.options,
+    });
   }
 }
