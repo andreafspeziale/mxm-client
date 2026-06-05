@@ -199,7 +199,9 @@ export class MxmClient {
       });
     }
 
-    return handleResponse<MxmClientResponse<TResponse>, unknown>({
+    // Safe cast: dataSchema always matches MxmClientResponse<TResponse> at default generic.
+    // When TResponse is extended via responseSchema, this branch is unreachable.
+    return handleResponse({
       method,
       path,
       statusCode,
