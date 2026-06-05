@@ -214,6 +214,66 @@ const result = await mxmClient.trackLyricsFingerprintPost<
 });
 ```
 
+### Unsafe mode
+
+The SDK provides an `.unsafe` accessor that skips response body validation, allowing you to extend output types via generics for cases where the API returns fields not covered by the built-in schemas.
+
+> [!CAUTION]
+> In unsafe mode, the TypeScript type is not guaranteed at runtime. Use this when you know the API returns additional fields for your account or use case.
+
+#### Extending response types
+
+```ts
+import {
+  MxmClient,
+  type MxmClientTrackGetResponse,
+} from '@andreafspeziale/mxm-client';
+
+interface MyTrackResponse extends MxmClientTrackGetResponse {
+  my_custom_field: string;
+}
+
+const mxmClient = new MxmClient({
+  config: { apiKey: 'your-api-key' },
+});
+
+const track = await mxmClient.unsafe.trackGet<undefined, MyTrackResponse>({
+  query: { track_isrc: 'USUM72005901' },
+});
+
+track.message.body.my_custom_field; // typed, not validated at runtime
+track.message.body.track_name;      // inherited from base type
+```
+
+#### Extending both input and output
+
+```ts
+import {
+  MxmClient,
+  type TrackGetQuery,
+  type MxmClientTrackGetResponse,
+} from '@andreafspeziale/mxm-client';
+
+interface MyQuery extends TrackGetQuery {
+  custom_param: string;
+}
+
+interface MyResponse extends MxmClientTrackGetResponse {
+  custom_output: number;
+}
+
+const mxmClient = new MxmClient({
+  config: { apiKey: 'your-api-key' },
+});
+
+const track = await mxmClient.unsafe.trackGet<MyQuery, MyResponse>({
+  query: {
+    track_isrc: 'USUM72005901',
+    custom_param: 'value',
+  },
+});
+```
+
 ## Available methods
 <!-- Matcher  -->
 - `matcherLyricsGet` ([matcher.lyrics.get](https://docs.musixmatch.com/lyrics-api/matcher/matcher-lyrics-get))

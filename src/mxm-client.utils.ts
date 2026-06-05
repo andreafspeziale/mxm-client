@@ -169,7 +169,7 @@ export const handleResponse = async <T, R>({
   method: AllowedHTTPMethods;
   path: string;
   statusCodeSchema: z.ZodSchema<R>;
-  dataSchema: z.ZodSchema<T>;
+  dataSchema?: z.ZodSchema<T> | undefined;
   logger?: Logger | undefined;
   errorToBeInitialized: typeof MxmClientError;
   options?: MxmClientRequestOptions | undefined;
@@ -211,18 +211,22 @@ export const handleResponse = async <T, R>({
     );
   }
 
-  return await dataSchema.parseAsync(data).catch((error: ZodError) =>
-    throwAPIError({
-      message: 'Unexpected response data shape',
-      details: {
-        method,
-        path,
-        statusCode,
-        data,
-        cause: fromError(error),
-      },
-      logger,
-      errorToBeInitialized,
-    }),
-  );
+  if (dataSchema) {
+    return await dataSchema.parseAsync(data).catch((error: ZodError) =>
+      throwAPIError({
+        message: 'Unexpected response data shape',
+        details: {
+          method,
+          path,
+          statusCode,
+          data,
+          cause: fromError(error),
+        },
+        logger,
+        errorToBeInitialized,
+      }),
+    );
+  }
+
+  return data as T;
 };
