@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const mxmClientTrackSearchResponse = z.object({
+export const mxmClientTrackSearchResponseSchema = z.object({
   track_list: z.array(
     z.object({
       track: z.object({

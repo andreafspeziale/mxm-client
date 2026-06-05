@@ -1,5 +1,5 @@
 import type { z } from 'zod';
-import type { mxmClientTrackSearchResponse } from './schema.js';
+import type { mxmClientTrackSearchResponseSchema } from './schema.js';
 
 // TODO: improve this type definition with some sort of utility
 type QueryParams =
@@ -68,5 +68,5 @@ interface OptionalFilters {
 export type TrackSearchQuery = QueryParams & OptionalFilters;
 
 export type MxmClientTrackSearchResponse = z.infer<
-  typeof mxmClientTrackSearchResponse
+  typeof mxmClientTrackSearchResponseSchema
 >;

@@ -1,5 +1,5 @@
 import type { z } from 'zod';
-import type { mxmClientTrackRichSyncGetResponse } from './schema.js';
+import type { mxmClientTrackRichSyncGetResponseSchema } from './schema.js';
 
 export type TrackRichSyncGetQuery =
   | {
@@ -49,5 +49,5 @@ export type TrackRichSyncGetQuery =
     };
 
 export type MxmClientTrackRichSyncGetResponse = z.infer<
-  typeof mxmClientTrackRichSyncGetResponse
+  typeof mxmClientTrackRichSyncGetResponseSchema
 >;

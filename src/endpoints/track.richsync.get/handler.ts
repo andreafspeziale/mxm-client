@@ -17,7 +17,7 @@ import type {
   MxmClientTrackRichSyncGetResponse,
   TrackRichSyncGetQuery,
 } from './interfaces.js';
-import { mxmClientTrackRichSyncGetResponse } from './schema.js';
+import { mxmClientTrackRichSyncGetResponseSchema } from './schema.js';
 
 export const trackRichSyncGet = async ({
   input,
@@ -59,7 +59,9 @@ export const trackRichSyncGet = async ({
     statusCode,
     data,
     statusCodeSchema: successStatusCodeSchema,
-    dataSchema: buildLegacyAPIResponseSchema(mxmClientTrackRichSyncGetResponse),
+    dataSchema: buildLegacyAPIResponseSchema(
+      mxmClientTrackRichSyncGetResponseSchema,
+    ),
     logger,
     errorToBeInitialized: MxmClientError,
     options,

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const mxmClientTrackRichSyncGetResponse = z.object({
+export const mxmClientTrackRichSyncGetResponseSchema = z.object({
   richsync: z.object({
     richsync_id: z.number(),
     restricted: z.number(),

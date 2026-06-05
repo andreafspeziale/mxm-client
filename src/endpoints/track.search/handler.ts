@@ -17,7 +17,7 @@ import type {
   MxmClientTrackSearchResponse,
   TrackSearchQuery,
 } from './interfaces.js';
-import { mxmClientTrackSearchResponse } from './schema.js';
+import { mxmClientTrackSearchResponseSchema } from './schema.js';
 
 export const trackSearch = async ({
   input,
@@ -59,7 +59,9 @@ export const trackSearch = async ({
     statusCode,
     data,
     statusCodeSchema: successStatusCodeSchema,
-    dataSchema: buildLegacyAPIResponseSchema(mxmClientTrackSearchResponse),
+    dataSchema: buildLegacyAPIResponseSchema(
+      mxmClientTrackSearchResponseSchema,
+    ),
     logger,
     errorToBeInitialized: MxmClientError,
     options,

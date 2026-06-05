@@ -64,7 +64,7 @@ import type {
   MxmClientTrackRichSyncGetResponse,
   TrackRichSyncGetQuery,
 } from './endpoints/track.richsync.get/index.js';
-import { mxmClientTrackRichSyncGetResponse } from './endpoints/track.richsync.get/schema.js';
+import { mxmClientTrackRichSyncGetResponseSchema } from './endpoints/track.richsync.get/schema.js';
 import {
   TRACK_SEARCH_ENDPOINT,
   METHOD as TRACK_SEARCH_METHOD,
@@ -73,7 +73,7 @@ import type {
   MxmClientTrackSearchResponse,
   TrackSearchQuery,
 } from './endpoints/track.search/index.js';
-import { mxmClientTrackSearchResponse } from './endpoints/track.search/schema.js';
+import { mxmClientTrackSearchResponseSchema } from './endpoints/track.search/schema.js';
 import {
   TRACK_SUBTITLE_GET_ENDPOINT,
   METHOD as TRACK_SUBTITLE_GET_METHOD,
@@ -82,7 +82,7 @@ import type {
   MxmClientTrackSubtitleGetResponse,
   TrackSubtitleGetQuery,
 } from './endpoints/track.subtitle.get/index.js';
-import { mxmClientTrackSubtitleGetResponse } from './endpoints/track.subtitle.get/schema.js';
+import { mxmClientTrackSubtitleGetResponseSchema } from './endpoints/track.subtitle.get/schema.js';
 import { MUSIXMATCH_BASE_URL } from './mxm-client.constants.js';
 import { MxmClientError } from './mxm-client.error.js';
 import type {
@@ -350,7 +350,7 @@ export class MxmClient {
       method: TRACK_SUBTITLE_GET_METHOD,
       query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
       dataSchema: buildLegacyAPIResponseSchema(
-        mxmClientTrackSubtitleGetResponse,
+        mxmClientTrackSubtitleGetResponseSchema,
       ),
       options: input.options,
     });
@@ -372,7 +372,7 @@ export class MxmClient {
       method: TRACK_RICHSYNC_GET_METHOD,
       query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
       dataSchema: buildLegacyAPIResponseSchema(
-        mxmClientTrackRichSyncGetResponse,
+        mxmClientTrackRichSyncGetResponseSchema,
       ),
       options: input.options,
     });
@@ -393,7 +393,9 @@ export class MxmClient {
       endpoint: TRACK_SEARCH_ENDPOINT,
       method: TRACK_SEARCH_METHOD,
       query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
-      dataSchema: buildLegacyAPIResponseSchema(mxmClientTrackSearchResponse),
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientTrackSearchResponseSchema,
+      ),
       options: input.options,
     });
   }

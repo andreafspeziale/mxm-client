@@ -17,7 +17,7 @@ import type {
   MxmClientTrackSubtitleGetResponse,
   TrackSubtitleGetQuery,
 } from './interfaces.js';
-import { mxmClientTrackSubtitleGetResponse } from './schema.js';
+import { mxmClientTrackSubtitleGetResponseSchema } from './schema.js';
 
 export const trackSubtitleGet = async ({
   input,
@@ -59,7 +59,9 @@ export const trackSubtitleGet = async ({
     statusCode,
     data,
     statusCodeSchema: successStatusCodeSchema,
-    dataSchema: buildLegacyAPIResponseSchema(mxmClientTrackSubtitleGetResponse),
+    dataSchema: buildLegacyAPIResponseSchema(
+      mxmClientTrackSubtitleGetResponseSchema,
+    ),
     logger,
     errorToBeInitialized: MxmClientError,
     options,
