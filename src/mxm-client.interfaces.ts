@@ -1,3 +1,4 @@
+import type { StandardSchemaV1 } from '@standard-schema/spec';
 import type { Logger, LoggerOptions } from 'pino';
 import type { Client, Interceptable } from 'undici';
 import type { UndiciHeaders } from 'undici/types/dispatcher.js';
@@ -43,6 +44,11 @@ export interface MxmClientOptionalAPIKey {
 
 export interface MxmClientRequestOptions {
   disableStatusCodeValidation?: boolean;
+}
+
+export interface MxmClientRequestOptionsWithSchema<T>
+  extends MxmClientRequestOptions {
+  responseSchema: StandardSchemaV1<unknown, MxmClientResponse<T>>;
 }
 
 export interface MxmClientConfig extends MxmClientOptionalAPIKey {

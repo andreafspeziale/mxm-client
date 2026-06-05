@@ -1,3 +1,4 @@
+import type { StandardSchemaV1 } from '@standard-schema/spec';
 import type { Logger } from 'pino';
 import type { z } from 'zod';
 import { fromError } from 'zod-validation-error';
@@ -229,4 +230,80 @@ export const handleResponse = async <T, R>({
   }
 
   return data as T;
+};
+
+export const handleResponseWithSchema = async <T>({
+  method,
+  path,
+  statusCode,
+  data,
+  statusCodeSchema,
+  responseSchema,
+  logger,
+  errorToBeInitialized,
+  options,
+}: {
+  method: AllowedHTTPMethods;
+  path: string;
+  statusCodeSchema: z.ZodSchema;
+  responseSchema: StandardSchemaV1<unknown, T>;
+  logger?: Logger | undefined;
+  errorToBeInitialized: typeof MxmClientError;
+  options?: MxmClientRequestOptions | undefined;
+} & Response): Promise<T> => {
+  logger?.debug(
+    {
+      fn: handleResponseWithSchema.name,
+      method,
+      path,
+      statusCode,
+      data,
+    },
+    'Handling response with custom schema...',
+  );
+
+  if (options?.disableStatusCodeValidation) {
+    logger?.debug(
+      {
+        fn: handleResponseWithSchema.name,
+        method,
+        path,
+        statusCode,
+      },
+      'Status code validation skipped',
+    );
+  } else {
+    await statusCodeSchema.parseAsync(statusCode).catch((error: ZodError) =>
+      throwAPIError({
+        message: `Unexpected statusCode, received ${statusCode}`,
+        details: {
+          method,
+          path,
+          statusCode,
+          cause: fromError(error),
+        },
+        logger,
+        errorToBeInitialized,
+      }),
+    );
+  }
+
+  const result = await responseSchema['~standard'].validate(data);
+
+  if (result.issues) {
+    return throwAPIError({
+      message: 'Unexpected response data shape',
+      details: {
+        method,
+        path,
+        statusCode,
+        data,
+        cause: result.issues,
+      },
+      logger,
+      errorToBeInitialized,
+    });
+  }
+
+  return result.value;
 };
