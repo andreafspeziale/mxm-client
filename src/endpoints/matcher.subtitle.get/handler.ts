@@ -23,6 +23,7 @@ export const matcherSubtitleGet = async ({
   input,
   client,
   logger,
+  options,
 }: EndpointPayload<Record<string, never>, MatcherSubtitleGetQuery>): Promise<
   MxmClientResponse<MxmClientMatcherSubtitleGetResponse>
 > => {
@@ -63,5 +64,6 @@ export const matcherSubtitleGet = async ({
     ),
     logger,
     errorToBeInitialized: MxmClientError,
+    options,
   });
 };

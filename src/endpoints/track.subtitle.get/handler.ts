@@ -23,6 +23,7 @@ export const trackSubtitleGet = async ({
   input,
   client,
   logger,
+  options,
 }: EndpointPayload<Record<string, never>, TrackSubtitleGetQuery>): Promise<
   MxmClientResponse<MxmClientTrackSubtitleGetResponse>
 > => {
@@ -61,5 +62,6 @@ export const trackSubtitleGet = async ({
     dataSchema: buildLegacyAPIResponseSchema(mxmClientTrackSubtitleGetResponse),
     logger,
     errorToBeInitialized: MxmClientError,
+    options,
   });
 };

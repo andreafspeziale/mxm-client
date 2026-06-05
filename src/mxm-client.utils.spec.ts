@@ -524,5 +524,109 @@ t.test('handleResponse', (t) => {
     );
   });
 
+  t.test(
+    'Should skip status code validation when disableStatusCodeValidation is true',
+    async (t) => {
+      const statusCodeSchema = z.literal(200);
+      const dataSchema = z.object({ foo: z.string() });
+      const data = { foo: 'bar' };
+
+      const result = await handleResponse({
+        method: 'GET',
+        path: '/test',
+        statusCode: 400,
+        data,
+        statusCodeSchema,
+        dataSchema,
+        errorToBeInitialized: MxmClientError,
+        options: { disableStatusCodeValidation: true },
+      });
+
+      t.same(result, data);
+    },
+  );
+
+  t.test(
+    'Should still validate data shape when disableStatusCodeValidation is true',
+    async (t) => {
+      const statusCodeSchema = z.literal(200);
+      const dataSchema = z.object({ foo: z.string() });
+      const data = { bar: 'baz' };
+
+      await t.rejects(
+        handleResponse({
+          method: 'GET',
+          path: '/test',
+          statusCode: 400,
+          data,
+          statusCodeSchema,
+          dataSchema,
+          errorToBeInitialized: MxmClientError,
+          options: { disableStatusCodeValidation: true },
+        }),
+        {
+          message: 'Unexpected response data shape',
+        },
+      );
+    },
+  );
+
+  t.test(
+    'Should validate status code when disableStatusCodeValidation is false',
+    async (t) => {
+      const statusCodeSchema = z.literal(200);
+      const dataSchema = z.object({ foo: z.string() });
+      const data = { foo: 'bar' };
+
+      await t.rejects(
+        handleResponse({
+          method: 'GET',
+          path: '/test',
+          statusCode: 400,
+          data,
+          statusCodeSchema,
+          dataSchema,
+          errorToBeInitialized: MxmClientError,
+          options: { disableStatusCodeValidation: false },
+        }),
+        {
+          message: 'Unexpected statusCode, received 400',
+        },
+      );
+    },
+  );
+
+  t.test(
+    'Should log debug when status code validation is skipped',
+    async (t) => {
+      const logger = pino({ level: 'silent' });
+      let debugLogged = false;
+      let debugMessage = '';
+      logger.debug = ((_obj: unknown, msg?: string) => {
+        debugLogged = true;
+        if (msg) debugMessage = msg;
+      }) as typeof logger.debug;
+
+      const statusCodeSchema = z.literal(200);
+      const dataSchema = z.object({ foo: z.string() });
+      const data = { foo: 'bar' };
+
+      await handleResponse({
+        method: 'GET',
+        path: '/test',
+        statusCode: 400,
+        data,
+        statusCodeSchema,
+        dataSchema,
+        logger,
+        errorToBeInitialized: MxmClientError,
+        options: { disableStatusCodeValidation: true },
+      });
+
+      t.ok(debugLogged);
+      t.equal(debugMessage, 'Status code validation skipped');
+    },
+  );
+
   t.end();
 });

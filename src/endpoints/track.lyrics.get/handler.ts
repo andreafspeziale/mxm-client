@@ -23,6 +23,7 @@ export const trackLyricsGet = async ({
   input,
   client,
   logger,
+  options,
 }: EndpointPayload<Record<string, never>, TrackLyricsGetQuery>): Promise<
   MxmClientResponse<MxmClientTrackLyricsGetResponse>
 > => {
@@ -63,5 +64,6 @@ export const trackLyricsGet = async ({
     ),
     logger,
     errorToBeInitialized: MxmClientError,
+    options,
   });
 };

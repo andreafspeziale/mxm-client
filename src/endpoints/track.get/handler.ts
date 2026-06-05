@@ -20,6 +20,7 @@ export const trackGet = async ({
   input,
   client,
   logger,
+  options,
 }: EndpointPayload<Record<string, never>, TrackGetQuery>): Promise<
   MxmClientResponse<MxmClientTrackGetResponse>
 > => {
@@ -58,5 +59,6 @@ export const trackGet = async ({
     dataSchema: buildLegacyAPIResponseSchema(mxmClientTrackGetResponseSchema),
     logger,
     errorToBeInitialized: MxmClientError,
+    options,
   });
 };
