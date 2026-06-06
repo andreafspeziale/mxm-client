@@ -15,3 +15,7 @@ export const buildLegacyAPIResponseSchema = <T>(schema: z.ZodType<T>) => {
     }),
   });
 };
+
+export const legacyResponseWrapperSchema = buildLegacyAPIResponseSchema(
+  z.unknown(),
+);

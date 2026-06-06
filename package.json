@@ -61,6 +61,7 @@
   },
   "packageManager": "pnpm@10.34.1",
   "dependencies": {
+    "@standard-schema/spec": "^1.1.0",
     "pino": "^10.1.0",
     "undici": "^7.16.0",
     "zod": "^4.1.12",

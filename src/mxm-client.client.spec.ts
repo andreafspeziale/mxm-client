@@ -151,6 +151,32 @@ t.test('MxmClient (spec)', (t) => {
     t.notOk(client['logger']);
   });
 
+  t.test('Should instantiate with custom baseUrl', async (t) => {
+    const client = new MxmClient({
+      config: {
+        baseUrl: 'https://staging.musixmatch.com',
+      },
+    });
+
+    t.ok(client instanceof MxmClient);
+    t.ok(client['client']);
+    t.equal(client['config']?.baseUrl, 'https://staging.musixmatch.com');
+  });
+
+  t.test(
+    'Should instantiate with custom baseUrl stripping trailing slash',
+    async (t) => {
+      const client = new MxmClient({
+        config: {
+          baseUrl: 'https://staging.musixmatch.com/',
+        },
+      });
+
+      t.ok(client instanceof MxmClient);
+      t.ok(client['client']);
+    },
+  );
+
   t.test('Should instantiate with full configuration', async (t) => {
     const apiKey = 'test-api-key';
     const externalLogger = pino({ level: 'debug' });
@@ -158,6 +184,7 @@ t.test('MxmClient (spec)', (t) => {
     const client = new MxmClient({
       config: {
         apiKey,
+        baseUrl: 'https://custom.musixmatch.com',
         enableLog: true,
         defaultLoggerConfig: {
           level: 'trace',
@@ -169,6 +196,7 @@ t.test('MxmClient (spec)', (t) => {
     t.ok(client instanceof MxmClient);
     t.ok(client['config']);
     t.equal(client['config']?.apiKey, apiKey);
+    t.equal(client['config']?.baseUrl, 'https://custom.musixmatch.com');
     t.ok(client['logger']);
   });
 

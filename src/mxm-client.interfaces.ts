@@ -1,4 +1,5 @@
-import type { Logger, LoggerOptions } from 'pino';
+import type { StandardSchemaV1 } from '@standard-schema/spec';
+import type { LoggerOptions } from 'pino';
 import type { Client, Interceptable } from 'undici';
 import type { UndiciHeaders } from 'undici/types/dispatcher.js';
 
@@ -41,29 +42,21 @@ export interface MxmClientOptionalAPIKey {
   apiKey?: string | undefined;
 }
 
+export interface MxmClientRequestOptions {
+  disableStatusCodeValidation?: boolean;
+}
+
+export interface MxmClientRequestOptionsWithSchema<
+  TSchema extends StandardSchemaV1 = StandardSchemaV1,
+> extends MxmClientRequestOptions {
+  responseSchema: TSchema;
+}
+
 export interface MxmClientConfig extends MxmClientOptionalAPIKey {
+  baseUrl?: string;
   enableLog?: boolean;
   defaultLoggerConfig?: LoggerOptions;
-}
-
-export interface BaseEndpointInput<
-  TParams extends Record<string, string> = Record<string, never>,
-  TQuery = Record<string, never>,
-  TBody = never,
-> {
-  params?: TParams;
-  query?: TQuery;
-  body?: TBody;
-}
-
-export interface EndpointPayload<
-  TParams extends Record<string, string> = Record<string, never>,
-  TQuery = Record<string, never>,
-  TBody = never,
-> {
-  input: BaseEndpointInput<TParams, TQuery & MxmClientOptionalAPIKey, TBody>;
-  client: Client | Interceptable;
-  logger?: Logger | undefined;
+  disableStatusCodeValidation?: boolean;
 }
 
 export interface MxmClientResponse<T> {
