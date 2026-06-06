@@ -76,9 +76,9 @@ const client = new MxmClient({
       process.exit(1);
     });
 
-  // To extend the response in safeland instead, you will need to build your own schema and pass it.
-  // No explicit generics needed — the response type is inferred from the schema.
-  // Extra fields in query/body are accepted because the types use `extends` constraints.
+  // To extend the response in safeland, build your own body schema and pass it via `options.responseSchema`.
+  // When using explicit generics for query/body extension, you must also pass `typeof yourSchema` as the last generic.
+  // TypeScript cannot partially infer generics — if you specify any, you must specify all.
   const baseTrackListItemSchema =
     mxmClientTrackLyricsFingerprintPostResponseSchema.shape.track_list.element;
   const enrichedBodySchema = z.object({
@@ -92,7 +92,11 @@ const client = new MxmClient({
   });
 
   const d = await client
-    .trackLyricsFingerprintPost({
+    .trackLyricsFingerprintPost<
+      MyFingerprintQuery,
+      MyFingerprintBody,
+      typeof enrichedBodySchema
+    >({
       query: {
         size: 10,
         limit: 3,

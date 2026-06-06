@@ -242,8 +242,8 @@ export class MxmClient {
   }): Promise<MxmClientResponse<MxmClientMatcherLyricsGetResponse>>;
 
   async matcherLyricsGet<
-    TQuery extends MatcherLyricsGetQuery = MatcherLyricsGetQuery,
-    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+    TQuery extends MatcherLyricsGetQuery,
+    TSchema extends StandardSchemaV1,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
@@ -277,8 +277,8 @@ export class MxmClient {
   }): Promise<MxmClientResponse<MxmClientMatcherSubtitleGetResponse>>;
 
   async matcherSubtitleGet<
-    TQuery extends MatcherSubtitleGetQuery = MatcherSubtitleGetQuery,
-    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+    TQuery extends MatcherSubtitleGetQuery,
+    TSchema extends StandardSchemaV1,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
@@ -312,8 +312,8 @@ export class MxmClient {
   }): Promise<MxmClientResponse<MxmClientMatcherTrackGetResponse>>;
 
   async matcherTrackGet<
-    TQuery extends MatcherTrackGetQuery = MatcherTrackGetQuery,
-    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+    TQuery extends MatcherTrackGetQuery,
+    TSchema extends StandardSchemaV1,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
@@ -345,8 +345,8 @@ export class MxmClient {
   }): Promise<MxmClientResponse<MxmClientTrackGetResponse>>;
 
   async trackGet<
-    TQuery extends TrackGetQuery = TrackGetQuery,
-    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+    TQuery extends TrackGetQuery,
+    TSchema extends StandardSchemaV1,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
@@ -378,8 +378,8 @@ export class MxmClient {
   }): Promise<MxmClientResponse<MxmClientTrackLyricsGetResponse>>;
 
   async trackLyricsGet<
-    TQuery extends TrackLyricsGetQuery = TrackLyricsGetQuery,
-    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+    TQuery extends TrackLyricsGetQuery,
+    TSchema extends StandardSchemaV1,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
@@ -413,8 +413,8 @@ export class MxmClient {
   }): Promise<MxmClientResponse<MxmClientTrackSubtitleGetResponse>>;
 
   async trackSubtitleGet<
-    TQuery extends TrackSubtitleGetQuery = TrackSubtitleGetQuery,
-    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+    TQuery extends TrackSubtitleGetQuery,
+    TSchema extends StandardSchemaV1,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
@@ -448,8 +448,8 @@ export class MxmClient {
   }): Promise<MxmClientResponse<MxmClientTrackRichSyncGetResponse>>;
 
   async trackRichSyncGet<
-    TQuery extends TrackRichSyncGetQuery = TrackRichSyncGetQuery,
-    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+    TQuery extends TrackRichSyncGetQuery,
+    TSchema extends StandardSchemaV1,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
@@ -481,8 +481,8 @@ export class MxmClient {
   }): Promise<MxmClientResponse<MxmClientTrackSearchResponse>>;
 
   async trackSearch<
-    TQuery extends TrackSearchQuery = TrackSearchQuery,
-    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+    TQuery extends TrackSearchQuery,
+    TSchema extends StandardSchemaV1,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
@@ -520,11 +520,9 @@ export class MxmClient {
   }): Promise<MxmClientResponse<MxmClientTrackLyricsFingerprintPostResponse>>;
 
   async trackLyricsFingerprintPost<
-    TQuery extends
-      TrackLyricsFingerprintPostQuery = TrackLyricsFingerprintPostQuery,
-    TBody extends
-      TrackLyricsFingerprintPostBody = TrackLyricsFingerprintPostBody,
-    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+    TQuery extends TrackLyricsFingerprintPostQuery,
+    TBody extends TrackLyricsFingerprintPostBody,
+    TSchema extends StandardSchemaV1,
   >(input: {
     query?: TQuery & { apiKey?: never };
     body: TBody;

@@ -221,10 +221,14 @@ For full runtime safety with extended response types, you can provide a custom s
 > [!NOTE]
 > The `responseSchema` option accepts any schema implementing the [Standard Schema](https://standardschema.dev) interface (Zod, Valibot, ArkType, etc.).
 
+> [!IMPORTANT]
+> TypeScript does not support partial generic inference. If you need to specify generics for query or body extension, you must also pass `typeof yourSchema` as the last generic parameter.
+
 ```ts
 import { z } from 'zod';
 import {
   MxmClient,
+  type TrackGetQuery,
   mxmClientTrackGetResponseSchema,
 } from '@andreafspeziale/mxm-client';
 
@@ -233,13 +237,17 @@ const myTrackBodySchema = mxmClientTrackGetResponseSchema.extend({
   my_custom_field: z.string(),
 });
 
+interface MyQuery extends TrackGetQuery {
+  custom_param: string;
+}
+
 const mxmClient = new MxmClient({
   config: { apiKey: 'your-api-key' },
 });
 
-// No generic needed for the response type — it's inferred from the schema
-const track = await mxmClient.trackGet({
-  query: { track_isrc: 'USUM72005901' },
+// Pass typeof schema as the last generic when extending query/body types
+const track = await mxmClient.trackGet<MyQuery, typeof myTrackBodySchema>({
+  query: { track_isrc: 'USUM72005901', custom_param: 'value' },
   options: { responseSchema: myTrackBodySchema },
 });
 
