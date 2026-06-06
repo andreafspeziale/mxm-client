@@ -349,6 +349,10 @@ const track = await mxmClient.unsafe.trackGet<MyTrackGetQuery, MyTrackGetRespons
 <!-- Enterprise  -->
 - `trackLyricsFingerprintPost` ([track.lyrics.fingerprint](https://docs.musixmatch.com/enterprise-integration/api-reference/track-lyrics-fingerprint-post))
 
+## Examples
+
+For more comprehensive usage examples including TypeScript and JavaScript (ESM/CJS), check the [`examples/`](./examples) directory.
+
 ## Test
 > [!NOTE]
 > To keep consistency over time and to be sure each endpoint returns the expected result, `e2e` tests are run against the actual Musixmatch APIs when a valid API key is provided (environment variable `MXM_API_KEY`). Instead `e2e` will be skipped.
