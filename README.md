@@ -127,7 +127,7 @@ const track = await mxmClient.trackGet({
 
 ### With status code validation disabled
 
-> When `disableStatusCodeValidation` is set to `true`, the client will not throw on unexpected HTTP status codes allowing the response body validation to still run.
+> When `disableStatusCodeValidation` is set to `true`, the client will not throw on unexpected HTTP status codes allowing the response body validation to still run. Musixmatch APIs always return a `200` status code. In case of an error, it will still be `200` and the error details will be included in the response body. This option can be useful if for any odd reason the status code is not `200`.
 
 #### Via client configuration (global)
 
