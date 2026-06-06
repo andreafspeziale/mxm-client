@@ -76,6 +76,7 @@ import type {
 import { MxmClientError } from './mxm-client.error.js';
 import type {
   AllowedHTTPMethods,
+  MxmClientOptionalAPIKey,
   MxmClientRequestOptions,
   MxmClientResponse,
 } from './mxm-client.interfaces.js';
@@ -114,13 +115,19 @@ export class MxmClientUnsafe {
   }: {
     endpoint: string;
     method: AllowedHTTPMethods;
-    query: Record<string, unknown>;
+    query: object;
     body?: unknown;
     options?: MxmClientRequestOptions | undefined;
   }): Promise<MxmClientResponse<TResponse>> {
+    const queryRecord = query as Record<string, unknown>;
+    const resolvedQuery = {
+      ...queryRecord,
+      apiKey: (queryRecord['apiKey'] as string | undefined) ?? this.apiKey,
+    } as Record<string, string>;
+
     const path = await buildUrl({
       endpoint,
-      query: query as Record<string, string>,
+      query: resolvedQuery,
       method,
       logger: this.logger,
       errorToBeInitialized: MxmClientError,
@@ -153,14 +160,13 @@ export class MxmClientUnsafe {
     TResponse extends
       MxmClientMatcherLyricsGetResponse = MxmClientMatcherLyricsGetResponse,
   >(input: {
-    query: TQuery & { apiKey?: never };
-    apiKey?: string;
+    query: TQuery & MxmClientOptionalAPIKey;
     options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<TResponse>> {
     return this.execute<TResponse>({
       endpoint: MATCHER_LYRICS_GET_ENDPOINT,
       method: MATCHER_LYRICS_GET_METHOD,
-      query: { ...input.query, apiKey: input.apiKey || this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -170,14 +176,13 @@ export class MxmClientUnsafe {
     TResponse extends
       MxmClientMatcherSubtitleGetResponse = MxmClientMatcherSubtitleGetResponse,
   >(input: {
-    query: TQuery & { apiKey?: never };
-    apiKey?: string;
+    query: TQuery & MxmClientOptionalAPIKey;
     options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<TResponse>> {
     return this.execute<TResponse>({
       endpoint: MATCHER_SUBTITLE_GET_ENDPOINT,
       method: MATCHER_SUBTITLE_GET_METHOD,
-      query: { ...input.query, apiKey: input.apiKey || this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -187,14 +192,13 @@ export class MxmClientUnsafe {
     TResponse extends
       MxmClientMatcherTrackGetResponse = MxmClientMatcherTrackGetResponse,
   >(input: {
-    query: TQuery & { apiKey?: never };
-    apiKey?: string;
+    query: TQuery & MxmClientOptionalAPIKey;
     options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<TResponse>> {
     return this.execute<TResponse>({
       endpoint: MATCHER_TRACK_GET_ENDPOINT,
       method: MATCHER_TRACK_GET_METHOD,
-      query: { ...input.query, apiKey: input.apiKey || this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -203,14 +207,13 @@ export class MxmClientUnsafe {
     TQuery extends TrackGetQuery = TrackGetQuery,
     TResponse extends MxmClientTrackGetResponse = MxmClientTrackGetResponse,
   >(input: {
-    query: TQuery & { apiKey?: never };
-    apiKey?: string;
+    query: TQuery & MxmClientOptionalAPIKey;
     options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<TResponse>> {
     return this.execute<TResponse>({
       endpoint: TRACK_GET_ENDPOINT,
       method: TRACK_GET_METHOD,
-      query: { ...input.query, apiKey: input.apiKey || this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -220,14 +223,13 @@ export class MxmClientUnsafe {
     TResponse extends
       MxmClientTrackLyricsGetResponse = MxmClientTrackLyricsGetResponse,
   >(input: {
-    query: TQuery & { apiKey?: never };
-    apiKey?: string;
+    query: TQuery & MxmClientOptionalAPIKey;
     options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<TResponse>> {
     return this.execute<TResponse>({
       endpoint: TRACK_LYRICS_GET_ENDPOINT,
       method: TRACK_LYRICS_GET_METHOD,
-      query: { ...input.query, apiKey: input.apiKey || this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -237,14 +239,13 @@ export class MxmClientUnsafe {
     TResponse extends
       MxmClientTrackSubtitleGetResponse = MxmClientTrackSubtitleGetResponse,
   >(input: {
-    query: TQuery & { apiKey?: never };
-    apiKey?: string;
+    query: TQuery & MxmClientOptionalAPIKey;
     options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<TResponse>> {
     return this.execute<TResponse>({
       endpoint: TRACK_SUBTITLE_GET_ENDPOINT,
       method: TRACK_SUBTITLE_GET_METHOD,
-      query: { ...input.query, apiKey: input.apiKey || this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -254,14 +255,13 @@ export class MxmClientUnsafe {
     TResponse extends
       MxmClientTrackRichSyncGetResponse = MxmClientTrackRichSyncGetResponse,
   >(input: {
-    query: TQuery & { apiKey?: never };
-    apiKey?: string;
+    query: TQuery & MxmClientOptionalAPIKey;
     options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<TResponse>> {
     return this.execute<TResponse>({
       endpoint: TRACK_RICH_SYNC_GET_ENDPOINT,
       method: TRACK_RICHSYNC_GET_METHOD,
-      query: { ...input.query, apiKey: input.apiKey || this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -271,14 +271,13 @@ export class MxmClientUnsafe {
     TResponse extends
       MxmClientTrackSearchResponse = MxmClientTrackSearchResponse,
   >(input: {
-    query: TQuery & { apiKey?: never };
-    apiKey?: string;
+    query: TQuery & MxmClientOptionalAPIKey;
     options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<TResponse>> {
     return this.execute<TResponse>({
       endpoint: TRACK_SEARCH_ENDPOINT,
       method: TRACK_SEARCH_METHOD,
-      query: { ...input.query, apiKey: input.apiKey || this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -291,15 +290,14 @@ export class MxmClientUnsafe {
     TResponse extends
       MxmClientTrackLyricsFingerprintPostResponse = MxmClientTrackLyricsFingerprintPostResponse,
   >(input: {
-    query?: TQuery & { apiKey?: never };
+    query?: TQuery & MxmClientOptionalAPIKey;
     body: TBody;
-    apiKey?: string;
     options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<TResponse>> {
     return this.execute<TResponse>({
       endpoint: TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT,
       method: TRACK_LYRICS_FINGERPRINT_POST_METHOD,
-      query: { ...input.query, apiKey: input.apiKey || this.apiKey },
+      query: input.query ?? {},
       body: { data: { text: input.body.text } },
       options: input.options,
     });
