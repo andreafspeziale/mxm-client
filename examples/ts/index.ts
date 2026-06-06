@@ -82,7 +82,7 @@ const client = new MxmClient({
   // TypeScript cannot partially infer generics — if you specify any, you must specify all.
   const baseTrackListItemSchema =
     mxmClientTrackLyricsFingerprintPostResponseSchema.shape.track_list.element;
-  const enrichedResponseSchema = z.object({
+  const myFingerprintPostResponseSchema = z.object({
     track_list: z.array(
       baseTrackListItemSchema.extend({
         matching: z.object({
@@ -96,7 +96,7 @@ const client = new MxmClient({
     .trackLyricsFingerprintPost<
       MyFingerprintPostQuery,
       MyFingerprintPostBody,
-      typeof enrichedResponseSchema
+      typeof myFingerprintPostResponseSchema
     >({
       query: {
         size: 10,
@@ -108,7 +108,7 @@ const client = new MxmClient({
         settings: { algorithm: 'raw' },
       },
       options: {
-        responseSchema: enrichedResponseSchema,
+        responseSchema: myFingerprintPostResponseSchema,
       },
     })
     .catch((_) => {
