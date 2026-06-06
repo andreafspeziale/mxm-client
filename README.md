@@ -51,8 +51,7 @@ import { MxmClient } from '@andreafspeziale/mxm-client';
 const mxmClient = new MxmClient();
 
 const track = await mxmClient.trackGet({
-  query: { track_isrc: 'USUM72005901' },
-  apiKey: 'your-api-key',
+  query: { track_isrc: 'USUM72005901', apiKey: 'your-api-key' },
 });
 ```
 
