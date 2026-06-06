@@ -14,9 +14,9 @@ Here you can find some examples of how to use the package in your project and it
 ### Missing API key
 
 ```sh
-~/Repositories/os/mxm-client/examples → pnpm run start:mjs
+~/Repositories/os/mxm-client/examples/js → pnpm run start:mjs
 
-> mxm-client-examples@ start:mjs /Users/andreafspeziale/Repositories/os/mxm-client/examples
+> mxm-client-examples@ start:mjs /Users/andreafspeziale/Repositories/os/mxm-client/examples/js
 > node index.mjs | pino-pretty
 
 [00:43:09.003] DEBUG (10512): Performing fingerprint by input text...
@@ -46,16 +46,16 @@ Here you can find some examples of how to use the package in your project and it
         }
       ]
     }
-~/Repositories/os/mxm-client/examples →
+~/Repositories/os/mxm-client/examples/js →
 ```
 
 ### Invalid API key
 
 ```sh
-~/Repositories/os/mxm-client/examples → export MXM_API_KEY=xyz
-~/Repositories/os/mxm-client/examples → pnpm run start:mjs
+~/Repositories/os/mxm-client/examples/js → export MXM_API_KEY=xyz
+~/Repositories/os/mxm-client/examples/js → pnpm run start:mjs
 
-> mxm-client-examples@ start:mjs /Users/andreafspeziale/Repositories/os/mxm-client/examples
+> mxm-client-examples@ start:mjs /Users/andreafspeziale/Repositories/os/mxm-client/examples/js
 > node index.mjs | pino-pretty
 
 [00:43:21.739] DEBUG (10535): Performing fingerprint by input text...
@@ -140,15 +140,15 @@ Here you can find some examples of how to use the package in your project and it
         }
       ]
     }
-~/Repositories/os/mxm-client/examples →
+~/Repositories/os/mxm-client/examples/js →
 ```
 
 ### Valid API key
 
 ```sh
-~/Repositories/os/mxm-client/examples → pnpm run start:mjs
+~/Repositories/os/mxm-client/examples/js → pnpm run start:mjs
 
-> mxm-client-examples@ start:mjs /Users/andreafspeziale/Repositories/os/mxm-client/examples
+> mxm-client-examples@ start:mjs /Users/andreafspeziale/Repositories/os/mxm-client/examples/js
 > node index.mjs | pino-pretty
 
 [00:43:38.309] DEBUG (10558): Performing fingerprint by input text...
@@ -260,5 +260,5 @@ Here you can find some examples of how to use the package in your project and it
         }
       }
     }
-~/Repositories/os/mxm-client/examples →
+~/Repositories/os/mxm-client/examples/js →
 ```
