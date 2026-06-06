@@ -3,7 +3,10 @@ import { MockAgent, setGlobalDispatcher } from 'undici';
 import { z } from 'zod';
 import { TRACK_GET_ENDPOINT } from './endpoints/track.get/constants.js';
 import { MxmClientError } from './mxm-client.error.js';
-import { successStatusCodeSchema } from './mxm-client.schemas.js';
+import {
+  legacyResponseWrapperSchema,
+  successStatusCodeSchema,
+} from './mxm-client.schemas.js';
 import { buildUrl, handleResponseWithSchema } from './mxm-client.utils.js';
 
 const mockAgent = new MockAgent();
@@ -19,21 +22,13 @@ t.test('handleResponseWithSchema', (t) => {
     },
   };
 
-  const customSchema = z.object({
-    message: z.object({
-      header: z.object({
-        status_code: z.literal(200),
-        execute_time: z.number(),
-      }),
-      body: z.object({
-        track_name: z.string(),
-        custom_field: z.string(),
-      }),
-    }),
+  const customBodySchema = z.object({
+    track_name: z.string(),
+    custom_field: z.string(),
   });
 
   t.test(
-    'Should validate and return data using custom Standard Schema',
+    'Should validate and return data using custom Standard Schema (body-level)',
     async (t) => {
       const result = await handleResponseWithSchema({
         method: 'GET',
@@ -41,7 +36,8 @@ t.test('handleResponseWithSchema', (t) => {
         statusCode: 200,
         data: validData,
         statusCodeSchema: successStatusCodeSchema,
-        responseSchema: customSchema,
+        responseSchema: customBodySchema,
+        wrapperSchema: legacyResponseWrapperSchema,
         errorToBeInitialized: MxmClientError,
       });
 
@@ -64,11 +60,34 @@ t.test('handleResponseWithSchema', (t) => {
         statusCode: 200,
         data: invalidData,
         statusCodeSchema: successStatusCodeSchema,
-        responseSchema: customSchema,
+        responseSchema: customBodySchema,
+        wrapperSchema: legacyResponseWrapperSchema,
         errorToBeInitialized: MxmClientError,
       }),
       {
         message: 'Unexpected response data shape',
+      },
+    );
+  });
+
+  t.test('Should throw when wrapper structure is invalid', async (t) => {
+    const malformedData = {
+      unexpected: 'shape',
+    };
+
+    await t.rejects(
+      handleResponseWithSchema({
+        method: 'GET',
+        path: '/test',
+        statusCode: 200,
+        data: malformedData,
+        statusCodeSchema: successStatusCodeSchema,
+        responseSchema: customBodySchema,
+        wrapperSchema: legacyResponseWrapperSchema,
+        errorToBeInitialized: MxmClientError,
+      }),
+      {
+        message: 'Unexpected response wrapper shape',
       },
     );
   });
@@ -81,7 +100,8 @@ t.test('handleResponseWithSchema', (t) => {
         statusCode: 400,
         data: validData,
         statusCodeSchema: successStatusCodeSchema,
-        responseSchema: customSchema,
+        responseSchema: customBodySchema,
+        wrapperSchema: legacyResponseWrapperSchema,
         errorToBeInitialized: MxmClientError,
       }),
       {
@@ -99,7 +119,8 @@ t.test('handleResponseWithSchema', (t) => {
         statusCode: 400,
         data: validData,
         statusCodeSchema: successStatusCodeSchema,
-        responseSchema: customSchema,
+        responseSchema: customBodySchema,
+        wrapperSchema: legacyResponseWrapperSchema,
         errorToBeInitialized: MxmClientError,
         options: { disableStatusCodeValidation: true },
       });
@@ -128,25 +149,17 @@ t.test('responseSchema via execute path (integration)', (t) => {
     },
   };
 
-  const customResponseSchema = z.object({
-    message: z.object({
-      header: z.object({
-        status_code: z.literal(200),
-        execute_time: z.number(),
-      }),
-      body: z
+  const customBodySchema = z
+    .object({
+      track: z
         .object({
-          track: z
-            .object({
-              track_id: z.number(),
-              track_name: z.string(),
-              custom_field: z.string(),
-            })
-            .passthrough(),
+          track_id: z.number(),
+          track_name: z.string(),
+          custom_field: z.string(),
         })
         .passthrough(),
-    }),
-  });
+    })
+    .passthrough();
 
   t.test(
     'Should validate response with custom responseSchema end-to-end',
@@ -178,7 +191,8 @@ t.test('responseSchema via execute path (integration)', (t) => {
         statusCode,
         data,
         statusCodeSchema: successStatusCodeSchema,
-        responseSchema: customResponseSchema,
+        responseSchema: customBodySchema,
+        wrapperSchema: legacyResponseWrapperSchema,
         errorToBeInitialized: MxmClientError,
       });
 
@@ -225,7 +239,8 @@ t.test('responseSchema via execute path (integration)', (t) => {
           statusCode,
           data,
           statusCodeSchema: successStatusCodeSchema,
-          responseSchema: customResponseSchema,
+          responseSchema: customBodySchema,
+          wrapperSchema: legacyResponseWrapperSchema,
           errorToBeInitialized: MxmClientError,
         }),
         { message: 'Unexpected response data shape' },

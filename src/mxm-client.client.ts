@@ -1,3 +1,4 @@
+import type { StandardSchemaV1 } from '@standard-schema/spec';
 import { type Logger, pino } from 'pino';
 import { Client } from 'undici';
 import type { z } from 'zod';
@@ -94,6 +95,7 @@ import type {
 } from './mxm-client.interfaces.js';
 import {
   buildLegacyAPIResponseSchema,
+  legacyResponseWrapperSchema,
   successStatusCodeSchema,
 } from './mxm-client.schemas.js';
 import { MxmClientUnsafe } from './mxm-client.unsafe.js';
@@ -165,7 +167,7 @@ export class MxmClient {
     dataSchema: z.ZodSchema;
     options?:
       | MxmClientRequestOptions
-      | MxmClientRequestOptionsWithSchema<TResponse>
+      | MxmClientRequestOptionsWithSchema
       | undefined;
   }): Promise<MxmClientResponse<TResponse>> {
     const path = await buildUrl({
@@ -186,21 +188,23 @@ export class MxmClient {
     });
 
     if (options && 'responseSchema' in options) {
-      return handleResponseWithSchema<MxmClientResponse<TResponse>>({
+      return handleResponseWithSchema({
         method,
         path,
         statusCode,
         data,
         statusCodeSchema: successStatusCodeSchema,
-        responseSchema: options.responseSchema,
+        responseSchema: options.responseSchema as StandardSchemaV1<
+          unknown,
+          TResponse
+        >,
+        wrapperSchema: legacyResponseWrapperSchema,
         logger: this.logger,
         errorToBeInitialized: MxmClientError,
         options: this.resolveOptions(options),
       });
     }
 
-    // Safe cast: dataSchema always matches MxmClientResponse<TResponse> at default generic.
-    // When TResponse is extended via responseSchema, this branch is unreachable.
     return handleResponse({
       method,
       path,
@@ -227,18 +231,31 @@ export class MxmClient {
     return this._unsafe;
   }
 
+  // --- matcherLyricsGet ---
+
   async matcherLyricsGet<
     TQuery extends MatcherLyricsGetQuery = MatcherLyricsGetQuery,
-    TResponse extends
-      MxmClientMatcherLyricsGetResponse = MxmClientMatcherLyricsGetResponse,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
-    options?:
-      | MxmClientRequestOptions
-      | MxmClientRequestOptionsWithSchema<TResponse>;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientMatcherLyricsGetResponse>>;
+
+  async matcherLyricsGet<
+    TQuery extends MatcherLyricsGetQuery = MatcherLyricsGetQuery,
+    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+  >(input: {
+    query: TQuery & { apiKey?: never };
+    apiKey?: string;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async matcherLyricsGet(input: {
+    query: MatcherLyricsGetQuery & { apiKey?: never };
+    apiKey?: string;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
       endpoint: MATCHER_LYRICS_GET_ENDPOINT,
       method: MATCHER_LYRICS_GET_METHOD,
       query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
@@ -249,18 +266,31 @@ export class MxmClient {
     });
   }
 
+  // --- matcherSubtitleGet ---
+
   async matcherSubtitleGet<
     TQuery extends MatcherSubtitleGetQuery = MatcherSubtitleGetQuery,
-    TResponse extends
-      MxmClientMatcherSubtitleGetResponse = MxmClientMatcherSubtitleGetResponse,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
-    options?:
-      | MxmClientRequestOptions
-      | MxmClientRequestOptionsWithSchema<TResponse>;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientMatcherSubtitleGetResponse>>;
+
+  async matcherSubtitleGet<
+    TQuery extends MatcherSubtitleGetQuery = MatcherSubtitleGetQuery,
+    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+  >(input: {
+    query: TQuery & { apiKey?: never };
+    apiKey?: string;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async matcherSubtitleGet(input: {
+    query: MatcherSubtitleGetQuery & { apiKey?: never };
+    apiKey?: string;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
       endpoint: MATCHER_SUBTITLE_GET_ENDPOINT,
       method: MATCHER_SUBTITLE_GET_METHOD,
       query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
@@ -271,18 +301,31 @@ export class MxmClient {
     });
   }
 
+  // --- matcherTrackGet ---
+
   async matcherTrackGet<
     TQuery extends MatcherTrackGetQuery = MatcherTrackGetQuery,
-    TResponse extends
-      MxmClientMatcherTrackGetResponse = MxmClientMatcherTrackGetResponse,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
-    options?:
-      | MxmClientRequestOptions
-      | MxmClientRequestOptionsWithSchema<TResponse>;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientMatcherTrackGetResponse>>;
+
+  async matcherTrackGet<
+    TQuery extends MatcherTrackGetQuery = MatcherTrackGetQuery,
+    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+  >(input: {
+    query: TQuery & { apiKey?: never };
+    apiKey?: string;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async matcherTrackGet(input: {
+    query: MatcherTrackGetQuery & { apiKey?: never };
+    apiKey?: string;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
       endpoint: MATCHER_TRACK_GET_ENDPOINT,
       method: MATCHER_TRACK_GET_METHOD,
       query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
@@ -293,17 +336,29 @@ export class MxmClient {
     });
   }
 
+  // --- trackGet ---
+
+  async trackGet<TQuery extends TrackGetQuery = TrackGetQuery>(input: {
+    query: TQuery & { apiKey?: never };
+    apiKey?: string;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientTrackGetResponse>>;
+
   async trackGet<
     TQuery extends TrackGetQuery = TrackGetQuery,
-    TResponse extends MxmClientTrackGetResponse = MxmClientTrackGetResponse,
+    TSchema extends StandardSchemaV1 = StandardSchemaV1,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
-    options?:
-      | MxmClientRequestOptions
-      | MxmClientRequestOptionsWithSchema<TResponse>;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async trackGet(input: {
+    query: TrackGetQuery & { apiKey?: never };
+    apiKey?: string;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
       endpoint: TRACK_GET_ENDPOINT,
       method: TRACK_GET_METHOD,
       query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
@@ -312,18 +367,31 @@ export class MxmClient {
     });
   }
 
+  // --- trackLyricsGet ---
+
   async trackLyricsGet<
     TQuery extends TrackLyricsGetQuery = TrackLyricsGetQuery,
-    TResponse extends
-      MxmClientTrackLyricsGetResponse = MxmClientTrackLyricsGetResponse,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
-    options?:
-      | MxmClientRequestOptions
-      | MxmClientRequestOptionsWithSchema<TResponse>;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientTrackLyricsGetResponse>>;
+
+  async trackLyricsGet<
+    TQuery extends TrackLyricsGetQuery = TrackLyricsGetQuery,
+    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+  >(input: {
+    query: TQuery & { apiKey?: never };
+    apiKey?: string;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async trackLyricsGet(input: {
+    query: TrackLyricsGetQuery & { apiKey?: never };
+    apiKey?: string;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
       endpoint: TRACK_LYRICS_GET_ENDPOINT,
       method: TRACK_LYRICS_GET_METHOD,
       query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
@@ -334,18 +402,31 @@ export class MxmClient {
     });
   }
 
+  // --- trackSubtitleGet ---
+
   async trackSubtitleGet<
     TQuery extends TrackSubtitleGetQuery = TrackSubtitleGetQuery,
-    TResponse extends
-      MxmClientTrackSubtitleGetResponse = MxmClientTrackSubtitleGetResponse,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
-    options?:
-      | MxmClientRequestOptions
-      | MxmClientRequestOptionsWithSchema<TResponse>;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientTrackSubtitleGetResponse>>;
+
+  async trackSubtitleGet<
+    TQuery extends TrackSubtitleGetQuery = TrackSubtitleGetQuery,
+    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+  >(input: {
+    query: TQuery & { apiKey?: never };
+    apiKey?: string;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async trackSubtitleGet(input: {
+    query: TrackSubtitleGetQuery & { apiKey?: never };
+    apiKey?: string;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
       endpoint: TRACK_SUBTITLE_GET_ENDPOINT,
       method: TRACK_SUBTITLE_GET_METHOD,
       query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
@@ -356,18 +437,31 @@ export class MxmClient {
     });
   }
 
+  // --- trackRichSyncGet ---
+
   async trackRichSyncGet<
     TQuery extends TrackRichSyncGetQuery = TrackRichSyncGetQuery,
-    TResponse extends
-      MxmClientTrackRichSyncGetResponse = MxmClientTrackRichSyncGetResponse,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
-    options?:
-      | MxmClientRequestOptions
-      | MxmClientRequestOptionsWithSchema<TResponse>;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientTrackRichSyncGetResponse>>;
+
+  async trackRichSyncGet<
+    TQuery extends TrackRichSyncGetQuery = TrackRichSyncGetQuery,
+    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+  >(input: {
+    query: TQuery & { apiKey?: never };
+    apiKey?: string;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async trackRichSyncGet(input: {
+    query: TrackRichSyncGetQuery & { apiKey?: never };
+    apiKey?: string;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
       endpoint: TRACK_RICH_SYNC_GET_ENDPOINT,
       method: TRACK_RICHSYNC_GET_METHOD,
       query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
@@ -378,18 +472,29 @@ export class MxmClient {
     });
   }
 
+  // --- trackSearch ---
+
+  async trackSearch<TQuery extends TrackSearchQuery = TrackSearchQuery>(input: {
+    query: TQuery & { apiKey?: never };
+    apiKey?: string;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientTrackSearchResponse>>;
+
   async trackSearch<
     TQuery extends TrackSearchQuery = TrackSearchQuery,
-    TResponse extends
-      MxmClientTrackSearchResponse = MxmClientTrackSearchResponse,
+    TSchema extends StandardSchemaV1 = StandardSchemaV1,
   >(input: {
     query: TQuery & { apiKey?: never };
     apiKey?: string;
-    options?:
-      | MxmClientRequestOptions
-      | MxmClientRequestOptionsWithSchema<TResponse>;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async trackSearch(input: {
+    query: TrackSearchQuery & { apiKey?: never };
+    apiKey?: string;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
       endpoint: TRACK_SEARCH_ENDPOINT,
       method: TRACK_SEARCH_METHOD,
       query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },
@@ -400,22 +505,40 @@ export class MxmClient {
     });
   }
 
+  // --- trackLyricsFingerprintPost ---
+
   async trackLyricsFingerprintPost<
     TQuery extends
       TrackLyricsFingerprintPostQuery = TrackLyricsFingerprintPostQuery,
     TBody extends
       TrackLyricsFingerprintPostBody = TrackLyricsFingerprintPostBody,
-    TResponse extends
-      MxmClientTrackLyricsFingerprintPostResponse = MxmClientTrackLyricsFingerprintPostResponse,
   >(input: {
     query?: TQuery & { apiKey?: never };
     body: TBody;
     apiKey?: string;
-    options?:
-      | MxmClientRequestOptions
-      | MxmClientRequestOptionsWithSchema<TResponse>;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientTrackLyricsFingerprintPostResponse>>;
+
+  async trackLyricsFingerprintPost<
+    TQuery extends
+      TrackLyricsFingerprintPostQuery = TrackLyricsFingerprintPostQuery,
+    TBody extends
+      TrackLyricsFingerprintPostBody = TrackLyricsFingerprintPostBody,
+    TSchema extends StandardSchemaV1 = StandardSchemaV1,
+  >(input: {
+    query?: TQuery & { apiKey?: never };
+    body: TBody;
+    apiKey?: string;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async trackLyricsFingerprintPost(input: {
+    query?: TrackLyricsFingerprintPostQuery & { apiKey?: never };
+    body: TrackLyricsFingerprintPostBody;
+    apiKey?: string;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
       endpoint: TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT,
       method: TRACK_LYRICS_FINGERPRINT_POST_METHOD,
       query: { ...input.query, apiKey: input.apiKey || this.config?.apiKey },

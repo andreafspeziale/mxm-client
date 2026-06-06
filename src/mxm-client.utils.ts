@@ -9,6 +9,7 @@ import type {
   APIErrorDetails,
   MxmClientOptionalAPIKey,
   MxmClientRequestOptions,
+  MxmClientResponse,
   Request,
   Response,
 } from './mxm-client.interfaces.js';
@@ -219,6 +220,7 @@ export const handleResponseWithSchema = async <T>({
   data,
   statusCodeSchema,
   responseSchema,
+  wrapperSchema,
   logger,
   errorToBeInitialized,
   options,
@@ -227,10 +229,11 @@ export const handleResponseWithSchema = async <T>({
   path: string;
   statusCodeSchema: z.ZodSchema;
   responseSchema: StandardSchemaV1<unknown, T>;
+  wrapperSchema: z.ZodSchema;
   logger?: Logger | undefined;
   errorToBeInitialized: typeof MxmClientError;
   options?: MxmClientRequestOptions | undefined;
-} & Response): Promise<T> => {
+} & Response): Promise<MxmClientResponse<T>> => {
   logger?.debug(
     {
       fn: handleResponseWithSchema.name,
@@ -252,7 +255,26 @@ export const handleResponseWithSchema = async <T>({
     options,
   });
 
-  const result = await responseSchema['~standard'].validate(data);
+  const wrapperResult = await wrapperSchema
+    .parseAsync(data)
+    .catch((error: ZodError) =>
+      throwAPIError({
+        message: 'Unexpected response wrapper shape',
+        details: {
+          method,
+          path,
+          statusCode,
+          data,
+          cause: fromError(error),
+        },
+        logger,
+        errorToBeInitialized,
+      }),
+    );
+
+  const body = (wrapperResult as MxmClientResponse<unknown>).message.body;
+
+  const result = await responseSchema['~standard'].validate(body);
 
   if (result.issues) {
     return throwAPIError({
@@ -261,7 +283,7 @@ export const handleResponseWithSchema = async <T>({
         method,
         path,
         statusCode,
-        data,
+        data: body,
         cause: result.issues,
       },
       logger,
@@ -269,7 +291,12 @@ export const handleResponseWithSchema = async <T>({
     });
   }
 
-  return result.value;
+  return {
+    message: {
+      header: (wrapperResult as MxmClientResponse<unknown>).message.header,
+      body: result.value,
+    },
+  };
 };
 
 export const validateStatusCode = async ({

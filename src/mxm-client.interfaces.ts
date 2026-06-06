@@ -46,9 +46,10 @@ export interface MxmClientRequestOptions {
   disableStatusCodeValidation?: boolean;
 }
 
-export interface MxmClientRequestOptionsWithSchema<T>
-  extends MxmClientRequestOptions {
-  responseSchema: StandardSchemaV1<unknown, MxmClientResponse<T>>;
+export interface MxmClientRequestOptionsWithSchema<
+  TSchema extends StandardSchemaV1 = StandardSchemaV1,
+> extends MxmClientRequestOptions {
+  responseSchema: TSchema;
 }
 
 export interface MxmClientConfig extends MxmClientOptionalAPIKey {

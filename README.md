@@ -276,7 +276,7 @@ const track = await mxmClient.unsafe.trackGet<MyQuery, MyResponse>({
 
 ### Custom response schema
 
-For full runtime safety with extended response types, you can provide a custom schema via `options.responseSchema`. The response will be validated against your schema at runtime and the return type will be inferred from it.
+For full runtime safety with extended response types, you can provide a custom schema via `options.responseSchema`. The schema describes **only the response body** — the client handles the legacy response wrapper (`message.header` + `message.body`) internally. The return type is automatically inferred from your schema.
 
 > [!NOTE]
 > The `responseSchema` option accepts any schema implementing the [Standard Schema](https://standardschema.dev) interface (Zod, Valibot, ArkType, etc.).
@@ -285,37 +285,26 @@ For full runtime safety with extended response types, you can provide a custom s
 import { z } from 'zod';
 import {
   MxmClient,
-  type MxmClientTrackGetResponse,
+  mxmClientTrackGetResponseSchema,
 } from '@andreafspeziale/mxm-client';
 
-const myTrackSchema = z.object({
-  message: z.object({
-    header: z.object({
-      status_code: z.literal(200),
-      execute_time: z.number(),
-    }),
-    body: z.object({
-      track: z.object({
-        track_id: z.number(),
-        track_name: z.string(),
-        my_custom_field: z.string(),
-      }),
-    }),
-  }),
+// Extend the base body schema with custom fields
+const myTrackBodySchema = mxmClientTrackGetResponseSchema.extend({
+  my_custom_field: z.string(),
 });
-
-type MyTrackResponse = z.infer<typeof myTrackSchema>['message']['body'];
 
 const mxmClient = new MxmClient({
   config: { apiKey: 'your-api-key' },
 });
 
-const track = await mxmClient.trackGet<undefined, MyTrackResponse>({
+// No generic needed for the response type — it's inferred from the schema
+const track = await mxmClient.trackGet({
   query: { track_isrc: 'USUM72005901' },
-  options: { responseSchema: myTrackSchema },
+  options: { responseSchema: myTrackBodySchema },
 });
 
 track.message.body.my_custom_field; // typed AND validated at runtime
+track.message.body.track.track_name; // base fields are still accessible
 ```
 
 ## Available methods
