@@ -76,7 +76,9 @@ const client = new MxmClient({
       process.exit(1);
     });
 
-  // To extend the response in safeland instead, you will need to build your own schema and pass it
+  // To extend the response in safeland instead, you will need to build your own schema and pass it.
+  // No explicit generics needed — the response type is inferred from the schema.
+  // Extra fields in query/body are accepted because the types use `extends` constraints.
   const baseTrackListItemSchema =
     mxmClientTrackLyricsFingerprintPostResponseSchema.shape.track_list.element;
   const enrichedBodySchema = z.object({
@@ -89,10 +91,8 @@ const client = new MxmClient({
     ),
   });
 
-  // I don't want the consumer to be able to pass the response generic here, I want it to be infered from the passed schema and I expect
-  // to be able to accesso `longest_common_ngram_length` in the reponse
   const d = await client
-    .trackLyricsFingerprintPost<MyFingerprintQuery, MyFingerprintBody>({
+    .trackLyricsFingerprintPost({
       query: {
         size: 10,
         limit: 3,
@@ -103,7 +103,7 @@ const client = new MxmClient({
         settings: { algorithm: 'raw' },
       },
       options: {
-        responseSchema: enrichedBodySchema, // Should not highlight any error
+        responseSchema: enrichedBodySchema,
       },
     })
     .catch((_) => {
