@@ -1,7 +1,7 @@
 import t from 'tap';
 import { MockAgent, setGlobalDispatcher } from 'undici';
 import { z } from 'zod';
-import { TRACK_GET_ENDPOINT } from './endpoints/track.get/constants.js';
+import { TRACK_GET_ENDPOINT } from './endpoints/track.get/definition.js';
 import { MxmClientError } from './mxm-client.error.js';
 import {
   legacyResponseWrapperSchema,

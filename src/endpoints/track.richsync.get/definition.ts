@@ -1,4 +1,13 @@
 import { z } from 'zod';
+import type { ExtendedTrackIdentifierQuery } from '../shared.js';
+
+export const TRACK_RICHSYNC_GET_METHOD = 'GET' as const;
+export const TRACK_RICHSYNC_GET_ENDPOINT = '/ws/1.1/track.richsync.get';
+
+export type TrackRichSyncGetQuery = ExtendedTrackIdentifierQuery & {
+  f_richsync_length?: string;
+  f_richsync_length_max_deviation?: string;
+};
 
 export const mxmClientTrackRichSyncGetResponseSchema = z.object({
   richsync: z.object({
@@ -18,3 +27,7 @@ export const mxmClientTrackRichSyncGetResponseSchema = z.object({
     updated_time: z.string(),
   }),
 });
+
+export type MxmClientTrackRichSyncGetResponse = z.infer<
+  typeof mxmClientTrackRichSyncGetResponseSchema
+>;

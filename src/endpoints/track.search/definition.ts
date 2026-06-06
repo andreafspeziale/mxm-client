@@ -1,5 +1,8 @@
-import type { z } from 'zod';
-import type { mxmClientTrackSearchResponseSchema } from './schema.js';
+import { z } from 'zod';
+import { trackSchema } from '../shared.js';
+
+export const TRACK_SEARCH_METHOD = 'GET' as const;
+export const TRACK_SEARCH_ENDPOINT = '/ws/1.1/track.search';
 
 // TODO: improve this type definition with some sort of utility
 type QueryParams =
@@ -66,6 +69,10 @@ interface OptionalFilters {
 }
 
 export type TrackSearchQuery = QueryParams & OptionalFilters;
+
+export const mxmClientTrackSearchResponseSchema = z.object({
+  track_list: z.array(z.object({ track: trackSchema })),
+});
 
 export type MxmClientTrackSearchResponse = z.infer<
   typeof mxmClientTrackSearchResponseSchema

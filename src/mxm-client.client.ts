@@ -2,88 +2,88 @@ import type { StandardSchemaV1 } from '@standard-schema/spec';
 import { type Logger, pino } from 'pino';
 import { Client } from 'undici';
 import type { z } from 'zod';
-import {
-  MATCHER_LYRICS_GET_ENDPOINT,
-  METHOD as MATCHER_LYRICS_GET_METHOD,
-} from './endpoints/matcher.lyrics.get/constants.js';
 import type {
   MatcherLyricsGetQuery,
   MxmClientMatcherLyricsGetResponse,
-} from './endpoints/matcher.lyrics.get/index.js';
-import { mxmClientMatcherLyricsGetResponseSchema } from './endpoints/matcher.lyrics.get/schema.js';
+} from './endpoints/matcher.lyrics.get/definition.js';
 import {
-  MATCHER_SUBTITLE_GET_ENDPOINT,
-  METHOD as MATCHER_SUBTITLE_GET_METHOD,
-} from './endpoints/matcher.subtitle.get/constants.js';
+  MATCHER_LYRICS_GET_ENDPOINT,
+  MATCHER_LYRICS_GET_METHOD,
+  mxmClientMatcherLyricsGetResponseSchema,
+} from './endpoints/matcher.lyrics.get/definition.js';
 import type {
   MatcherSubtitleGetQuery,
   MxmClientMatcherSubtitleGetResponse,
-} from './endpoints/matcher.subtitle.get/index.js';
-import { mxmClientMatcherSubtitleGetResponseSchema } from './endpoints/matcher.subtitle.get/schema.js';
+} from './endpoints/matcher.subtitle.get/definition.js';
 import {
-  MATCHER_TRACK_GET_ENDPOINT,
-  METHOD as MATCHER_TRACK_GET_METHOD,
-} from './endpoints/matcher.track.get/constants.js';
+  MATCHER_SUBTITLE_GET_ENDPOINT,
+  MATCHER_SUBTITLE_GET_METHOD,
+  mxmClientMatcherSubtitleGetResponseSchema,
+} from './endpoints/matcher.subtitle.get/definition.js';
 import type {
   MatcherTrackGetQuery,
   MxmClientMatcherTrackGetResponse,
-} from './endpoints/matcher.track.get/index.js';
-import { mxmClientMatcherTrackGetResponseSchema } from './endpoints/matcher.track.get/schema.js';
+} from './endpoints/matcher.track.get/definition.js';
 import {
-  TRACK_GET_ENDPOINT,
-  METHOD as TRACK_GET_METHOD,
-} from './endpoints/track.get/constants.js';
+  MATCHER_TRACK_GET_ENDPOINT,
+  MATCHER_TRACK_GET_METHOD,
+  mxmClientMatcherTrackGetResponseSchema,
+} from './endpoints/matcher.track.get/definition.js';
 import type {
   MxmClientTrackGetResponse,
   TrackGetQuery,
-} from './endpoints/track.get/index.js';
-import { mxmClientTrackGetResponseSchema } from './endpoints/track.get/schema.js';
+} from './endpoints/track.get/definition.js';
 import {
-  TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT,
-  METHOD as TRACK_LYRICS_FINGERPRINT_POST_METHOD,
-} from './endpoints/track.lyrics.fingerprint.post/constants.js';
+  mxmClientTrackGetResponseSchema,
+  TRACK_GET_ENDPOINT,
+  TRACK_GET_METHOD,
+} from './endpoints/track.get/definition.js';
 import type {
   MxmClientTrackLyricsFingerprintPostResponse,
   TrackLyricsFingerprintPostBody,
   TrackLyricsFingerprintPostQuery,
-} from './endpoints/track.lyrics.fingerprint.post/index.js';
-import { mxmClientTrackLyricsFingerprintPostResponseSchema } from './endpoints/track.lyrics.fingerprint.post/schema.js';
+} from './endpoints/track.lyrics.fingerprint.post/definition.js';
 import {
-  TRACK_LYRICS_GET_ENDPOINT,
-  METHOD as TRACK_LYRICS_GET_METHOD,
-} from './endpoints/track.lyrics.get/constants.js';
+  mxmClientTrackLyricsFingerprintPostResponseSchema,
+  TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT,
+  TRACK_LYRICS_FINGERPRINT_POST_METHOD,
+} from './endpoints/track.lyrics.fingerprint.post/definition.js';
 import type {
   MxmClientTrackLyricsGetResponse,
   TrackLyricsGetQuery,
-} from './endpoints/track.lyrics.get/index.js';
-import { mxmClientTrackLyricsGetResponseSchema } from './endpoints/track.lyrics.get/schema.js';
+} from './endpoints/track.lyrics.get/definition.js';
 import {
-  TRACK_RICH_SYNC_GET_ENDPOINT,
-  METHOD as TRACK_RICHSYNC_GET_METHOD,
-} from './endpoints/track.richsync.get/constants.js';
+  mxmClientTrackLyricsGetResponseSchema,
+  TRACK_LYRICS_GET_ENDPOINT,
+  TRACK_LYRICS_GET_METHOD,
+} from './endpoints/track.lyrics.get/definition.js';
 import type {
   MxmClientTrackRichSyncGetResponse,
   TrackRichSyncGetQuery,
-} from './endpoints/track.richsync.get/index.js';
-import { mxmClientTrackRichSyncGetResponseSchema } from './endpoints/track.richsync.get/schema.js';
+} from './endpoints/track.richsync.get/definition.js';
 import {
-  TRACK_SEARCH_ENDPOINT,
-  METHOD as TRACK_SEARCH_METHOD,
-} from './endpoints/track.search/constants.js';
+  mxmClientTrackRichSyncGetResponseSchema,
+  TRACK_RICHSYNC_GET_ENDPOINT,
+  TRACK_RICHSYNC_GET_METHOD,
+} from './endpoints/track.richsync.get/definition.js';
 import type {
   MxmClientTrackSearchResponse,
   TrackSearchQuery,
-} from './endpoints/track.search/index.js';
-import { mxmClientTrackSearchResponseSchema } from './endpoints/track.search/schema.js';
+} from './endpoints/track.search/definition.js';
 import {
-  TRACK_SUBTITLE_GET_ENDPOINT,
-  METHOD as TRACK_SUBTITLE_GET_METHOD,
-} from './endpoints/track.subtitle.get/constants.js';
+  mxmClientTrackSearchResponseSchema,
+  TRACK_SEARCH_ENDPOINT,
+  TRACK_SEARCH_METHOD,
+} from './endpoints/track.search/definition.js';
 import type {
   MxmClientTrackSubtitleGetResponse,
   TrackSubtitleGetQuery,
-} from './endpoints/track.subtitle.get/index.js';
-import { mxmClientTrackSubtitleGetResponseSchema } from './endpoints/track.subtitle.get/schema.js';
+} from './endpoints/track.subtitle.get/definition.js';
+import {
+  mxmClientTrackSubtitleGetResponseSchema,
+  TRACK_SUBTITLE_GET_ENDPOINT,
+  TRACK_SUBTITLE_GET_METHOD,
+} from './endpoints/track.subtitle.get/definition.js';
 import { MUSIXMATCH_BASE_URL } from './mxm-client.constants.js';
 import { MxmClientError } from './mxm-client.error.js';
 import type {
@@ -451,7 +451,7 @@ export class MxmClient {
     options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
   }): Promise<MxmClientResponse<unknown>> {
     return this.execute({
-      endpoint: TRACK_RICH_SYNC_GET_ENDPOINT,
+      endpoint: TRACK_RICHSYNC_GET_ENDPOINT,
       method: TRACK_RICHSYNC_GET_METHOD,
       query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(

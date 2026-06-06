@@ -1,5 +1,5 @@
 import type { StandardSchemaV1 } from '@standard-schema/spec';
-import type { Logger, LoggerOptions } from 'pino';
+import type { LoggerOptions } from 'pino';
 import type { Client, Interceptable } from 'undici';
 import type { UndiciHeaders } from 'undici/types/dispatcher.js';
 
@@ -57,27 +57,6 @@ export interface MxmClientConfig extends MxmClientOptionalAPIKey {
   enableLog?: boolean;
   defaultLoggerConfig?: LoggerOptions;
   disableStatusCodeValidation?: boolean;
-}
-
-export interface BaseEndpointInput<
-  TParams extends Record<string, string> = Record<string, never>,
-  TQuery = Record<string, never>,
-  TBody = never,
-> {
-  params?: TParams;
-  query?: TQuery;
-  body?: TBody;
-}
-
-export interface EndpointPayload<
-  TParams extends Record<string, string> = Record<string, never>,
-  TQuery = Record<string, never>,
-  TBody = never,
-> {
-  input: BaseEndpointInput<TParams, TQuery & MxmClientOptionalAPIKey, TBody>;
-  client: Client | Interceptable;
-  logger?: Logger | undefined;
-  options?: MxmClientRequestOptions;
 }
 
 export interface MxmClientResponse<T> {

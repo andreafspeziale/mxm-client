@@ -1,78 +1,78 @@
 import type { Logger } from 'pino';
 import type { Client } from 'undici';
-import {
-  MATCHER_LYRICS_GET_ENDPOINT,
-  METHOD as MATCHER_LYRICS_GET_METHOD,
-} from './endpoints/matcher.lyrics.get/constants.js';
 import type {
   MatcherLyricsGetQuery,
   MxmClientMatcherLyricsGetResponse,
-} from './endpoints/matcher.lyrics.get/index.js';
+} from './endpoints/matcher.lyrics.get/definition.js';
 import {
-  MATCHER_SUBTITLE_GET_ENDPOINT,
-  METHOD as MATCHER_SUBTITLE_GET_METHOD,
-} from './endpoints/matcher.subtitle.get/constants.js';
+  MATCHER_LYRICS_GET_ENDPOINT,
+  MATCHER_LYRICS_GET_METHOD,
+} from './endpoints/matcher.lyrics.get/definition.js';
 import type {
   MatcherSubtitleGetQuery,
   MxmClientMatcherSubtitleGetResponse,
-} from './endpoints/matcher.subtitle.get/index.js';
+} from './endpoints/matcher.subtitle.get/definition.js';
 import {
-  MATCHER_TRACK_GET_ENDPOINT,
-  METHOD as MATCHER_TRACK_GET_METHOD,
-} from './endpoints/matcher.track.get/constants.js';
+  MATCHER_SUBTITLE_GET_ENDPOINT,
+  MATCHER_SUBTITLE_GET_METHOD,
+} from './endpoints/matcher.subtitle.get/definition.js';
 import type {
   MatcherTrackGetQuery,
   MxmClientMatcherTrackGetResponse,
-} from './endpoints/matcher.track.get/index.js';
+} from './endpoints/matcher.track.get/definition.js';
 import {
-  TRACK_GET_ENDPOINT,
-  METHOD as TRACK_GET_METHOD,
-} from './endpoints/track.get/constants.js';
+  MATCHER_TRACK_GET_ENDPOINT,
+  MATCHER_TRACK_GET_METHOD,
+} from './endpoints/matcher.track.get/definition.js';
 import type {
   MxmClientTrackGetResponse,
   TrackGetQuery,
-} from './endpoints/track.get/index.js';
+} from './endpoints/track.get/definition.js';
 import {
-  TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT,
-  METHOD as TRACK_LYRICS_FINGERPRINT_POST_METHOD,
-} from './endpoints/track.lyrics.fingerprint.post/constants.js';
+  TRACK_GET_ENDPOINT,
+  TRACK_GET_METHOD,
+} from './endpoints/track.get/definition.js';
 import type {
   MxmClientTrackLyricsFingerprintPostResponse,
   TrackLyricsFingerprintPostBody,
   TrackLyricsFingerprintPostQuery,
-} from './endpoints/track.lyrics.fingerprint.post/index.js';
+} from './endpoints/track.lyrics.fingerprint.post/definition.js';
 import {
-  TRACK_LYRICS_GET_ENDPOINT,
-  METHOD as TRACK_LYRICS_GET_METHOD,
-} from './endpoints/track.lyrics.get/constants.js';
+  TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT,
+  TRACK_LYRICS_FINGERPRINT_POST_METHOD,
+} from './endpoints/track.lyrics.fingerprint.post/definition.js';
 import type {
   MxmClientTrackLyricsGetResponse,
   TrackLyricsGetQuery,
-} from './endpoints/track.lyrics.get/index.js';
+} from './endpoints/track.lyrics.get/definition.js';
 import {
-  TRACK_RICH_SYNC_GET_ENDPOINT,
-  METHOD as TRACK_RICHSYNC_GET_METHOD,
-} from './endpoints/track.richsync.get/constants.js';
+  TRACK_LYRICS_GET_ENDPOINT,
+  TRACK_LYRICS_GET_METHOD,
+} from './endpoints/track.lyrics.get/definition.js';
 import type {
   MxmClientTrackRichSyncGetResponse,
   TrackRichSyncGetQuery,
-} from './endpoints/track.richsync.get/index.js';
+} from './endpoints/track.richsync.get/definition.js';
 import {
-  TRACK_SEARCH_ENDPOINT,
-  METHOD as TRACK_SEARCH_METHOD,
-} from './endpoints/track.search/constants.js';
+  TRACK_RICHSYNC_GET_ENDPOINT,
+  TRACK_RICHSYNC_GET_METHOD,
+} from './endpoints/track.richsync.get/definition.js';
 import type {
   MxmClientTrackSearchResponse,
   TrackSearchQuery,
-} from './endpoints/track.search/index.js';
+} from './endpoints/track.search/definition.js';
 import {
-  TRACK_SUBTITLE_GET_ENDPOINT,
-  METHOD as TRACK_SUBTITLE_GET_METHOD,
-} from './endpoints/track.subtitle.get/constants.js';
+  TRACK_SEARCH_ENDPOINT,
+  TRACK_SEARCH_METHOD,
+} from './endpoints/track.search/definition.js';
 import type {
   MxmClientTrackSubtitleGetResponse,
   TrackSubtitleGetQuery,
-} from './endpoints/track.subtitle.get/index.js';
+} from './endpoints/track.subtitle.get/definition.js';
+import {
+  TRACK_SUBTITLE_GET_ENDPOINT,
+  TRACK_SUBTITLE_GET_METHOD,
+} from './endpoints/track.subtitle.get/definition.js';
 import { MxmClientError } from './mxm-client.error.js';
 import type {
   AllowedHTTPMethods,
@@ -259,7 +259,7 @@ export class MxmClientUnsafe {
     options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<TResponse>> {
     return this.execute<TResponse>({
-      endpoint: TRACK_RICH_SYNC_GET_ENDPOINT,
+      endpoint: TRACK_RICHSYNC_GET_ENDPOINT,
       method: TRACK_RICHSYNC_GET_METHOD,
       query: input.query,
       options: input.options,

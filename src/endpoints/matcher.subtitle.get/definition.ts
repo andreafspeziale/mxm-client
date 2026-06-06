@@ -1,5 +1,8 @@
-import type { z } from 'zod';
-import type { mxmClientMatcherSubtitleGetResponseSchema } from './schema.js';
+import { z } from 'zod';
+import { subtitleSchema } from '../shared.js';
+
+export const MATCHER_SUBTITLE_GET_METHOD = 'GET' as const;
+export const MATCHER_SUBTITLE_GET_ENDPOINT = '/ws/1.1/matcher.subtitle.get';
 
 export type MatcherSubtitleGetQuery =
   | {
@@ -16,6 +19,10 @@ export type MatcherSubtitleGetQuery =
       f_subtitle_length?: string;
       f_subtitle_length_max_deviation?: string;
     };
+
+export const mxmClientMatcherSubtitleGetResponseSchema = z.object({
+  subtitle: subtitleSchema,
+});
 
 export type MxmClientMatcherSubtitleGetResponse = z.infer<
   typeof mxmClientMatcherSubtitleGetResponseSchema
