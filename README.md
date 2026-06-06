@@ -214,6 +214,39 @@ const result = await mxmClient.trackLyricsFingerprintPost<
 });
 ```
 
+### Custom response schema
+
+For full runtime safety with extended response types, you can provide a custom schema via `options.responseSchema`. The schema describes **only the response body** — the client handles the legacy response wrapper (`message.header` + `message.body`) internally. The return type is automatically inferred from your schema.
+
+> [!NOTE]
+> The `responseSchema` option accepts any schema implementing the [Standard Schema](https://standardschema.dev) interface (Zod, Valibot, ArkType, etc.).
+
+```ts
+import { z } from 'zod';
+import {
+  MxmClient,
+  mxmClientTrackGetResponseSchema,
+} from '@andreafspeziale/mxm-client';
+
+// Extend the base body schema with custom fields
+const myTrackBodySchema = mxmClientTrackGetResponseSchema.extend({
+  my_custom_field: z.string(),
+});
+
+const mxmClient = new MxmClient({
+  config: { apiKey: 'your-api-key' },
+});
+
+// No generic needed for the response type — it's inferred from the schema
+const track = await mxmClient.trackGet({
+  query: { track_isrc: 'USUM72005901' },
+  options: { responseSchema: myTrackBodySchema },
+});
+
+track.message.body.my_custom_field; // typed AND validated at runtime
+track.message.body.track.track_name; // base fields are still accessible
+```
+
 ### Unsafe mode
 
 The SDK provides an `.unsafe` accessor that skips response body validation, allowing you to extend output types via generics for cases where the API returns fields not covered by the built-in schemas.
@@ -272,39 +305,6 @@ const track = await mxmClient.unsafe.trackGet<MyQuery, MyResponse>({
     custom_param: 'value',
   },
 });
-```
-
-### Custom response schema
-
-For full runtime safety with extended response types, you can provide a custom schema via `options.responseSchema`. The schema describes **only the response body** — the client handles the legacy response wrapper (`message.header` + `message.body`) internally. The return type is automatically inferred from your schema.
-
-> [!NOTE]
-> The `responseSchema` option accepts any schema implementing the [Standard Schema](https://standardschema.dev) interface (Zod, Valibot, ArkType, etc.).
-
-```ts
-import { z } from 'zod';
-import {
-  MxmClient,
-  mxmClientTrackGetResponseSchema,
-} from '@andreafspeziale/mxm-client';
-
-// Extend the base body schema with custom fields
-const myTrackBodySchema = mxmClientTrackGetResponseSchema.extend({
-  my_custom_field: z.string(),
-});
-
-const mxmClient = new MxmClient({
-  config: { apiKey: 'your-api-key' },
-});
-
-// No generic needed for the response type — it's inferred from the schema
-const track = await mxmClient.trackGet({
-  query: { track_isrc: 'USUM72005901' },
-  options: { responseSchema: myTrackBodySchema },
-});
-
-track.message.body.my_custom_field; // typed AND validated at runtime
-track.message.body.track.track_name; // base fields are still accessible
 ```
 
 ## Available methods
