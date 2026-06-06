@@ -1,6 +1,13 @@
 import { z } from 'zod';
 
-export const mxmClientTrackLyricsGetResponseSchema = z.object({
+export const MATCHER_LYRICS_GET_METHOD = 'GET' as const;
+export const MATCHER_LYRICS_GET_ENDPOINT = '/ws/1.1/matcher.lyrics.get';
+
+export type MatcherLyricsGetQuery =
+  | { track_isrc: string; q_track?: never; q_artist?: never }
+  | { track_isrc?: never; q_track: string; q_artist: string };
+
+export const mxmClientMatcherLyricsGetResponseSchema = z.object({
   lyrics: z.object({
     explicit: z.number(),
     lyrics_body: z.string(),
@@ -18,3 +25,7 @@ export const mxmClientTrackLyricsGetResponseSchema = z.object({
     updated_time: z.string(),
   }),
 });
+
+export type MxmClientMatcherLyricsGetResponse = z.infer<
+  typeof mxmClientMatcherLyricsGetResponseSchema
+>;

@@ -1,6 +1,35 @@
 import { z } from 'zod';
 
-export const mxmClientMatcherTrackGetResponseSchema = z.object({
+export const TRACK_GET_METHOD = 'GET' as const;
+export const TRACK_GET_ENDPOINT = '/ws/1.1/track.get';
+
+export type TrackGetQuery =
+  | {
+      commontrack_id: string;
+      track_isrc?: never;
+      track_spotify_id?: never;
+      track_itunes_id?: never;
+    }
+  | {
+      commontrack_id?: never;
+      track_isrc: string;
+      track_spotify_id?: never;
+      track_itunes_id?: never;
+    }
+  | {
+      commontrack_id?: never;
+      track_isrc?: never;
+      track_spotify_id: string;
+      track_itunes_id?: never;
+    }
+  | {
+      commontrack_id?: never;
+      track_isrc?: never;
+      track_spotify_id?: never;
+      track_itunes_id: string;
+    };
+
+export const mxmClientTrackGetResponseSchema = z.object({
   track: z.object({
     track_id: z.number(),
     track_isrc: z.string(),
@@ -54,3 +83,7 @@ export const mxmClientMatcherTrackGetResponseSchema = z.object({
     }),
   }),
 });
+
+export type MxmClientTrackGetResponse = z.infer<
+  typeof mxmClientTrackGetResponseSchema
+>;
