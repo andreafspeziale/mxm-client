@@ -165,7 +165,7 @@ export class MxmClient {
   }: {
     endpoint: string;
     method: AllowedHTTPMethods;
-    query: Record<string, unknown>;
+    query: object;
     body?: unknown;
     dataSchema: z.ZodSchema;
     options?:
@@ -173,9 +173,16 @@ export class MxmClient {
       | MxmClientRequestOptionsWithSchema
       | undefined;
   }): Promise<MxmClientResponse<TResponse>> {
+    const queryRecord = query as Record<string, unknown>;
+    const resolvedQuery = {
+      ...queryRecord,
+      apiKey:
+        (queryRecord['apiKey'] as string | undefined) ?? this.config?.apiKey,
+    } as Record<string, string>;
+
     const path = await buildUrl({
       endpoint,
-      query: query as Record<string, string>,
+      query: resolvedQuery,
       method,
       logger: this.logger,
       errorToBeInitialized: MxmClientError,
@@ -258,10 +265,7 @@ export class MxmClient {
     return this.execute({
       endpoint: MATCHER_LYRICS_GET_ENDPOINT,
       method: MATCHER_LYRICS_GET_METHOD,
-      query: {
-        ...input.query,
-        apiKey: input.query.apiKey ?? this.config?.apiKey,
-      },
+      query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientMatcherLyricsGetResponseSchema,
       ),
@@ -293,10 +297,7 @@ export class MxmClient {
     return this.execute({
       endpoint: MATCHER_SUBTITLE_GET_ENDPOINT,
       method: MATCHER_SUBTITLE_GET_METHOD,
-      query: {
-        ...input.query,
-        apiKey: input.query.apiKey ?? this.config?.apiKey,
-      },
+      query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientMatcherSubtitleGetResponseSchema,
       ),
@@ -328,10 +329,7 @@ export class MxmClient {
     return this.execute({
       endpoint: MATCHER_TRACK_GET_ENDPOINT,
       method: MATCHER_TRACK_GET_METHOD,
-      query: {
-        ...input.query,
-        apiKey: input.query.apiKey ?? this.config?.apiKey,
-      },
+      query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientMatcherTrackGetResponseSchema,
       ),
@@ -361,10 +359,7 @@ export class MxmClient {
     return this.execute({
       endpoint: TRACK_GET_ENDPOINT,
       method: TRACK_GET_METHOD,
-      query: {
-        ...input.query,
-        apiKey: input.query.apiKey ?? this.config?.apiKey,
-      },
+      query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(mxmClientTrackGetResponseSchema),
       options: input.options,
     });
@@ -394,10 +389,7 @@ export class MxmClient {
     return this.execute({
       endpoint: TRACK_LYRICS_GET_ENDPOINT,
       method: TRACK_LYRICS_GET_METHOD,
-      query: {
-        ...input.query,
-        apiKey: input.query.apiKey ?? this.config?.apiKey,
-      },
+      query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientTrackLyricsGetResponseSchema,
       ),
@@ -429,10 +421,7 @@ export class MxmClient {
     return this.execute({
       endpoint: TRACK_SUBTITLE_GET_ENDPOINT,
       method: TRACK_SUBTITLE_GET_METHOD,
-      query: {
-        ...input.query,
-        apiKey: input.query.apiKey ?? this.config?.apiKey,
-      },
+      query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientTrackSubtitleGetResponseSchema,
       ),
@@ -464,10 +453,7 @@ export class MxmClient {
     return this.execute({
       endpoint: TRACK_RICH_SYNC_GET_ENDPOINT,
       method: TRACK_RICHSYNC_GET_METHOD,
-      query: {
-        ...input.query,
-        apiKey: input.query.apiKey ?? this.config?.apiKey,
-      },
+      query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientTrackRichSyncGetResponseSchema,
       ),
@@ -497,10 +483,7 @@ export class MxmClient {
     return this.execute({
       endpoint: TRACK_SEARCH_ENDPOINT,
       method: TRACK_SEARCH_METHOD,
-      query: {
-        ...input.query,
-        apiKey: input.query.apiKey ?? this.config?.apiKey,
-      },
+      query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientTrackSearchResponseSchema,
       ),
@@ -539,10 +522,7 @@ export class MxmClient {
     return this.execute({
       endpoint: TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT,
       method: TRACK_LYRICS_FINGERPRINT_POST_METHOD,
-      query: {
-        ...input.query,
-        apiKey: input.query?.apiKey ?? this.config?.apiKey,
-      },
+      query: input.query ?? {},
       body: { data: { text: input.body.text } },
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientTrackLyricsFingerprintPostResponseSchema,

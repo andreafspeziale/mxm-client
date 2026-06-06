@@ -115,13 +115,19 @@ export class MxmClientUnsafe {
   }: {
     endpoint: string;
     method: AllowedHTTPMethods;
-    query: Record<string, unknown>;
+    query: object;
     body?: unknown;
     options?: MxmClientRequestOptions | undefined;
   }): Promise<MxmClientResponse<TResponse>> {
+    const queryRecord = query as Record<string, unknown>;
+    const resolvedQuery = {
+      ...queryRecord,
+      apiKey: (queryRecord['apiKey'] as string | undefined) ?? this.apiKey,
+    } as Record<string, string>;
+
     const path = await buildUrl({
       endpoint,
-      query: query as Record<string, string>,
+      query: resolvedQuery,
       method,
       logger: this.logger,
       errorToBeInitialized: MxmClientError,
@@ -160,7 +166,7 @@ export class MxmClientUnsafe {
     return this.execute<TResponse>({
       endpoint: MATCHER_LYRICS_GET_ENDPOINT,
       method: MATCHER_LYRICS_GET_METHOD,
-      query: { ...input.query, apiKey: input.query.apiKey ?? this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -176,7 +182,7 @@ export class MxmClientUnsafe {
     return this.execute<TResponse>({
       endpoint: MATCHER_SUBTITLE_GET_ENDPOINT,
       method: MATCHER_SUBTITLE_GET_METHOD,
-      query: { ...input.query, apiKey: input.query.apiKey ?? this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -192,7 +198,7 @@ export class MxmClientUnsafe {
     return this.execute<TResponse>({
       endpoint: MATCHER_TRACK_GET_ENDPOINT,
       method: MATCHER_TRACK_GET_METHOD,
-      query: { ...input.query, apiKey: input.query.apiKey ?? this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -207,7 +213,7 @@ export class MxmClientUnsafe {
     return this.execute<TResponse>({
       endpoint: TRACK_GET_ENDPOINT,
       method: TRACK_GET_METHOD,
-      query: { ...input.query, apiKey: input.query.apiKey ?? this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -223,7 +229,7 @@ export class MxmClientUnsafe {
     return this.execute<TResponse>({
       endpoint: TRACK_LYRICS_GET_ENDPOINT,
       method: TRACK_LYRICS_GET_METHOD,
-      query: { ...input.query, apiKey: input.query.apiKey ?? this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -239,7 +245,7 @@ export class MxmClientUnsafe {
     return this.execute<TResponse>({
       endpoint: TRACK_SUBTITLE_GET_ENDPOINT,
       method: TRACK_SUBTITLE_GET_METHOD,
-      query: { ...input.query, apiKey: input.query.apiKey ?? this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -255,7 +261,7 @@ export class MxmClientUnsafe {
     return this.execute<TResponse>({
       endpoint: TRACK_RICH_SYNC_GET_ENDPOINT,
       method: TRACK_RICHSYNC_GET_METHOD,
-      query: { ...input.query, apiKey: input.query.apiKey ?? this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -271,7 +277,7 @@ export class MxmClientUnsafe {
     return this.execute<TResponse>({
       endpoint: TRACK_SEARCH_ENDPOINT,
       method: TRACK_SEARCH_METHOD,
-      query: { ...input.query, apiKey: input.query.apiKey ?? this.apiKey },
+      query: input.query,
       options: input.options,
     });
   }
@@ -291,7 +297,7 @@ export class MxmClientUnsafe {
     return this.execute<TResponse>({
       endpoint: TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT,
       method: TRACK_LYRICS_FINGERPRINT_POST_METHOD,
-      query: { ...input.query, apiKey: input.query?.apiKey ?? this.apiKey },
+      query: input.query ?? {},
       body: { data: { text: input.body.text } },
       options: input.options,
     });
