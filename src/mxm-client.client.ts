@@ -119,7 +119,9 @@ export class MxmClient {
     config?: MxmClientConfig;
     logger?: Logger;
   }) {
-    this.client = new Client(MUSIXMATCH_BASE_URL);
+    this.client = new Client(
+      config?.baseUrl?.replace(/\/+$/, '') ?? MUSIXMATCH_BASE_URL,
+    );
 
     if (config) {
       this.config = config;

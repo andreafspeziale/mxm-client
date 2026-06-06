@@ -53,6 +53,7 @@ export interface MxmClientRequestOptionsWithSchema<
 }
 
 export interface MxmClientConfig extends MxmClientOptionalAPIKey {
+  baseUrl?: string;
   enableLog?: boolean;
   defaultLoggerConfig?: LoggerOptions;
   disableStatusCodeValidation?: boolean;
