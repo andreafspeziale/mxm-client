@@ -229,7 +229,7 @@ export const handleResponseWithSchema = async <T>({
   path: string;
   statusCodeSchema: z.ZodSchema;
   responseSchema: StandardSchemaV1<unknown, T>;
-  wrapperSchema: z.ZodSchema;
+  wrapperSchema: z.ZodSchema<MxmClientResponse<unknown>>;
   logger?: Logger | undefined;
   errorToBeInitialized: typeof MxmClientError;
   options?: MxmClientRequestOptions | undefined;
@@ -272,7 +272,7 @@ export const handleResponseWithSchema = async <T>({
       }),
     );
 
-  const body = (wrapperResult as MxmClientResponse<unknown>).message.body;
+  const body = wrapperResult.message.body;
 
   const result = await responseSchema['~standard'].validate(body);
 
@@ -293,7 +293,7 @@ export const handleResponseWithSchema = async <T>({
 
   return {
     message: {
-      header: (wrapperResult as MxmClientResponse<unknown>).message.header,
+      header: wrapperResult.message.header,
       body: result.value,
     },
   };
