@@ -286,6 +286,7 @@ The SDK provides an `.unsafe` accessor that skips response body validation, allo
 ```ts
 import {
   MxmClient,
+  type TrackGetQuery,
   type MxmClientTrackGetResponse,
 } from '@andreafspeziale/mxm-client';
 
@@ -297,7 +298,7 @@ const mxmClient = new MxmClient({
   config: { apiKey: 'your-api-key' },
 });
 
-const track = await mxmClient.unsafe.trackGet<undefined, MyTrackGetResponse>({
+const track = await mxmClient.unsafe.trackGet<TrackGetQuery, MyTrackGetResponse>({
   query: { track_isrc: 'USUM72005901' },
 });
 
