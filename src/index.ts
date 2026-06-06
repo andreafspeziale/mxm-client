@@ -1,6 +1,7 @@
 export * from './endpoints/matcher.lyrics.get/index.js';
 export * from './endpoints/matcher.subtitle.get/index.js';
 export * from './endpoints/matcher.track.get/index.js';
+export * from './endpoints/shared.js';
 export * from './endpoints/track.get/index.js';
 export * from './endpoints/track.lyrics.fingerprint.post/index.js';
 export * from './endpoints/track.lyrics.get/index.js';

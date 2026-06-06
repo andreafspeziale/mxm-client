@@ -54,7 +54,7 @@ import type {
   TrackRichSyncGetQuery,
 } from './endpoints/track.richsync.get/definition.js';
 import {
-  TRACK_RICH_SYNC_GET_ENDPOINT,
+  TRACK_RICHSYNC_GET_ENDPOINT,
   TRACK_RICHSYNC_GET_METHOD,
 } from './endpoints/track.richsync.get/definition.js';
 import type {
@@ -259,7 +259,7 @@ export class MxmClientUnsafe {
     options?: MxmClientRequestOptions;
   }): Promise<MxmClientResponse<TResponse>> {
     return this.execute<TResponse>({
-      endpoint: TRACK_RICH_SYNC_GET_ENDPOINT,
+      endpoint: TRACK_RICHSYNC_GET_ENDPOINT,
       method: TRACK_RICHSYNC_GET_METHOD,
       query: input.query,
       options: input.options,

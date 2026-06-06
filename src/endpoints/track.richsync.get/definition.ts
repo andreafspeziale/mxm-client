@@ -1,54 +1,13 @@
 import { z } from 'zod';
+import type { ExtendedTrackIdentifierQuery } from '../shared.js';
 
 export const TRACK_RICHSYNC_GET_METHOD = 'GET' as const;
-export const TRACK_RICH_SYNC_GET_ENDPOINT = '/ws/1.1/track.richsync.get';
+export const TRACK_RICHSYNC_GET_ENDPOINT = '/ws/1.1/track.richsync.get';
 
-export type TrackRichSyncGetQuery =
-  | {
-      commontrack_id: string;
-      track_id?: never;
-      track_isrc?: never;
-      track_spotify_id?: never;
-      track_itunes_id?: never;
-      f_richsync_length?: string;
-      f_richsync_length_max_deviation?: string;
-    }
-  | {
-      commontrack_id?: never;
-      track_id: string;
-      track_isrc?: never;
-      track_spotify_id?: never;
-      track_itunes_id?: never;
-      f_richsync_length?: string;
-      f_richsync_length_max_deviation?: string;
-    }
-  | {
-      commontrack_id?: never;
-      track_id?: never;
-      track_isrc: string;
-      track_spotify_id?: never;
-      track_itunes_id?: never;
-      f_richsync_length?: string;
-      f_richsync_length_max_deviation?: string;
-    }
-  | {
-      commontrack_id?: never;
-      track_id?: never;
-      track_isrc?: never;
-      track_spotify_id: string;
-      track_itunes_id?: never;
-      f_richsync_length?: string;
-      f_richsync_length_max_deviation?: string;
-    }
-  | {
-      commontrack_id?: never;
-      track_id?: never;
-      track_isrc?: never;
-      track_spotify_id?: never;
-      track_itunes_id: string;
-      f_richsync_length?: string;
-      f_richsync_length_max_deviation?: string;
-    };
+export type TrackRichSyncGetQuery = ExtendedTrackIdentifierQuery & {
+  f_richsync_length?: string;
+  f_richsync_length_max_deviation?: string;
+};
 
 export const mxmClientTrackRichSyncGetResponseSchema = z.object({
   richsync: z.object({
