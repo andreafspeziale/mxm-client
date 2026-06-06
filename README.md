@@ -195,7 +195,7 @@ import {
   type TrackLyricsFingerprintPostBody,
 } from '@andreafspeziale/mxm-client';
 
-interface MyBody extends TrackLyricsFingerprintPostBody {
+interface MyFingerprintPostBody extends TrackLyricsFingerprintPostBody {
   settings: { algorithm: string };
 }
 
@@ -205,7 +205,7 @@ const mxmClient = new MxmClient({
 
 const result = await mxmClient.trackLyricsFingerprintPost<
   TrackLyricsFingerprintPostQuery,
-  MyBody
+  MyFingerprintPostBody
 >({
   body: {
     text: "Fratelli d'Italia...",
@@ -233,11 +233,11 @@ import {
 } from '@andreafspeziale/mxm-client';
 
 // Extend the base body schema with custom fields
-const myTrackBodySchema = mxmClientTrackGetResponseSchema.extend({
+const myTrackGetResponseSchema = mxmClientTrackGetResponseSchema.extend({
   my_custom_field: z.string(),
 });
 
-interface MyQuery extends TrackGetQuery {
+interface MyTrackGetQuery extends TrackGetQuery {
   custom_param: string;
 }
 
@@ -246,9 +246,9 @@ const mxmClient = new MxmClient({
 });
 
 // Pass typeof schema as the last generic when extending query/body types
-const track = await mxmClient.trackGet<MyQuery, typeof myTrackBodySchema>({
+const track = await mxmClient.trackGet<MyTrackGetQuery, typeof myTrackGetResponseSchema>({
   query: { track_isrc: 'USUM72005901', custom_param: 'value' },
-  options: { responseSchema: myTrackBodySchema },
+  options: { responseSchema: myTrackGetResponseSchema },
 });
 
 track.message.body.my_custom_field; // typed AND validated at runtime
@@ -270,7 +270,7 @@ import {
   type MxmClientTrackGetResponse,
 } from '@andreafspeziale/mxm-client';
 
-interface MyTrackResponse extends MxmClientTrackGetResponse {
+interface MyTrackGetResponse extends MxmClientTrackGetResponse {
   my_custom_field: string;
 }
 
@@ -278,7 +278,7 @@ const mxmClient = new MxmClient({
   config: { apiKey: 'your-api-key' },
 });
 
-const track = await mxmClient.unsafe.trackGet<undefined, MyTrackResponse>({
+const track = await mxmClient.unsafe.trackGet<undefined, MyTrackGetResponse>({
   query: { track_isrc: 'USUM72005901' },
 });
 
@@ -295,11 +295,11 @@ import {
   type MxmClientTrackGetResponse,
 } from '@andreafspeziale/mxm-client';
 
-interface MyQuery extends TrackGetQuery {
+interface MyTrackGetQuery extends TrackGetQuery {
   custom_param: string;
 }
 
-interface MyResponse extends MxmClientTrackGetResponse {
+interface MyTrackGetResponse extends MxmClientTrackGetResponse {
   custom_output: number;
 }
 
@@ -307,7 +307,7 @@ const mxmClient = new MxmClient({
   config: { apiKey: 'your-api-key' },
 });
 
-const track = await mxmClient.unsafe.trackGet<MyQuery, MyResponse>({
+const track = await mxmClient.unsafe.trackGet<MyTrackGetQuery, MyTrackGetResponse>({
   query: {
     track_isrc: 'USUM72005901',
     custom_param: 'value',

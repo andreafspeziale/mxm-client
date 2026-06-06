@@ -18,6 +18,7 @@ const client = new MxmClient({
 });
 
 (async () => {
+  // Basic call with default query and body types
   const a = await client
     .trackLyricsFingerprintPost({
       query: {
@@ -32,15 +33,15 @@ const client = new MxmClient({
       process.exit(1);
     });
 
-  // This call basically enrich not only the query but also the actual response, but the prop that will be added to the response
-  // will not be accessible. No error will throw, but the prop will be stripped out from the response
+  // Extending query parameters via generics.
+  // Extra fields are type-checked but the response type remains unchanged.
 
-  interface MyFingerprintQuery extends TrackLyricsFingerprintPostQuery {
+  interface MyFingerprintPostQuery extends TrackLyricsFingerprintPostQuery {
     include_ngram_length: boolean;
   }
 
   const b = await client
-    .trackLyricsFingerprintPost<MyFingerprintQuery>({
+    .trackLyricsFingerprintPost<MyFingerprintPostQuery>({
       query: {
         size: 10,
         limit: 3,
@@ -54,14 +55,14 @@ const client = new MxmClient({
       process.exit(1);
     });
 
-  // Same as above but with also body enrichment
+  // Extending both query and body types via generics
 
-  interface MyFingerprintBody extends TrackLyricsFingerprintPostBody {
+  interface MyFingerprintPostBody extends TrackLyricsFingerprintPostBody {
     settings: { algorithm: string };
   }
 
   const c = await client
-    .trackLyricsFingerprintPost<MyFingerprintQuery, MyFingerprintBody>({
+    .trackLyricsFingerprintPost<MyFingerprintPostQuery, MyFingerprintPostBody>({
       query: {
         size: 10,
         limit: 3,
@@ -76,12 +77,12 @@ const client = new MxmClient({
       process.exit(1);
     });
 
-  // To extend the response in safeland, build your own body schema and pass it via `options.responseSchema`.
-  // When using explicit generics for query/body extension, you must also pass `typeof yourSchema` as the last generic.
+  // Extending the response with runtime validation via a custom body schema.
+  // Pass `typeof yourSchema` as the last generic to enable type inference.
   // TypeScript cannot partially infer generics — if you specify any, you must specify all.
   const baseTrackListItemSchema =
     mxmClientTrackLyricsFingerprintPostResponseSchema.shape.track_list.element;
-  const enrichedBodySchema = z.object({
+  const enrichedResponseSchema = z.object({
     track_list: z.array(
       baseTrackListItemSchema.extend({
         matching: z.object({
@@ -93,9 +94,9 @@ const client = new MxmClient({
 
   const d = await client
     .trackLyricsFingerprintPost<
-      MyFingerprintQuery,
-      MyFingerprintBody,
-      typeof enrichedBodySchema
+      MyFingerprintPostQuery,
+      MyFingerprintPostBody,
+      typeof enrichedResponseSchema
     >({
       query: {
         size: 10,
@@ -107,7 +108,7 @@ const client = new MxmClient({
         settings: { algorithm: 'raw' },
       },
       options: {
-        responseSchema: enrichedBodySchema,
+        responseSchema: enrichedResponseSchema,
       },
     })
     .catch((_) => {
@@ -116,13 +117,12 @@ const client = new MxmClient({
 
   console.log(
     d.message.body.track_list[0].matching.longest_common_ngram_length,
-  ); // Should not highlight any error and should be accessible
+  );
 
-  // The difference in unsafeland is that the consumer can pass the third generic type to extend the response.
-  // The option responseSchema should not be expected or even suggested by the IDE
-  // I don't want the consumer to be able to pass the response generic here, I want it to be infered from the passed schema and I expect
-  // to be able to accesso `longest_common_ngram_length` in the reponse
-  interface MyFingerprintResponse {
+  // Unsafe mode: extend the response type via a third generic without runtime validation.
+  // The `responseSchema` option is not available in unsafe mode.
+
+  interface MyFingerprintPostResponse {
     track_list: Array<
       MxmClientTrackLyricsFingerprintPostResponse['track_list'][number] & {
         matching: { longest_common_ngram_length: number };
@@ -132,9 +132,9 @@ const client = new MxmClient({
 
   const e = await client.unsafe
     .trackLyricsFingerprintPost<
-      MyFingerprintQuery,
-      MyFingerprintBody,
-      MyFingerprintResponse
+      MyFingerprintPostQuery,
+      MyFingerprintPostBody,
+      MyFingerprintPostResponse
     >({
       query: {
         size: 10,
