@@ -26,13 +26,13 @@ const client = new MxmClient({
    *
    * In TypeScript you would define:
    *
-   *   interface MyBody extends TrackLyricsFingerprintPostBody {
+   *   interface MyFingerprintPostBody extends TrackLyricsFingerprintPostBody {
    *     settings: { algorithm: string };
    *   }
    *
    *   await client.trackLyricsFingerprintPost<
    *     TrackLyricsFingerprintPostQuery,
-   *     MyBody
+   *     MyFingerprintPostBody
    *   >({ body: { text: '...', settings: { algorithm: 'raw' } } });
    */
   await client

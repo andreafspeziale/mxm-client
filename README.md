@@ -195,7 +195,7 @@ import {
   type TrackLyricsFingerprintPostBody,
 } from '@andreafspeziale/mxm-client';
 
-interface MyBody extends TrackLyricsFingerprintPostBody {
+interface MyFingerprintPostBody extends TrackLyricsFingerprintPostBody {
   settings: { algorithm: string };
 }
 
@@ -205,13 +205,54 @@ const mxmClient = new MxmClient({
 
 const result = await mxmClient.trackLyricsFingerprintPost<
   TrackLyricsFingerprintPostQuery,
-  MyBody
+  MyFingerprintPostBody
 >({
   body: {
     text: "Fratelli d'Italia...",
     settings: { algorithm: 'raw' },
   },
 });
+```
+
+### Custom response schema
+
+For full runtime safety with extended response types, you can provide a custom schema via `options.responseSchema`. The schema describes **only the response body** — the client handles the legacy response wrapper (`message.header` + `message.body`) internally. The return type is automatically inferred from your schema.
+
+> [!NOTE]
+> The `responseSchema` option accepts any schema implementing the [Standard Schema](https://standardschema.dev) interface (Zod, Valibot, ArkType, etc.).
+
+> [!IMPORTANT]
+> TypeScript does not support partial generic inference. If you need to specify generics for query or body extension, you must also pass `typeof yourSchema` as the last generic parameter.
+
+```ts
+import { z } from 'zod';
+import {
+  MxmClient,
+  type TrackGetQuery,
+  mxmClientTrackGetResponseSchema,
+} from '@andreafspeziale/mxm-client';
+
+// Extend the base body schema with custom fields
+const myTrackGetResponseSchema = mxmClientTrackGetResponseSchema.extend({
+  my_custom_field: z.string(),
+});
+
+interface MyTrackGetQuery extends TrackGetQuery {
+  custom_param: string;
+}
+
+const mxmClient = new MxmClient({
+  config: { apiKey: 'your-api-key' },
+});
+
+// Pass typeof schema as the last generic when extending query/body types
+const track = await mxmClient.trackGet<MyTrackGetQuery, typeof myTrackGetResponseSchema>({
+  query: { track_isrc: 'USUM72005901', custom_param: 'value' },
+  options: { responseSchema: myTrackGetResponseSchema },
+});
+
+track.message.body.my_custom_field; // typed AND validated at runtime
+track.message.body.track.track_name; // base fields are still accessible
 ```
 
 ### Unsafe mode
@@ -229,7 +270,7 @@ import {
   type MxmClientTrackGetResponse,
 } from '@andreafspeziale/mxm-client';
 
-interface MyTrackResponse extends MxmClientTrackGetResponse {
+interface MyTrackGetResponse extends MxmClientTrackGetResponse {
   my_custom_field: string;
 }
 
@@ -237,7 +278,7 @@ const mxmClient = new MxmClient({
   config: { apiKey: 'your-api-key' },
 });
 
-const track = await mxmClient.unsafe.trackGet<undefined, MyTrackResponse>({
+const track = await mxmClient.unsafe.trackGet<undefined, MyTrackGetResponse>({
   query: { track_isrc: 'USUM72005901' },
 });
 
@@ -254,11 +295,11 @@ import {
   type MxmClientTrackGetResponse,
 } from '@andreafspeziale/mxm-client';
 
-interface MyQuery extends TrackGetQuery {
+interface MyTrackGetQuery extends TrackGetQuery {
   custom_param: string;
 }
 
-interface MyResponse extends MxmClientTrackGetResponse {
+interface MyTrackGetResponse extends MxmClientTrackGetResponse {
   custom_output: number;
 }
 
@@ -266,56 +307,12 @@ const mxmClient = new MxmClient({
   config: { apiKey: 'your-api-key' },
 });
 
-const track = await mxmClient.unsafe.trackGet<MyQuery, MyResponse>({
+const track = await mxmClient.unsafe.trackGet<MyTrackGetQuery, MyTrackGetResponse>({
   query: {
     track_isrc: 'USUM72005901',
     custom_param: 'value',
   },
 });
-```
-
-### Custom response schema
-
-For full runtime safety with extended response types, you can provide a custom schema via `options.responseSchema`. The response will be validated against your schema at runtime and the return type will be inferred from it.
-
-> [!NOTE]
-> The `responseSchema` option accepts any schema implementing the [Standard Schema](https://standardschema.dev) interface (Zod, Valibot, ArkType, etc.).
-
-```ts
-import { z } from 'zod';
-import {
-  MxmClient,
-  type MxmClientTrackGetResponse,
-} from '@andreafspeziale/mxm-client';
-
-const myTrackSchema = z.object({
-  message: z.object({
-    header: z.object({
-      status_code: z.literal(200),
-      execute_time: z.number(),
-    }),
-    body: z.object({
-      track: z.object({
-        track_id: z.number(),
-        track_name: z.string(),
-        my_custom_field: z.string(),
-      }),
-    }),
-  }),
-});
-
-type MyTrackResponse = z.infer<typeof myTrackSchema>['message']['body'];
-
-const mxmClient = new MxmClient({
-  config: { apiKey: 'your-api-key' },
-});
-
-const track = await mxmClient.trackGet<undefined, MyTrackResponse>({
-  query: { track_isrc: 'USUM72005901' },
-  options: { responseSchema: myTrackSchema },
-});
-
-track.message.body.my_custom_field; // typed AND validated at runtime
 ```
 
 ## Available methods
