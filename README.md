@@ -125,6 +125,25 @@ const track = await mxmClient.trackGet({
 });
 ```
 
+### With custom base URL
+
+> By default the client targets `https://api.musixmatch.com`. Use `baseUrl` to point the client at a different host (e.g. staging environment or a custom Kubernetes entrypoint).
+
+```ts
+import { MxmClient } from '@andreafspeziale/mxm-client';
+
+const mxmClient = new MxmClient({
+  config: {
+    apiKey: 'your-api-key',
+    baseUrl: 'https://staging.musixmatch.com',
+  },
+});
+
+const track = await mxmClient.trackGet({
+  query: { track_isrc: 'USUM72005901' },
+});
+```
+
 ### With status code validation disabled
 
 > When `disableStatusCodeValidation` is set to `true`, the client will not throw on unexpected HTTP status codes allowing the response body validation to still run. Musixmatch APIs always return a `200` status code. In case of an error, it will still be `200` and the error details will be included in the response body. This option can be useful if for any odd reason the status code is not `200`.
