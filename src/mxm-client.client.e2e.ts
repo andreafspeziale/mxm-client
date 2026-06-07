@@ -19,6 +19,14 @@ t.test(
         : false,
   },
   (t) => {
+    t.test('artist.get', async (t) => {
+      await t.resolves(
+        client.artistGet({
+          query: { artist_id: '259675' },
+        }),
+      );
+    });
+
     t.test('matcher.lyrics.get', async (t) => {
       await t.resolves(
         client.matcherLyricsGet({
