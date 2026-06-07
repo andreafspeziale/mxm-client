@@ -335,22 +335,28 @@ const track = await mxmClient.unsafe.trackGet<MyTrackGetQuery, MyTrackGetRespons
 ```
 
 ## Available methods
-<!-- Artist -->
-- `artistGet` ([artist.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/artist-get))
-<!-- Matcher  -->
+
+<!-- Matcher -->
 - `matcherLyricsGet` ([matcher.lyrics.get](https://docs.musixmatch.com/lyrics-api/matcher/matcher-lyrics-get))
 - `matcherSubtitleGet` ([matcher.subtitle.get](https://docs.musixmatch.com/lyrics-api/matcher/matcher-subtitle-get))
 - `matcherTrackGet` ([matcher.track.get](https://docs.musixmatch.com/lyrics-api/matcher/matcher-track-get))
-<!-- Track  -->
+
+<!-- Track -->
 - `trackGet` ([track.get](https://docs.musixmatch.com/lyrics-api/track/track-get))
+- `trackSearch` ([track.search](https://docs.musixmatch.com/lyrics-api/track/track-search))
 - `trackLyricsGet` ([track.lyrics.get](https://docs.musixmatch.com/lyrics-api/track/track-lyrics-get))
-- `trackLyricsTranslationGet` ([track.lyrics.translation.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/track-lyrics-translation-get))
 - `trackSubtitleGet` ([track.subtitle.get](https://docs.musixmatch.com/lyrics-api/track/track-subtitle-get))
-- `trackSubtitleTranslationGet` ([track.subtitle.translation.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/track-subtitle-translation-get))
 - `trackRichSyncGet` ([track.richsync.get](https://docs.musixmatch.com/lyrics-api/track/track-richsync-get))
 - `trackSnippetGet` ([track.snippet.get](https://docs.musixmatch.com/lyrics-api/track/track-snippet-get))
-- `trackSearch` ([track.search](https://docs.musixmatch.com/lyrics-api/track/track-search))
-<!-- Enterprise  -->
+
+<!-- Translations -->
+- `trackLyricsTranslationGet` ([track.lyrics.translation.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/track-lyrics-translation-get))
+- `trackSubtitleTranslationGet` ([track.subtitle.translation.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/track-subtitle-translation-get))
+
+<!-- Artist -->
+- `artistGet` ([artist.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/artist-get))
+
+<!-- Enterprise -->
 - `trackLyricsFingerprintPost` ([track.lyrics.fingerprint](https://docs.musixmatch.com/enterprise-integration/api-reference/track-lyrics-fingerprint-post))
 
 ## Examples
