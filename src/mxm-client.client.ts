@@ -3,6 +3,33 @@ import { type Logger, pino } from 'pino';
 import { Client } from 'undici';
 import type { z } from 'zod';
 import type {
+  ArtistAlbumsGetQuery,
+  MxmClientArtistAlbumsGetResponse,
+} from './endpoints/artist.albums.get/definition.js';
+import {
+  ARTIST_ALBUMS_GET_ENDPOINT,
+  ARTIST_ALBUMS_GET_METHOD,
+  mxmClientArtistAlbumsGetResponseSchema,
+} from './endpoints/artist.albums.get/definition.js';
+import type {
+  ArtistGetQuery,
+  MxmClientArtistGetResponse,
+} from './endpoints/artist.get/definition.js';
+import {
+  ARTIST_GET_ENDPOINT,
+  ARTIST_GET_METHOD,
+  mxmClientArtistGetResponseSchema,
+} from './endpoints/artist.get/definition.js';
+import type {
+  LanguagesGetQuery,
+  MxmClientLanguagesGetResponse,
+} from './endpoints/languages.get/definition.js';
+import {
+  LANGUAGES_GET_ENDPOINT,
+  LANGUAGES_GET_METHOD,
+  mxmClientLanguagesGetResponseSchema,
+} from './endpoints/languages.get/definition.js';
+import type {
   MatcherLyricsGetQuery,
   MxmClientMatcherLyricsGetResponse,
 } from './endpoints/matcher.lyrics.get/definition.js';
@@ -58,6 +85,15 @@ import {
   TRACK_LYRICS_GET_METHOD,
 } from './endpoints/track.lyrics.get/definition.js';
 import type {
+  MxmClientTrackLyricsTranslationGetResponse,
+  TrackLyricsTranslationGetQuery,
+} from './endpoints/track.lyrics.translation.get/definition.js';
+import {
+  mxmClientTrackLyricsTranslationGetResponseSchema,
+  TRACK_LYRICS_TRANSLATION_GET_ENDPOINT,
+  TRACK_LYRICS_TRANSLATION_GET_METHOD,
+} from './endpoints/track.lyrics.translation.get/definition.js';
+import type {
   MxmClientTrackRichSyncGetResponse,
   TrackRichSyncGetQuery,
 } from './endpoints/track.richsync.get/definition.js';
@@ -76,6 +112,15 @@ import {
   TRACK_SEARCH_METHOD,
 } from './endpoints/track.search/definition.js';
 import type {
+  MxmClientTrackSnippetGetResponse,
+  TrackSnippetGetQuery,
+} from './endpoints/track.snippet.get/definition.js';
+import {
+  mxmClientTrackSnippetGetResponseSchema,
+  TRACK_SNIPPET_GET_ENDPOINT,
+  TRACK_SNIPPET_GET_METHOD,
+} from './endpoints/track.snippet.get/definition.js';
+import type {
   MxmClientTrackSubtitleGetResponse,
   TrackSubtitleGetQuery,
 } from './endpoints/track.subtitle.get/definition.js';
@@ -84,6 +129,15 @@ import {
   TRACK_SUBTITLE_GET_ENDPOINT,
   TRACK_SUBTITLE_GET_METHOD,
 } from './endpoints/track.subtitle.get/definition.js';
+import type {
+  MxmClientTrackSubtitleTranslationGetResponse,
+  TrackSubtitleTranslationGetQuery,
+} from './endpoints/track.subtitle.translation.get/definition.js';
+import {
+  mxmClientTrackSubtitleTranslationGetResponseSchema,
+  TRACK_SUBTITLE_TRANSLATION_GET_ENDPOINT,
+  TRACK_SUBTITLE_TRANSLATION_GET_METHOD,
+} from './endpoints/track.subtitle.translation.get/definition.js';
 import { MUSIXMATCH_BASE_URL } from './mxm-client.constants.js';
 import { MxmClientError } from './mxm-client.error.js';
 import type {
@@ -239,6 +293,100 @@ export class MxmClient {
     }
 
     return this._unsafe;
+  }
+
+  // --- artistGet ---
+
+  async artistGet<TQuery extends ArtistGetQuery = ArtistGetQuery>(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientArtistGetResponse>>;
+
+  async artistGet<
+    TQuery extends ArtistGetQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async artistGet(input: {
+    query: ArtistGetQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: ARTIST_GET_ENDPOINT,
+      method: ARTIST_GET_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientArtistGetResponseSchema,
+      ),
+      options: input.options,
+    });
+  }
+
+  // --- artistAlbumsGet ---
+
+  async artistAlbumsGet<
+    TQuery extends ArtistAlbumsGetQuery = ArtistAlbumsGetQuery,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientArtistAlbumsGetResponse>>;
+
+  async artistAlbumsGet<
+    TQuery extends ArtistAlbumsGetQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async artistAlbumsGet(input: {
+    query: ArtistAlbumsGetQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: ARTIST_ALBUMS_GET_ENDPOINT,
+      method: ARTIST_ALBUMS_GET_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientArtistAlbumsGetResponseSchema,
+      ),
+      options: input.options,
+    });
+  }
+
+  // --- languagesGet ---
+
+  async languagesGet<
+    TQuery extends LanguagesGetQuery = LanguagesGetQuery,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientLanguagesGetResponse>>;
+
+  async languagesGet<
+    TQuery extends LanguagesGetQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async languagesGet(input: {
+    query: LanguagesGetQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: LANGUAGES_GET_ENDPOINT,
+      method: LANGUAGES_GET_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientLanguagesGetResponseSchema,
+      ),
+      options: input.options,
+    });
   }
 
   // --- matcherLyricsGet ---
@@ -397,6 +545,39 @@ export class MxmClient {
     });
   }
 
+  // --- trackLyricsTranslationGet ---
+
+  async trackLyricsTranslationGet<
+    TQuery extends
+      TrackLyricsTranslationGetQuery = TrackLyricsTranslationGetQuery,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientTrackLyricsTranslationGetResponse>>;
+
+  async trackLyricsTranslationGet<
+    TQuery extends TrackLyricsTranslationGetQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async trackLyricsTranslationGet(input: {
+    query: TrackLyricsTranslationGetQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: TRACK_LYRICS_TRANSLATION_GET_ENDPOINT,
+      method: TRACK_LYRICS_TRANSLATION_GET_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientTrackLyricsTranslationGetResponseSchema,
+      ),
+      options: input.options,
+    });
+  }
+
   // --- trackSubtitleGet ---
 
   async trackSubtitleGet<
@@ -424,6 +605,39 @@ export class MxmClient {
       query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientTrackSubtitleGetResponseSchema,
+      ),
+      options: input.options,
+    });
+  }
+
+  // --- trackSubtitleTranslationGet ---
+
+  async trackSubtitleTranslationGet<
+    TQuery extends
+      TrackSubtitleTranslationGetQuery = TrackSubtitleTranslationGetQuery,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientTrackSubtitleTranslationGetResponse>>;
+
+  async trackSubtitleTranslationGet<
+    TQuery extends TrackSubtitleTranslationGetQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async trackSubtitleTranslationGet(input: {
+    query: TrackSubtitleTranslationGetQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: TRACK_SUBTITLE_TRANSLATION_GET_ENDPOINT,
+      method: TRACK_SUBTITLE_TRANSLATION_GET_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientTrackSubtitleTranslationGetResponseSchema,
       ),
       options: input.options,
     });
@@ -486,6 +700,38 @@ export class MxmClient {
       query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientTrackSearchResponseSchema,
+      ),
+      options: input.options,
+    });
+  }
+
+  // --- trackSnippetGet ---
+
+  async trackSnippetGet<
+    TQuery extends TrackSnippetGetQuery = TrackSnippetGetQuery,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientTrackSnippetGetResponse>>;
+
+  async trackSnippetGet<
+    TQuery extends TrackSnippetGetQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async trackSnippetGet(input: {
+    query: TrackSnippetGetQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: TRACK_SNIPPET_GET_ENDPOINT,
+      method: TRACK_SNIPPET_GET_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientTrackSnippetGetResponseSchema,
       ),
       options: input.options,
     });

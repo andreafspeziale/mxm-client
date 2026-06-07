@@ -19,6 +19,22 @@ t.test(
         : false,
   },
   (t) => {
+    t.test('artist.get', async (t) => {
+      await t.resolves(
+        client.artistGet({
+          query: { artist_id: '259675' },
+        }),
+      );
+    });
+
+    t.test('artist.albums.get', async (t) => {
+      await t.resolves(
+        client.artistAlbumsGet({
+          query: { artist_id: '259675' },
+        }),
+      );
+    });
+
     t.test('matcher.lyrics.get', async (t) => {
       await t.resolves(
         client.matcherLyricsGet({
@@ -89,6 +105,14 @@ t.test(
       await t.resolves(
         client.trackSearch({
           query: { q_track: 'Hello', q_artist: 'Adele' },
+        }),
+      );
+    });
+
+    t.test('track.snippet.get', async (t) => {
+      await t.resolves(
+        client.trackSnippetGet({
+          query: { track_isrc: 'GBAAA9100070' },
         }),
       );
     });
