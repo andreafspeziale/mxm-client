@@ -35,6 +35,14 @@ t.test(
       );
     });
 
+    t.test('artist.search', async (t) => {
+      await t.resolves(
+        client.artistSearch({
+          query: { q_artist: 'Taylor Swift' },
+        }),
+      );
+    });
+
     t.test('matcher.lyrics.get', async (t) => {
       await t.resolves(
         client.matcherLyricsGet({

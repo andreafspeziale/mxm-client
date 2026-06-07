@@ -21,6 +21,15 @@ import {
   mxmClientArtistGetResponseSchema,
 } from './endpoints/artist.get/definition.js';
 import type {
+  ArtistSearchQuery,
+  MxmClientArtistSearchResponse,
+} from './endpoints/artist.search/definition.js';
+import {
+  ARTIST_SEARCH_ENDPOINT,
+  ARTIST_SEARCH_METHOD,
+  mxmClientArtistSearchResponseSchema,
+} from './endpoints/artist.search/definition.js';
+import type {
   LanguagesGetQuery,
   MxmClientLanguagesGetResponse,
 } from './endpoints/languages.get/definition.js';
@@ -320,6 +329,38 @@ export class MxmClient {
       query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientArtistGetResponseSchema,
+      ),
+      options: input.options,
+    });
+  }
+
+  // --- artistSearch ---
+
+  async artistSearch<
+    TQuery extends ArtistSearchQuery = ArtistSearchQuery,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientArtistSearchResponse>>;
+
+  async artistSearch<
+    TQuery extends ArtistSearchQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async artistSearch(input: {
+    query: ArtistSearchQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: ARTIST_SEARCH_ENDPOINT,
+      method: ARTIST_SEARCH_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientArtistSearchResponseSchema,
       ),
       options: input.options,
     });
