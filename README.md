@@ -352,6 +352,7 @@ const track = await mxmClient.unsafe.trackGet<MyTrackGetQuery, MyTrackGetRespons
 <!-- Translations -->
 - `trackLyricsTranslationGet` ([track.lyrics.translation.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/track-lyrics-translation-get))
 - `trackSubtitleTranslationGet` ([track.subtitle.translation.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/track-subtitle-translation-get))
+- `languagesGet` ([languages.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/languages-get))
 
 <!-- Artist -->
 - `artistGet` ([artist.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/artist-get))
