@@ -3,6 +3,15 @@ import { type Logger, pino } from 'pino';
 import { Client } from 'undici';
 import type { z } from 'zod';
 import type {
+  ArtistAlbumsGetQuery,
+  MxmClientArtistAlbumsGetResponse,
+} from './endpoints/artist.albums.get/definition.js';
+import {
+  ARTIST_ALBUMS_GET_ENDPOINT,
+  ARTIST_ALBUMS_GET_METHOD,
+  mxmClientArtistAlbumsGetResponseSchema,
+} from './endpoints/artist.albums.get/definition.js';
+import type {
   ArtistGetQuery,
   MxmClientArtistGetResponse,
 } from './endpoints/artist.get/definition.js';
@@ -311,6 +320,38 @@ export class MxmClient {
       query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientArtistGetResponseSchema,
+      ),
+      options: input.options,
+    });
+  }
+
+  // --- artistAlbumsGet ---
+
+  async artistAlbumsGet<
+    TQuery extends ArtistAlbumsGetQuery = ArtistAlbumsGetQuery,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientArtistAlbumsGetResponse>>;
+
+  async artistAlbumsGet<
+    TQuery extends ArtistAlbumsGetQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async artistAlbumsGet(input: {
+    query: ArtistAlbumsGetQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: ARTIST_ALBUMS_GET_ENDPOINT,
+      method: ARTIST_ALBUMS_GET_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientArtistAlbumsGetResponseSchema,
       ),
       options: input.options,
     });
