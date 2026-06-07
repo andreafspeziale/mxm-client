@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.2.0](https://github.com/andreafspeziale/mxm-client/compare/1.1.0...1.2.0) (2026-06-07)
+
+### Features
+
+* add artist.albums.get endpoint ([#24](https://github.com/andreafspeziale/mxm-client/issues/24)) ([7ddf112](https://github.com/andreafspeziale/mxm-client/commit/7ddf112b0af31f8ac5343b4f75c22706da2ec6b3))
+* add artist.get endpoint ([#22](https://github.com/andreafspeziale/mxm-client/issues/22)) ([92b33d1](https://github.com/andreafspeziale/mxm-client/commit/92b33d1e439425f50925d40a24ce465a5eb7736e))
+* add languages get endpoint ([#23](https://github.com/andreafspeziale/mxm-client/issues/23)) ([624a25f](https://github.com/andreafspeziale/mxm-client/commit/624a25f766b644f5238b2bb84dfe54bea761a402))
+* add track.lyrics.translation.get endpoint ([ff00657](https://github.com/andreafspeziale/mxm-client/commit/ff006574f9e552ceefc6d5938997e9088998c7e1))
+* add track.snippet.get endpoint ([84a4f21](https://github.com/andreafspeziale/mxm-client/commit/84a4f2139378596db13959b3e1a84751e6702a2a))
+* add track.subtitle.translation.get endpoint ([#21](https://github.com/andreafspeziale/mxm-client/issues/21)) ([a3d2482](https://github.com/andreafspeziale/mxm-client/commit/a3d2482637905b97dd5b365b78151782047733aa))
+
+### Miscellaneous
+
+* reorder README available methods by API category ([5c629af](https://github.com/andreafspeziale/mxm-client/commit/5c629afa5869e15949b3c003a248ceb3cd73ee32))
+* update available methods in README ([820b883](https://github.com/andreafspeziale/mxm-client/commit/820b88399f75dd85082843de57233471f4244944))
+* update available methods in README ([44106ac](https://github.com/andreafspeziale/mxm-client/commit/44106ac491d17640b4571c3d33d3f7fc93924b57))
+* update dependency @types/node to v24.13.1 ([#16](https://github.com/andreafspeziale/mxm-client/issues/16)) ([fa1a41c](https://github.com/andreafspeziale/mxm-client/commit/fa1a41ca63542ab33dd00eacfbe37bd7731b8dcf))
+* update dependency undici to v7.27.2 ([#17](https://github.com/andreafspeziale/mxm-client/issues/17)) ([89ae35e](https://github.com/andreafspeziale/mxm-client/commit/89ae35e0dd096a92d27bb2b39bbe458d2295a4fe))
+
 ## [1.1.0](https://github.com/andreafspeziale/mxm-client/compare/1.0.0...1.1.0) (2026-06-06)
 
 ### Features
