@@ -9,6 +9,14 @@ import {
   ARTIST_GET_METHOD,
 } from './endpoints/artist.get/definition.js';
 import type {
+  LanguagesGetQuery,
+  MxmClientLanguagesGetResponse,
+} from './endpoints/languages.get/definition.js';
+import {
+  LANGUAGES_GET_ENDPOINT,
+  LANGUAGES_GET_METHOD,
+} from './endpoints/languages.get/definition.js';
+import type {
   MatcherLyricsGetQuery,
   MxmClientMatcherLyricsGetResponse,
 } from './endpoints/matcher.lyrics.get/definition.js';
@@ -197,6 +205,22 @@ export class MxmClientUnsafe {
     return this.execute<TResponse>({
       endpoint: ARTIST_GET_ENDPOINT,
       method: ARTIST_GET_METHOD,
+      query: input.query,
+      options: input.options,
+    });
+  }
+
+  async languagesGet<
+    TQuery extends LanguagesGetQuery = LanguagesGetQuery,
+    TResponse extends
+      MxmClientLanguagesGetResponse = MxmClientLanguagesGetResponse,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<TResponse>> {
+    return this.execute<TResponse>({
+      endpoint: LANGUAGES_GET_ENDPOINT,
+      method: LANGUAGES_GET_METHOD,
       query: input.query,
       options: input.options,
     });

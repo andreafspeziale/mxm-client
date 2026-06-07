@@ -12,6 +12,15 @@ import {
   mxmClientArtistGetResponseSchema,
 } from './endpoints/artist.get/definition.js';
 import type {
+  LanguagesGetQuery,
+  MxmClientLanguagesGetResponse,
+} from './endpoints/languages.get/definition.js';
+import {
+  LANGUAGES_GET_ENDPOINT,
+  LANGUAGES_GET_METHOD,
+  mxmClientLanguagesGetResponseSchema,
+} from './endpoints/languages.get/definition.js';
+import type {
   MatcherLyricsGetQuery,
   MxmClientMatcherLyricsGetResponse,
 } from './endpoints/matcher.lyrics.get/definition.js';
@@ -302,6 +311,38 @@ export class MxmClient {
       query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientArtistGetResponseSchema,
+      ),
+      options: input.options,
+    });
+  }
+
+  // --- languagesGet ---
+
+  async languagesGet<
+    TQuery extends LanguagesGetQuery = LanguagesGetQuery,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientLanguagesGetResponse>>;
+
+  async languagesGet<
+    TQuery extends LanguagesGetQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async languagesGet(input: {
+    query: LanguagesGetQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: LANGUAGES_GET_ENDPOINT,
+      method: LANGUAGES_GET_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientLanguagesGetResponseSchema,
       ),
       options: input.options,
     });
