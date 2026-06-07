@@ -76,6 +76,15 @@ import {
   TRACK_SEARCH_METHOD,
 } from './endpoints/track.search/definition.js';
 import type {
+  MxmClientTrackSnippetGetResponse,
+  TrackSnippetGetQuery,
+} from './endpoints/track.snippet.get/definition.js';
+import {
+  mxmClientTrackSnippetGetResponseSchema,
+  TRACK_SNIPPET_GET_ENDPOINT,
+  TRACK_SNIPPET_GET_METHOD,
+} from './endpoints/track.snippet.get/definition.js';
+import type {
   MxmClientTrackSubtitleGetResponse,
   TrackSubtitleGetQuery,
 } from './endpoints/track.subtitle.get/definition.js';
@@ -486,6 +495,38 @@ export class MxmClient {
       query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientTrackSearchResponseSchema,
+      ),
+      options: input.options,
+    });
+  }
+
+  // --- trackSnippetGet ---
+
+  async trackSnippetGet<
+    TQuery extends TrackSnippetGetQuery = TrackSnippetGetQuery,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientTrackSnippetGetResponse>>;
+
+  async trackSnippetGet<
+    TQuery extends TrackSnippetGetQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async trackSnippetGet(input: {
+    query: TrackSnippetGetQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: TRACK_SNIPPET_GET_ENDPOINT,
+      method: TRACK_SNIPPET_GET_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientTrackSnippetGetResponseSchema,
       ),
       options: input.options,
     });
