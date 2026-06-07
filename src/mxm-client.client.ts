@@ -102,6 +102,15 @@ import {
   TRACK_SUBTITLE_GET_ENDPOINT,
   TRACK_SUBTITLE_GET_METHOD,
 } from './endpoints/track.subtitle.get/definition.js';
+import type {
+  MxmClientTrackSubtitleTranslationGetResponse,
+  TrackSubtitleTranslationGetQuery,
+} from './endpoints/track.subtitle.translation.get/definition.js';
+import {
+  mxmClientTrackSubtitleTranslationGetResponseSchema,
+  TRACK_SUBTITLE_TRANSLATION_GET_ENDPOINT,
+  TRACK_SUBTITLE_TRANSLATION_GET_METHOD,
+} from './endpoints/track.subtitle.translation.get/definition.js';
 import { MUSIXMATCH_BASE_URL } from './mxm-client.constants.js';
 import { MxmClientError } from './mxm-client.error.js';
 import type {
@@ -475,6 +484,39 @@ export class MxmClient {
       query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientTrackSubtitleGetResponseSchema,
+      ),
+      options: input.options,
+    });
+  }
+
+  // --- trackSubtitleTranslationGet ---
+
+  async trackSubtitleTranslationGet<
+    TQuery extends
+      TrackSubtitleTranslationGetQuery = TrackSubtitleTranslationGetQuery,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientTrackSubtitleTranslationGetResponse>>;
+
+  async trackSubtitleTranslationGet<
+    TQuery extends TrackSubtitleTranslationGetQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async trackSubtitleTranslationGet(input: {
+    query: TrackSubtitleTranslationGetQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: TRACK_SUBTITLE_TRANSLATION_GET_ENDPOINT,
+      method: TRACK_SUBTITLE_TRANSLATION_GET_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientTrackSubtitleTranslationGetResponseSchema,
       ),
       options: input.options,
     });
