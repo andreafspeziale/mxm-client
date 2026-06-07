@@ -342,8 +342,10 @@ const track = await mxmClient.unsafe.trackGet<MyTrackGetQuery, MyTrackGetRespons
 <!-- Track  -->
 - `trackGet` ([track.get](https://docs.musixmatch.com/lyrics-api/track/track-get))
 - `trackLyricsGet` ([track.lyrics.get](https://docs.musixmatch.com/lyrics-api/track/track-lyrics-get))
+- `trackLyricsTranslationGet` ([track.lyrics.translation.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/track-lyrics-translation-get))
 - `trackSubtitleGet` ([track.subtitle.get](https://docs.musixmatch.com/lyrics-api/track/track-subtitle-get))
 - `trackRichSyncGet` ([track.richsync.get](https://docs.musixmatch.com/lyrics-api/track/track-richsync-get))
+- `trackSnippetGet` ([track.snippet.get](https://docs.musixmatch.com/lyrics-api/track/track-snippet-get))
 - `trackSearch` ([track.search](https://docs.musixmatch.com/lyrics-api/track/track-search))
 <!-- Enterprise  -->
 - `trackLyricsFingerprintPost` ([track.lyrics.fingerprint](https://docs.musixmatch.com/enterprise-integration/api-reference/track-lyrics-fingerprint-post))
