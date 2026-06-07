@@ -335,6 +335,8 @@ const track = await mxmClient.unsafe.trackGet<MyTrackGetQuery, MyTrackGetRespons
 ```
 
 ## Available methods
+<!-- Artist -->
+- `artistGet` ([artist.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/artist-get))
 <!-- Matcher  -->
 - `matcherLyricsGet` ([matcher.lyrics.get](https://docs.musixmatch.com/lyrics-api/matcher/matcher-lyrics-get))
 - `matcherSubtitleGet` ([matcher.subtitle.get](https://docs.musixmatch.com/lyrics-api/matcher/matcher-subtitle-get))
@@ -344,6 +346,7 @@ const track = await mxmClient.unsafe.trackGet<MyTrackGetQuery, MyTrackGetRespons
 - `trackLyricsGet` ([track.lyrics.get](https://docs.musixmatch.com/lyrics-api/track/track-lyrics-get))
 - `trackLyricsTranslationGet` ([track.lyrics.translation.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/track-lyrics-translation-get))
 - `trackSubtitleGet` ([track.subtitle.get](https://docs.musixmatch.com/lyrics-api/track/track-subtitle-get))
+- `trackSubtitleTranslationGet` ([track.subtitle.translation.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/track-subtitle-translation-get))
 - `trackRichSyncGet` ([track.richsync.get](https://docs.musixmatch.com/lyrics-api/track/track-richsync-get))
 - `trackSnippetGet` ([track.snippet.get](https://docs.musixmatch.com/lyrics-api/track/track-snippet-get))
 - `trackSearch` ([track.search](https://docs.musixmatch.com/lyrics-api/track/track-search))
