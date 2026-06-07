@@ -7,6 +7,7 @@ export * from './endpoints/track.lyrics.fingerprint.post/index.js';
 export * from './endpoints/track.lyrics.get/index.js';
 export * from './endpoints/track.richsync.get/index.js';
 export * from './endpoints/track.search/index.js';
+export * from './endpoints/track.snippet.get/index.js';
 export * from './endpoints/track.subtitle.get/index.js';
 export * from './mxm-client.client.js';
 export * from './mxm-client.error.js';

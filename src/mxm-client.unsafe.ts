@@ -66,6 +66,14 @@ import {
   TRACK_SEARCH_METHOD,
 } from './endpoints/track.search/definition.js';
 import type {
+  MxmClientTrackSnippetGetResponse,
+  TrackSnippetGetQuery,
+} from './endpoints/track.snippet.get/definition.js';
+import {
+  TRACK_SNIPPET_GET_ENDPOINT,
+  TRACK_SNIPPET_GET_METHOD,
+} from './endpoints/track.snippet.get/definition.js';
+import type {
   MxmClientTrackSubtitleGetResponse,
   TrackSubtitleGetQuery,
 } from './endpoints/track.subtitle.get/definition.js';
@@ -277,6 +285,22 @@ export class MxmClientUnsafe {
     return this.execute<TResponse>({
       endpoint: TRACK_SEARCH_ENDPOINT,
       method: TRACK_SEARCH_METHOD,
+      query: input.query,
+      options: input.options,
+    });
+  }
+
+  async trackSnippetGet<
+    TQuery extends TrackSnippetGetQuery = TrackSnippetGetQuery,
+    TResponse extends
+      MxmClientTrackSnippetGetResponse = MxmClientTrackSnippetGetResponse,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<TResponse>> {
+    return this.execute<TResponse>({
+      endpoint: TRACK_SNIPPET_GET_ENDPOINT,
+      method: TRACK_SNIPPET_GET_METHOD,
       query: input.query,
       options: input.options,
     });

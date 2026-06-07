@@ -93,6 +93,14 @@ t.test(
       );
     });
 
+    t.test('track.snippet.get', async (t) => {
+      await t.resolves(
+        client.trackSnippetGet({
+          query: { track_isrc: 'GBAAA9100070' },
+        }),
+      );
+    });
+
     t.end();
   },
 );
