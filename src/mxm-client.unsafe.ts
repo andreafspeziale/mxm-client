@@ -17,6 +17,14 @@ import {
   ARTIST_GET_METHOD,
 } from './endpoints/artist.get/definition.js';
 import type {
+  ArtistSearchQuery,
+  MxmClientArtistSearchResponse,
+} from './endpoints/artist.search/definition.js';
+import {
+  ARTIST_SEARCH_ENDPOINT,
+  ARTIST_SEARCH_METHOD,
+} from './endpoints/artist.search/definition.js';
+import type {
   LanguagesGetQuery,
   MxmClientLanguagesGetResponse,
 } from './endpoints/languages.get/definition.js';
@@ -213,6 +221,22 @@ export class MxmClientUnsafe {
     return this.execute<TResponse>({
       endpoint: ARTIST_GET_ENDPOINT,
       method: ARTIST_GET_METHOD,
+      query: input.query,
+      options: input.options,
+    });
+  }
+
+  async artistSearch<
+    TQuery extends ArtistSearchQuery = ArtistSearchQuery,
+    TResponse extends
+      MxmClientArtistSearchResponse = MxmClientArtistSearchResponse,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<TResponse>> {
+    return this.execute<TResponse>({
+      endpoint: ARTIST_SEARCH_ENDPOINT,
+      method: ARTIST_SEARCH_METHOD,
       query: input.query,
       options: input.options,
     });
