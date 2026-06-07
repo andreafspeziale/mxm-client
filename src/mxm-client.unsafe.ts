@@ -50,6 +50,14 @@ import {
   TRACK_LYRICS_GET_METHOD,
 } from './endpoints/track.lyrics.get/definition.js';
 import type {
+  MxmClientTrackLyricsTranslationGetResponse,
+  TrackLyricsTranslationGetQuery,
+} from './endpoints/track.lyrics.translation.get/definition.js';
+import {
+  TRACK_LYRICS_TRANSLATION_GET_ENDPOINT,
+  TRACK_LYRICS_TRANSLATION_GET_METHOD,
+} from './endpoints/track.lyrics.translation.get/definition.js';
+import type {
   MxmClientTrackRichSyncGetResponse,
   TrackRichSyncGetQuery,
 } from './endpoints/track.richsync.get/definition.js';
@@ -237,6 +245,23 @@ export class MxmClientUnsafe {
     return this.execute<TResponse>({
       endpoint: TRACK_LYRICS_GET_ENDPOINT,
       method: TRACK_LYRICS_GET_METHOD,
+      query: input.query,
+      options: input.options,
+    });
+  }
+
+  async trackLyricsTranslationGet<
+    TQuery extends
+      TrackLyricsTranslationGetQuery = TrackLyricsTranslationGetQuery,
+    TResponse extends
+      MxmClientTrackLyricsTranslationGetResponse = MxmClientTrackLyricsTranslationGetResponse,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<TResponse>> {
+    return this.execute<TResponse>({
+      endpoint: TRACK_LYRICS_TRANSLATION_GET_ENDPOINT,
+      method: TRACK_LYRICS_TRANSLATION_GET_METHOD,
       query: input.query,
       options: input.options,
     });

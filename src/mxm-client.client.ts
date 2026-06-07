@@ -58,6 +58,15 @@ import {
   TRACK_LYRICS_GET_METHOD,
 } from './endpoints/track.lyrics.get/definition.js';
 import type {
+  MxmClientTrackLyricsTranslationGetResponse,
+  TrackLyricsTranslationGetQuery,
+} from './endpoints/track.lyrics.translation.get/definition.js';
+import {
+  mxmClientTrackLyricsTranslationGetResponseSchema,
+  TRACK_LYRICS_TRANSLATION_GET_ENDPOINT,
+  TRACK_LYRICS_TRANSLATION_GET_METHOD,
+} from './endpoints/track.lyrics.translation.get/definition.js';
+import type {
   MxmClientTrackRichSyncGetResponse,
   TrackRichSyncGetQuery,
 } from './endpoints/track.richsync.get/definition.js';
@@ -401,6 +410,39 @@ export class MxmClient {
       query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientTrackLyricsGetResponseSchema,
+      ),
+      options: input.options,
+    });
+  }
+
+  // --- trackLyricsTranslationGet ---
+
+  async trackLyricsTranslationGet<
+    TQuery extends
+      TrackLyricsTranslationGetQuery = TrackLyricsTranslationGetQuery,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientTrackLyricsTranslationGetResponse>>;
+
+  async trackLyricsTranslationGet<
+    TQuery extends TrackLyricsTranslationGetQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async trackLyricsTranslationGet(input: {
+    query: TrackLyricsTranslationGetQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: TRACK_LYRICS_TRANSLATION_GET_ENDPOINT,
+      method: TRACK_LYRICS_TRANSLATION_GET_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientTrackLyricsTranslationGetResponseSchema,
       ),
       options: input.options,
     });

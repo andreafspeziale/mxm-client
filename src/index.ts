@@ -5,6 +5,7 @@ export * from './endpoints/shared.js';
 export * from './endpoints/track.get/index.js';
 export * from './endpoints/track.lyrics.fingerprint.post/index.js';
 export * from './endpoints/track.lyrics.get/index.js';
+export * from './endpoints/track.lyrics.translation.get/index.js';
 export * from './endpoints/track.richsync.get/index.js';
 export * from './endpoints/track.search/index.js';
 export * from './endpoints/track.snippet.get/index.js';
