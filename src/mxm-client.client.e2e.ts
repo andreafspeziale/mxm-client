@@ -27,6 +27,14 @@ t.test(
       );
     });
 
+    t.test('artist.albums.get', async (t) => {
+      await t.resolves(
+        client.artistAlbumsGet({
+          query: { artist_id: '259675' },
+        }),
+      );
+    });
+
     t.test('matcher.lyrics.get', async (t) => {
       await t.resolves(
         client.matcherLyricsGet({

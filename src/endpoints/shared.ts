@@ -67,6 +67,19 @@ export type ExtendedTrackIdentifierQuery =
 
 // --- Shared response schemas ---
 
+export const albumSchema = z.object({
+  album_id: z.number(),
+  album_name: z.string(),
+  album_release_date: z.string(),
+  artist_id: z.number(),
+  artist_name: z.string(),
+  album_pline: z.string(),
+  album_copyright: z.string(),
+  album_label: z.string(),
+  restricted: z.number(),
+  updated_time: z.string(),
+});
+
 export const artistSchema = z.object({
   artist_id: z.number(),
   artist_name: z.string(),
