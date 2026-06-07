@@ -97,6 +97,14 @@ import {
   TRACK_SUBTITLE_GET_ENDPOINT,
   TRACK_SUBTITLE_GET_METHOD,
 } from './endpoints/track.subtitle.get/definition.js';
+import type {
+  MxmClientTrackSubtitleTranslationGetResponse,
+  TrackSubtitleTranslationGetQuery,
+} from './endpoints/track.subtitle.translation.get/definition.js';
+import {
+  TRACK_SUBTITLE_TRANSLATION_GET_ENDPOINT,
+  TRACK_SUBTITLE_TRANSLATION_GET_METHOD,
+} from './endpoints/track.subtitle.translation.get/definition.js';
 import { MxmClientError } from './mxm-client.error.js';
 import type {
   AllowedHTTPMethods,
@@ -301,6 +309,23 @@ export class MxmClientUnsafe {
     return this.execute<TResponse>({
       endpoint: TRACK_SUBTITLE_GET_ENDPOINT,
       method: TRACK_SUBTITLE_GET_METHOD,
+      query: input.query,
+      options: input.options,
+    });
+  }
+
+  async trackSubtitleTranslationGet<
+    TQuery extends
+      TrackSubtitleTranslationGetQuery = TrackSubtitleTranslationGetQuery,
+    TResponse extends
+      MxmClientTrackSubtitleTranslationGetResponse = MxmClientTrackSubtitleTranslationGetResponse,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<TResponse>> {
+    return this.execute<TResponse>({
+      endpoint: TRACK_SUBTITLE_TRANSLATION_GET_ENDPOINT,
+      method: TRACK_SUBTITLE_TRANSLATION_GET_METHOD,
       query: input.query,
       options: input.options,
     });

@@ -11,6 +11,7 @@ export * from './endpoints/track.richsync.get/index.js';
 export * from './endpoints/track.search/index.js';
 export * from './endpoints/track.snippet.get/index.js';
 export * from './endpoints/track.subtitle.get/index.js';
+export * from './endpoints/track.subtitle.translation.get/index.js';
 export * from './mxm-client.client.js';
 export * from './mxm-client.error.js';
 export * from './mxm-client.interfaces.js';
