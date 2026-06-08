@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import { analysisSchema, trackSchema } from '../shared.js';
+import { analysisSchema } from '../shared.analysis.js';
+import { trackSchema } from '../shared.js';
 
 export const TRACK_LYRICS_ANALYSIS_SEARCH_METHOD = 'POST' as const;
 export const TRACK_LYRICS_ANALYSIS_SEARCH_ENDPOINT =
@@ -59,10 +60,9 @@ export type ModerationCategory =
   | 'sexual/minors'
   | 'violence/graphic';
 
-export interface TrackLyricsAnalysisSearchEntity {
-  name?: string;
-  category?: EntityCategory;
-}
+export type TrackLyricsAnalysisSearchEntity =
+  | { name: string; category?: EntityCategory }
+  | { name?: string; category: EntityCategory };
 
 export interface TrackLyricsAnalysisSearchBody {
   meaning?: string;
@@ -75,6 +75,7 @@ export interface TrackLyricsAnalysisSearchBody {
   genre?: string | string[];
   lyrics_language?: string;
   lyrics_explicit?: boolean;
+  // NOTE: undocumented field — observed working in live API but not in official docs; may be removed server-side without notice
   has_profanities?: boolean;
   first_release_date?: string;
   needs_moderation?: boolean;
