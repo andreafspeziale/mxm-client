@@ -205,13 +205,13 @@ export class MxmClientUnsafe {
     };
   }
 
-  private createPost(
+  private createPost<TBody>(
     endpoint: string,
-    transformBody: (body: unknown) => unknown,
+    transformBody: (body: TBody) => unknown,
   ) {
     return (input: {
       query?: object;
-      body: unknown;
+      body: TBody;
       options?: MxmClientRequestOptions;
     }): Promise<MxmClientResponse<never>> => {
       return this.execute({
@@ -329,6 +329,6 @@ export class MxmClientUnsafe {
     TrackLyricsFingerprintPostBody,
     MxmClientTrackLyricsFingerprintPostResponse
   > = this.createPost(TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT, (body) => ({
-    data: { text: (body as TrackLyricsFingerprintPostBody).text },
+    data: { text: body.text },
   }));
 }

@@ -330,14 +330,14 @@ export class MxmClient {
     };
   }
 
-  private createPost(
+  private createPost<TBody>(
     endpoint: string,
     responseSchema: z.ZodSchema,
-    transformBody: (body: unknown) => unknown,
+    transformBody: (body: TBody) => unknown,
   ) {
     return (input: {
       query?: object;
-      body: unknown;
+      body: TBody;
       options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
     }): Promise<MxmClientResponse<never>> => {
       return this.execute({
@@ -520,7 +520,7 @@ export class MxmClient {
     TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT,
     mxmClientTrackLyricsFingerprintPostResponseSchema,
     (body) => ({
-      data: { text: (body as TrackLyricsFingerprintPostBody).text },
+      data: { text: body.text },
     }),
   );
 }
