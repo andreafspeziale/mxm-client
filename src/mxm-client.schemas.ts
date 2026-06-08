@@ -10,6 +10,7 @@ export const buildLegacyAPIResponseSchema = <T>(schema: z.ZodType<T>) => {
       header: z.object({
         status_code: z.literal(200),
         execute_time: z.number(),
+        available: z.number().optional(),
       }),
       body: schema,
     }),

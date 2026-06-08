@@ -129,6 +129,31 @@ t.test('handleResponseWithSchema', (t) => {
     },
   );
 
+  t.test(
+    'Should preserve header.available when present in response',
+    async (t) => {
+      const dataWithAvailable = {
+        message: {
+          header: { status_code: 200, execute_time: 0.1, available: 42 },
+          body: { track_name: 'Hello', custom_field: 'extra' },
+        },
+      };
+
+      const result = await handleResponseWithSchema({
+        method: 'GET',
+        path: '/test',
+        statusCode: 200,
+        data: dataWithAvailable,
+        statusCodeSchema: successStatusCodeSchema,
+        responseSchema: customBodySchema,
+        wrapperSchema: legacyResponseWrapperSchema,
+        errorToBeInitialized: MxmClientError,
+      });
+
+      t.equal(result.message.header.available, 42);
+    },
+  );
+
   t.end();
 });
 

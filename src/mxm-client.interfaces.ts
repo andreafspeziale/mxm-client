@@ -64,6 +64,7 @@ export interface MxmClientResponse<T> {
     header: {
       status_code: number;
       execute_time: number;
+      available?: number | undefined;
     };
     body: T;
   };
