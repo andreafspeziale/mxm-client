@@ -1,3 +1,4 @@
+export * from './endpoints/album.get/index.js';
 export * from './endpoints/artist.albums.get/index.js';
 export * from './endpoints/artist.get/index.js';
 export * from './endpoints/artist.search/index.js';

@@ -19,6 +19,14 @@ t.test(
         : false,
   },
   (t) => {
+    t.test('album.get', async (t) => {
+      await t.resolves(
+        client.albumGet({
+          query: { album_id: '56126508' },
+        }),
+      );
+    });
+
     t.test('artist.get', async (t) => {
       await t.resolves(
         client.artistGet({

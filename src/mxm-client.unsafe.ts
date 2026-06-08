@@ -1,6 +1,14 @@
 import type { Logger } from 'pino';
 import type { Client } from 'undici';
 import type {
+  AlbumGetQuery,
+  MxmClientAlbumGetResponse,
+} from './endpoints/album.get/definition.js';
+import {
+  ALBUM_GET_ENDPOINT,
+  ALBUM_GET_METHOD,
+} from './endpoints/album.get/definition.js';
+import type {
   ArtistAlbumsGetQuery,
   MxmClientArtistAlbumsGetResponse,
 } from './endpoints/artist.albums.get/definition.js';
@@ -209,6 +217,21 @@ export class MxmClientUnsafe {
     });
 
     return data as MxmClientResponse<TResponse>;
+  }
+
+  async albumGet<
+    TQuery extends AlbumGetQuery = AlbumGetQuery,
+    TResponse extends MxmClientAlbumGetResponse = MxmClientAlbumGetResponse,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<TResponse>> {
+    return this.execute<TResponse>({
+      endpoint: ALBUM_GET_ENDPOINT,
+      method: ALBUM_GET_METHOD,
+      query: input.query,
+      options: input.options,
+    });
   }
 
   async artistGet<
