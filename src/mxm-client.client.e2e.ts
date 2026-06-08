@@ -27,6 +27,14 @@ t.test(
       );
     });
 
+    t.test('album.tracks.get', async (t) => {
+      await t.resolves(
+        client.albumTracksGet({
+          query: { album_id: '32540723' },
+        }),
+      );
+    });
+
     t.test('artist.get', async (t) => {
       await t.resolves(
         client.artistGet({

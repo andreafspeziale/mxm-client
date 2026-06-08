@@ -12,6 +12,15 @@ import {
   mxmClientAlbumGetResponseSchema,
 } from './endpoints/album.get/definition.js';
 import type {
+  AlbumTracksGetQuery,
+  MxmClientAlbumTracksGetResponse,
+} from './endpoints/album.tracks.get/definition.js';
+import {
+  ALBUM_TRACKS_GET_ENDPOINT,
+  ALBUM_TRACKS_GET_METHOD,
+  mxmClientAlbumTracksGetResponseSchema,
+} from './endpoints/album.tracks.get/definition.js';
+import type {
   ArtistAlbumsGetQuery,
   MxmClientArtistAlbumsGetResponse,
 } from './endpoints/artist.albums.get/definition.js';
@@ -337,6 +346,38 @@ export class MxmClient {
       method: ALBUM_GET_METHOD,
       query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(mxmClientAlbumGetResponseSchema),
+      options: input.options,
+    });
+  }
+
+  // --- albumTracksGet ---
+
+  async albumTracksGet<
+    TQuery extends AlbumTracksGetQuery = AlbumTracksGetQuery,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientAlbumTracksGetResponse>>;
+
+  async albumTracksGet<
+    TQuery extends AlbumTracksGetQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async albumTracksGet(input: {
+    query: AlbumTracksGetQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: ALBUM_TRACKS_GET_ENDPOINT,
+      method: ALBUM_TRACKS_GET_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientAlbumTracksGetResponseSchema,
+      ),
       options: input.options,
     });
   }
