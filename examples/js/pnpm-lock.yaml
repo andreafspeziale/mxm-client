@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@andreafspeziale/mxm-client':
-        specifier: file:../../andreafspeziale-mxm-client-1.0.0.tgz
-        version: file:../../andreafspeziale-mxm-client-1.0.0.tgz
+        specifier: file:../../andreafspeziale-mxm-client-1.2.0.tgz
+        version: file:../../andreafspeziale-mxm-client-1.2.0.tgz
     devDependencies:
       '@types/node':
         specifier: ^24.10.0
@@ -21,9 +21,9 @@ importers:
 
 packages:
 
-  '@andreafspeziale/mxm-client@file:../../andreafspeziale-mxm-client-1.0.0.tgz':
-    resolution: {integrity: sha512-Jl2HdHG9qbmJk7OZzTObfFFKAdfrnW/mA8fheu72Y4u1n5oWJqCix/R6hzU9ZQS9yRze/SGNfAa1K7MtvKD8lA==, tarball: file:../../andreafspeziale-mxm-client-1.0.0.tgz}
-    version: 1.0.0
+  '@andreafspeziale/mxm-client@file:../../andreafspeziale-mxm-client-1.2.0.tgz':
+    resolution: {integrity: sha512-e5MF2IUfWFjFGhAVEVEJOJMgbpBIOTo3GVVdTKpmwVtgVFV2YnjspsLKMYP+G3yEsTsR2gWW3hltCxYKgr3l0g==, tarball: file:../../andreafspeziale-mxm-client-1.2.0.tgz}
+    version: 1.2.0
     engines: {node: '>=24.11.0'}
 
   '@pinojs/redact@0.4.0':
@@ -144,7 +144,7 @@ packages:
 
 snapshots:
 
-  '@andreafspeziale/mxm-client@file:../../andreafspeziale-mxm-client-1.0.0.tgz':
+  '@andreafspeziale/mxm-client@file:../../andreafspeziale-mxm-client-1.2.0.tgz':
     dependencies:
       '@standard-schema/spec': 1.1.0
       pino: 10.3.1
