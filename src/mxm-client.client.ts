@@ -48,6 +48,24 @@ import {
   mxmClientArtistSearchResponseSchema,
 } from './endpoints/artist.search/definition.js';
 import type {
+  ChartArtistsGetQuery,
+  MxmClientChartArtistsGetResponse,
+} from './endpoints/chart.artists.get/definition.js';
+import {
+  CHART_ARTISTS_GET_ENDPOINT,
+  CHART_ARTISTS_GET_METHOD,
+  mxmClientChartArtistsGetResponseSchema,
+} from './endpoints/chart.artists.get/definition.js';
+import type {
+  ChartTracksGetQuery,
+  MxmClientChartTracksGetResponse,
+} from './endpoints/chart.tracks.get/definition.js';
+import {
+  CHART_TRACKS_GET_ENDPOINT,
+  CHART_TRACKS_GET_METHOD,
+  mxmClientChartTracksGetResponseSchema,
+} from './endpoints/chart.tracks.get/definition.js';
+import type {
   LanguagesGetQuery,
   MxmClientLanguagesGetResponse,
 } from './endpoints/languages.get/definition.js';
@@ -83,6 +101,15 @@ import {
   MATCHER_TRACK_GET_METHOD,
   mxmClientMatcherTrackGetResponseSchema,
 } from './endpoints/matcher.track.get/definition.js';
+import type {
+  MusicGenresGetQuery,
+  MxmClientMusicGenresGetResponse,
+} from './endpoints/music.genres.get/definition.js';
+import {
+  MUSIC_GENRES_GET_ENDPOINT,
+  MUSIC_GENRES_GET_METHOD,
+  mxmClientMusicGenresGetResponseSchema,
+} from './endpoints/music.genres.get/definition.js';
 import type {
   MxmClientTrackGetResponse,
   TrackGetQuery,
@@ -476,6 +503,70 @@ export class MxmClient {
     });
   }
 
+  // --- chartTracksGet ---
+
+  async chartTracksGet<
+    TQuery extends ChartTracksGetQuery = ChartTracksGetQuery,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientChartTracksGetResponse>>;
+
+  async chartTracksGet<
+    TQuery extends ChartTracksGetQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async chartTracksGet(input: {
+    query: ChartTracksGetQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: CHART_TRACKS_GET_ENDPOINT,
+      method: CHART_TRACKS_GET_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientChartTracksGetResponseSchema,
+      ),
+      options: input.options,
+    });
+  }
+
+  // --- chartArtistsGet ---
+
+  async chartArtistsGet<
+    TQuery extends ChartArtistsGetQuery = ChartArtistsGetQuery,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientChartArtistsGetResponse>>;
+
+  async chartArtistsGet<
+    TQuery extends ChartArtistsGetQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async chartArtistsGet(input: {
+    query: ChartArtistsGetQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: CHART_ARTISTS_GET_ENDPOINT,
+      method: CHART_ARTISTS_GET_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientChartArtistsGetResponseSchema,
+      ),
+      options: input.options,
+    });
+  }
+
   // --- languagesGet ---
 
   async languagesGet<
@@ -599,6 +690,38 @@ export class MxmClient {
       query: input.query,
       dataSchema: buildLegacyAPIResponseSchema(
         mxmClientMatcherTrackGetResponseSchema,
+      ),
+      options: input.options,
+    });
+  }
+
+  // --- musicGenresGet ---
+
+  async musicGenresGet<
+    TQuery extends MusicGenresGetQuery = MusicGenresGetQuery,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<MxmClientMusicGenresGetResponse>>;
+
+  async musicGenresGet<
+    TQuery extends MusicGenresGetQuery,
+    TSchema extends StandardSchemaV1,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options: MxmClientRequestOptionsWithSchema<TSchema>;
+  }): Promise<MxmClientResponse<StandardSchemaV1.InferOutput<TSchema>>>;
+
+  async musicGenresGet(input: {
+    query: MusicGenresGetQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions | MxmClientRequestOptionsWithSchema;
+  }): Promise<MxmClientResponse<unknown>> {
+    return this.execute({
+      endpoint: MUSIC_GENRES_GET_ENDPOINT,
+      method: MUSIC_GENRES_GET_METHOD,
+      query: input.query,
+      dataSchema: buildLegacyAPIResponseSchema(
+        mxmClientMusicGenresGetResponseSchema,
       ),
       options: input.options,
     });
