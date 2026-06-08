@@ -9,6 +9,14 @@ import {
   ALBUM_GET_METHOD,
 } from './endpoints/album.get/definition.js';
 import type {
+  AlbumTracksGetQuery,
+  MxmClientAlbumTracksGetResponse,
+} from './endpoints/album.tracks.get/definition.js';
+import {
+  ALBUM_TRACKS_GET_ENDPOINT,
+  ALBUM_TRACKS_GET_METHOD,
+} from './endpoints/album.tracks.get/definition.js';
+import type {
   ArtistAlbumsGetQuery,
   MxmClientArtistAlbumsGetResponse,
 } from './endpoints/artist.albums.get/definition.js';
@@ -229,6 +237,22 @@ export class MxmClientUnsafe {
     return this.execute<TResponse>({
       endpoint: ALBUM_GET_ENDPOINT,
       method: ALBUM_GET_METHOD,
+      query: input.query,
+      options: input.options,
+    });
+  }
+
+  async albumTracksGet<
+    TQuery extends AlbumTracksGetQuery = AlbumTracksGetQuery,
+    TResponse extends
+      MxmClientAlbumTracksGetResponse = MxmClientAlbumTracksGetResponse,
+  >(input: {
+    query: TQuery & MxmClientOptionalAPIKey;
+    options?: MxmClientRequestOptions;
+  }): Promise<MxmClientResponse<TResponse>> {
+    return this.execute<TResponse>({
+      endpoint: ALBUM_TRACKS_GET_ENDPOINT,
+      method: ALBUM_TRACKS_GET_METHOD,
       query: input.query,
       options: input.options,
     });

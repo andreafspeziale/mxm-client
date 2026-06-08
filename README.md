@@ -361,6 +361,7 @@ const track = await mxmClient.unsafe.trackGet<MyTrackGetQuery, MyTrackGetRespons
 
 <!-- Album -->
 - `albumGet` ([album.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/album-get))
+- `albumTracksGet` ([album.tracks.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/album-tracks-get))
 
 <!-- Enterprise -->
 - `trackLyricsFingerprintPost` ([track.lyrics.fingerprint](https://docs.musixmatch.com/enterprise-integration/api-reference/track-lyrics-fingerprint-post))
