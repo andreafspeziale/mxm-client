@@ -67,6 +67,14 @@ export type ExtendedTrackIdentifierQuery =
 
 // --- Shared response schemas ---
 
+export const musicGenreSchema = z.object({
+  music_genre_id: z.number(),
+  music_genre_parent_id: z.number(),
+  music_genre_name: z.string(),
+  music_genre_name_extended: z.string(),
+  music_genre_vanity: z.string(),
+});
+
 export const albumSchema = z.object({
   album_id: z.number(),
   album_name: z.string(),
@@ -151,16 +159,16 @@ export const trackSchema = z.object({
   primary_genres: z.object({
     music_genre_list: z.array(
       z.object({
-        music_genre: z.object({
-          music_genre_id: z.number(),
-          music_genre_name: z.string(),
-          music_genre_name_extended: z.string(),
-          music_genre_parent_id: z.number(),
-          music_genre_vanity: z.string(),
-        }),
+        music_genre: musicGenreSchema,
       }),
     ),
   }),
+  // TODO: not returned by track.search
+  track_lyrics_translation_options: z
+    .object({
+      contribution_blocked: z.number(),
+    })
+    .optional(),
 });
 
 export const lyricsSchema = z.object({
