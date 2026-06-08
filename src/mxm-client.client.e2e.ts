@@ -91,6 +91,19 @@ t.test(
       );
     });
 
+    t.test('track.lyrics.analysis.search', async (t) => {
+      await t.resolves(
+        client.trackLyricsAnalysisSearch({
+          body: {
+            meaning: 'songs about love and heartbreak',
+            moods: ['Love', 'Heartbreak'],
+            lyrics_language: 'en',
+          },
+          query: { page: '1', page_size: '2' },
+        }),
+      );
+    });
+
     t.test('track.lyrics.fingerprint.post', async (t) => {
       await t.resolves(
         client.trackLyricsFingerprintPost({

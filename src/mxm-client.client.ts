@@ -107,6 +107,15 @@ import {
   TRACK_GET_ENDPOINT,
 } from './endpoints/track.get/definition.js';
 import type {
+  MxmClientTrackLyricsAnalysisSearchResponse,
+  TrackLyricsAnalysisSearchBody,
+  TrackLyricsAnalysisSearchQuery,
+} from './endpoints/track.lyrics.analysis.search/definition.js';
+import {
+  mxmClientTrackLyricsAnalysisSearchResponseSchema,
+  TRACK_LYRICS_ANALYSIS_SEARCH_ENDPOINT,
+} from './endpoints/track.lyrics.analysis.search/definition.js';
+import type {
   MxmClientTrackLyricsFingerprintPostResponse,
   TrackLyricsFingerprintPostBody,
   TrackLyricsFingerprintPostQuery,
@@ -511,6 +520,16 @@ export class MxmClient {
   );
 
   // --- POST endpoints ---
+
+  readonly trackLyricsAnalysisSearch: SafePostMethod<
+    TrackLyricsAnalysisSearchQuery,
+    TrackLyricsAnalysisSearchBody,
+    MxmClientTrackLyricsAnalysisSearchResponse
+  > = this.createPost(
+    TRACK_LYRICS_ANALYSIS_SEARCH_ENDPOINT,
+    mxmClientTrackLyricsAnalysisSearchResponseSchema,
+    (body) => ({ data: body }),
+  );
 
   readonly trackLyricsFingerprintPost: SafePostMethod<
     TrackLyricsFingerprintPostQuery,
