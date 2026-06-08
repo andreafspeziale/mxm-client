@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.3.0](https://github.com/andreafspeziale/mxm-client/compare/1.2.0...1.3.0) (2026-06-08)
+
+### Features
+
+* add album.get endpoint ([c4e5c23](https://github.com/andreafspeziale/mxm-client/commit/c4e5c23f2201c36c7149163dda97492c16eb447d))
+* add album.tracks.get endpoint ([1d725f3](https://github.com/andreafspeziale/mxm-client/commit/1d725f3379e5f6c09bd0c79eb8571c3e0312773d))
+* add artist search endpoint ([18dbbe6](https://github.com/andreafspeziale/mxm-client/commit/18dbbe6154a52ab87cfd112958a8cb887e70384e))
+* add chart.tracks.get, chart.artists.get, music.genres.get endpoints ([f17b476](https://github.com/andreafspeziale/mxm-client/commit/f17b476bc3c9dc0bfedb376d7ada152e0861ff3c))
+* add header.available field to response ([de6eae6](https://github.com/andreafspeziale/mxm-client/commit/de6eae6cd44fd270eb7b858aa99ede606ff5d121))
+* add missing documented params to track.search ([0a39c5b](https://github.com/andreafspeziale/mxm-client/commit/0a39c5be71376b79ed7c97f991c903e54f8bc8b1))
+* add track.lyrics.analysis.get endpoint ([e3a9761](https://github.com/andreafspeziale/mxm-client/commit/e3a97610fab853c3c1bb49447a7a8ed3a17ea3bb))
+* add track.lyrics.analysis.search endpoint ([0bd944a](https://github.com/andreafspeziale/mxm-client/commit/0bd944a8d94d2086e3ec5de380ba8fd8367871e8))
+
+### Refactors
+
+* address review findings ([e94f77a](https://github.com/andreafspeziale/mxm-client/commit/e94f77a2f2cc9b6d4bbb76a980eb79bea301e655))
+* extract factory pattern for client endpoint methods ([0cb3705](https://github.com/andreafspeziale/mxm-client/commit/0cb37051c4ef1f0ab3b7c75300406b8debe6ed4f))
+* remove body type assertion in createPost ([bf366d6](https://github.com/andreafspeziale/mxm-client/commit/bf366d63e4f9acc577b4ed6139b4ea5a1799da3f))
+
+### Miscellaneous
+
+* add ts as preference to AGENTS.md ([f266814](https://github.com/andreafspeziale/mxm-client/commit/f266814d89130034579bcbe524965024355b6400))
+
 ## [1.2.0](https://github.com/andreafspeziale/mxm-client/compare/1.1.0...1.2.0) (2026-06-07)
 
 ### Features
