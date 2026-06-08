@@ -20,6 +20,7 @@
 - **Testing**: Use `tap` test runner, mock with `undici` MockAgent, organize tests with `t.test()` blocks
 - **File structure**: Endpoints in `src/endpoints/{name}/` with handler.ts, schema.ts, interfaces.ts, constants.ts, handler.spec.ts
 - **Input types**: Structured `{ query, body }` via `EndpointPayload<TParams, TQuery, TBody>`. Client methods accept `{ query, apiKey? }` (GET) or `{ query?, body, apiKey? }` (POST). Payload types named `*Query` (GET) or `*Query` + `*Body` (POST)
+- **Typescript "as"**: It's a last resort, only when it's strictly necessary, still type-safe and improves DX. Otherwise, fix the types properly
 
 ## Git Branch, Commit, PR and Release Conventions
 

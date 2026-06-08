@@ -60,10 +60,15 @@ interface OptionalFilters {
   f_music_genre_id?: string;
   f_lyrics_language?: string;
   f_has_lyrics?: string;
+  f_has_rich_sync?: string;
+  f_is_instrumental?: string;
+  f_has_subtitle?: string;
   f_track_release_group_first_release_date_min?: string;
   f_track_release_group_first_release_date_max?: string;
+  g_commontrack?: string;
   s_artist_rating?: string;
   s_track_rating?: string;
+  s_track_release_date?: string;
   page?: string;
   page_size?: string;
 }

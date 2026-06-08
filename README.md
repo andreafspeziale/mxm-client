@@ -356,10 +356,24 @@ const track = await mxmClient.unsafe.trackGet<MyTrackGetQuery, MyTrackGetRespons
 
 <!-- Artist -->
 - `artistGet` ([artist.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/artist-get))
+- `artistSearch` ([artist.search](https://docs.musixmatch.com/api-reference/lyrics-catalog/artist-search))
 - `artistAlbumsGet` ([artist.albums.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/artist-albums-get))
+
+<!-- Album -->
+- `albumGet` ([album.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/album-get))
+- `albumTracksGet` ([album.tracks.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/album-tracks-get))
+
+<!-- Charts -->
+- `chartTracksGet` ([chart.tracks.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/chart-tracks-get))
+- `chartArtistsGet` ([chart.artists.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/chart-artists-get))
+- `musicGenresGet` ([music.genres.get](https://docs.musixmatch.com/api-reference/lyrics-catalog/music-genres-get))
 
 <!-- Enterprise -->
 - `trackLyricsFingerprintPost` ([track.lyrics.fingerprint](https://docs.musixmatch.com/enterprise-integration/api-reference/track-lyrics-fingerprint-post))
+
+<!-- Analysis -->
+- `trackLyricsAnalysisGet` ([track.lyrics.analysis.get](https://docs.musixmatch.com/api-reference/analysis/track-lyrics-analysis-get))
+- `trackLyricsAnalysisSearch` ([track.lyrics.analysis.search](https://docs.musixmatch.com/api-reference/analysis/track-lyrics-analysis-search))
 
 ## Examples
 

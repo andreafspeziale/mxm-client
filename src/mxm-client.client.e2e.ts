@@ -19,6 +19,22 @@ t.test(
         : false,
   },
   (t) => {
+    t.test('album.get', async (t) => {
+      await t.resolves(
+        client.albumGet({
+          query: { album_id: '56126508' },
+        }),
+      );
+    });
+
+    t.test('album.tracks.get', async (t) => {
+      await t.resolves(
+        client.albumTracksGet({
+          query: { album_id: '32540723' },
+        }),
+      );
+    });
+
     t.test('artist.get', async (t) => {
       await t.resolves(
         client.artistGet({
@@ -31,6 +47,14 @@ t.test(
       await t.resolves(
         client.artistAlbumsGet({
           query: { artist_id: '259675' },
+        }),
+      );
+    });
+
+    t.test('artist.search', async (t) => {
+      await t.resolves(
+        client.artistSearch({
+          query: { q_artist: 'Taylor Swift' },
         }),
       );
     });
@@ -63,6 +87,19 @@ t.test(
       await t.resolves(
         client.trackGet({
           query: { track_isrc: 'GBAAA9100070' },
+        }),
+      );
+    });
+
+    t.test('track.lyrics.analysis.search', async (t) => {
+      await t.resolves(
+        client.trackLyricsAnalysisSearch({
+          body: {
+            meaning: 'songs about love and heartbreak',
+            moods: ['Love', 'Heartbreak'],
+            lyrics_language: 'en',
+          },
+          query: { page: '1', page_size: '2' },
         }),
       );
     });
