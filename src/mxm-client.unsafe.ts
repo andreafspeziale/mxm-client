@@ -4,175 +4,115 @@ import type {
   AlbumGetQuery,
   MxmClientAlbumGetResponse,
 } from './endpoints/album.get/definition.js';
-import {
-  ALBUM_GET_ENDPOINT,
-  ALBUM_GET_METHOD,
-} from './endpoints/album.get/definition.js';
+import { ALBUM_GET_ENDPOINT } from './endpoints/album.get/definition.js';
 import type {
   AlbumTracksGetQuery,
   MxmClientAlbumTracksGetResponse,
 } from './endpoints/album.tracks.get/definition.js';
-import {
-  ALBUM_TRACKS_GET_ENDPOINT,
-  ALBUM_TRACKS_GET_METHOD,
-} from './endpoints/album.tracks.get/definition.js';
+import { ALBUM_TRACKS_GET_ENDPOINT } from './endpoints/album.tracks.get/definition.js';
 import type {
   ArtistAlbumsGetQuery,
   MxmClientArtistAlbumsGetResponse,
 } from './endpoints/artist.albums.get/definition.js';
-import {
-  ARTIST_ALBUMS_GET_ENDPOINT,
-  ARTIST_ALBUMS_GET_METHOD,
-} from './endpoints/artist.albums.get/definition.js';
+import { ARTIST_ALBUMS_GET_ENDPOINT } from './endpoints/artist.albums.get/definition.js';
 import type {
   ArtistGetQuery,
   MxmClientArtistGetResponse,
 } from './endpoints/artist.get/definition.js';
-import {
-  ARTIST_GET_ENDPOINT,
-  ARTIST_GET_METHOD,
-} from './endpoints/artist.get/definition.js';
+import { ARTIST_GET_ENDPOINT } from './endpoints/artist.get/definition.js';
 import type {
   ArtistSearchQuery,
   MxmClientArtistSearchResponse,
 } from './endpoints/artist.search/definition.js';
-import {
-  ARTIST_SEARCH_ENDPOINT,
-  ARTIST_SEARCH_METHOD,
-} from './endpoints/artist.search/definition.js';
+import { ARTIST_SEARCH_ENDPOINT } from './endpoints/artist.search/definition.js';
 import type {
   ChartArtistsGetQuery,
   MxmClientChartArtistsGetResponse,
 } from './endpoints/chart.artists.get/definition.js';
-import {
-  CHART_ARTISTS_GET_ENDPOINT,
-  CHART_ARTISTS_GET_METHOD,
-} from './endpoints/chart.artists.get/definition.js';
+import { CHART_ARTISTS_GET_ENDPOINT } from './endpoints/chart.artists.get/definition.js';
 import type {
   ChartTracksGetQuery,
   MxmClientChartTracksGetResponse,
 } from './endpoints/chart.tracks.get/definition.js';
-import {
-  CHART_TRACKS_GET_ENDPOINT,
-  CHART_TRACKS_GET_METHOD,
-} from './endpoints/chart.tracks.get/definition.js';
+import { CHART_TRACKS_GET_ENDPOINT } from './endpoints/chart.tracks.get/definition.js';
 import type {
   LanguagesGetQuery,
   MxmClientLanguagesGetResponse,
 } from './endpoints/languages.get/definition.js';
-import {
-  LANGUAGES_GET_ENDPOINT,
-  LANGUAGES_GET_METHOD,
-} from './endpoints/languages.get/definition.js';
+import { LANGUAGES_GET_ENDPOINT } from './endpoints/languages.get/definition.js';
 import type {
   MatcherLyricsGetQuery,
   MxmClientMatcherLyricsGetResponse,
 } from './endpoints/matcher.lyrics.get/definition.js';
-import {
-  MATCHER_LYRICS_GET_ENDPOINT,
-  MATCHER_LYRICS_GET_METHOD,
-} from './endpoints/matcher.lyrics.get/definition.js';
+import { MATCHER_LYRICS_GET_ENDPOINT } from './endpoints/matcher.lyrics.get/definition.js';
 import type {
   MatcherSubtitleGetQuery,
   MxmClientMatcherSubtitleGetResponse,
 } from './endpoints/matcher.subtitle.get/definition.js';
-import {
-  MATCHER_SUBTITLE_GET_ENDPOINT,
-  MATCHER_SUBTITLE_GET_METHOD,
-} from './endpoints/matcher.subtitle.get/definition.js';
+import { MATCHER_SUBTITLE_GET_ENDPOINT } from './endpoints/matcher.subtitle.get/definition.js';
 import type {
   MatcherTrackGetQuery,
   MxmClientMatcherTrackGetResponse,
 } from './endpoints/matcher.track.get/definition.js';
-import {
-  MATCHER_TRACK_GET_ENDPOINT,
-  MATCHER_TRACK_GET_METHOD,
-} from './endpoints/matcher.track.get/definition.js';
+import { MATCHER_TRACK_GET_ENDPOINT } from './endpoints/matcher.track.get/definition.js';
 import type {
   MusicGenresGetQuery,
   MxmClientMusicGenresGetResponse,
 } from './endpoints/music.genres.get/definition.js';
-import {
-  MUSIC_GENRES_GET_ENDPOINT,
-  MUSIC_GENRES_GET_METHOD,
-} from './endpoints/music.genres.get/definition.js';
+import { MUSIC_GENRES_GET_ENDPOINT } from './endpoints/music.genres.get/definition.js';
 import type {
   MxmClientTrackGetResponse,
   TrackGetQuery,
 } from './endpoints/track.get/definition.js';
-import {
-  TRACK_GET_ENDPOINT,
-  TRACK_GET_METHOD,
-} from './endpoints/track.get/definition.js';
+import { TRACK_GET_ENDPOINT } from './endpoints/track.get/definition.js';
 import type {
   MxmClientTrackLyricsFingerprintPostResponse,
   TrackLyricsFingerprintPostBody,
   TrackLyricsFingerprintPostQuery,
 } from './endpoints/track.lyrics.fingerprint.post/definition.js';
-import {
-  TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT,
-  TRACK_LYRICS_FINGERPRINT_POST_METHOD,
-} from './endpoints/track.lyrics.fingerprint.post/definition.js';
+import { TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT } from './endpoints/track.lyrics.fingerprint.post/definition.js';
 import type {
   MxmClientTrackLyricsGetResponse,
   TrackLyricsGetQuery,
 } from './endpoints/track.lyrics.get/definition.js';
-import {
-  TRACK_LYRICS_GET_ENDPOINT,
-  TRACK_LYRICS_GET_METHOD,
-} from './endpoints/track.lyrics.get/definition.js';
+import { TRACK_LYRICS_GET_ENDPOINT } from './endpoints/track.lyrics.get/definition.js';
 import type {
   MxmClientTrackLyricsTranslationGetResponse,
   TrackLyricsTranslationGetQuery,
 } from './endpoints/track.lyrics.translation.get/definition.js';
-import {
-  TRACK_LYRICS_TRANSLATION_GET_ENDPOINT,
-  TRACK_LYRICS_TRANSLATION_GET_METHOD,
-} from './endpoints/track.lyrics.translation.get/definition.js';
+import { TRACK_LYRICS_TRANSLATION_GET_ENDPOINT } from './endpoints/track.lyrics.translation.get/definition.js';
 import type {
   MxmClientTrackRichSyncGetResponse,
   TrackRichSyncGetQuery,
 } from './endpoints/track.richsync.get/definition.js';
-import {
-  TRACK_RICHSYNC_GET_ENDPOINT,
-  TRACK_RICHSYNC_GET_METHOD,
-} from './endpoints/track.richsync.get/definition.js';
+import { TRACK_RICHSYNC_GET_ENDPOINT } from './endpoints/track.richsync.get/definition.js';
 import type {
   MxmClientTrackSearchResponse,
   TrackSearchQuery,
 } from './endpoints/track.search/definition.js';
-import {
-  TRACK_SEARCH_ENDPOINT,
-  TRACK_SEARCH_METHOD,
-} from './endpoints/track.search/definition.js';
+import { TRACK_SEARCH_ENDPOINT } from './endpoints/track.search/definition.js';
 import type {
   MxmClientTrackSnippetGetResponse,
   TrackSnippetGetQuery,
 } from './endpoints/track.snippet.get/definition.js';
-import {
-  TRACK_SNIPPET_GET_ENDPOINT,
-  TRACK_SNIPPET_GET_METHOD,
-} from './endpoints/track.snippet.get/definition.js';
+import { TRACK_SNIPPET_GET_ENDPOINT } from './endpoints/track.snippet.get/definition.js';
 import type {
   MxmClientTrackSubtitleGetResponse,
   TrackSubtitleGetQuery,
 } from './endpoints/track.subtitle.get/definition.js';
-import {
-  TRACK_SUBTITLE_GET_ENDPOINT,
-  TRACK_SUBTITLE_GET_METHOD,
-} from './endpoints/track.subtitle.get/definition.js';
+import { TRACK_SUBTITLE_GET_ENDPOINT } from './endpoints/track.subtitle.get/definition.js';
 import type {
   MxmClientTrackSubtitleTranslationGetResponse,
   TrackSubtitleTranslationGetQuery,
 } from './endpoints/track.subtitle.translation.get/definition.js';
-import {
-  TRACK_SUBTITLE_TRANSLATION_GET_ENDPOINT,
-  TRACK_SUBTITLE_TRANSLATION_GET_METHOD,
-} from './endpoints/track.subtitle.translation.get/definition.js';
+import { TRACK_SUBTITLE_TRANSLATION_GET_ENDPOINT } from './endpoints/track.subtitle.translation.get/definition.js';
 import { MxmClientError } from './mxm-client.error.js';
 import type {
+  UnsafeGetMethod,
+  UnsafePostMethod,
+} from './mxm-client.factory.js';
+import type {
   AllowedHTTPMethods,
-  MxmClientOptionalAPIKey,
   MxmClientRequestOptions,
   MxmClientResponse,
 } from './mxm-client.interfaces.js';
@@ -251,343 +191,144 @@ export class MxmClientUnsafe {
     return data as MxmClientResponse<TResponse>;
   }
 
-  async albumGet<
-    TQuery extends AlbumGetQuery = AlbumGetQuery,
-    TResponse extends MxmClientAlbumGetResponse = MxmClientAlbumGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: ALBUM_GET_ENDPOINT,
-      method: ALBUM_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
+  private createGet(endpoint: string) {
+    return (input: {
+      query: object;
+      options?: MxmClientRequestOptions;
+    }): Promise<MxmClientResponse<never>> => {
+      return this.execute({
+        endpoint,
+        method: 'GET',
+        query: input.query,
+        options: input.options,
+      });
+    };
   }
 
-  async albumTracksGet<
-    TQuery extends AlbumTracksGetQuery = AlbumTracksGetQuery,
-    TResponse extends
-      MxmClientAlbumTracksGetResponse = MxmClientAlbumTracksGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: ALBUM_TRACKS_GET_ENDPOINT,
-      method: ALBUM_TRACKS_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
+  private createPost(
+    endpoint: string,
+    transformBody: (body: unknown) => unknown,
+  ) {
+    return (input: {
+      query?: object;
+      body: unknown;
+      options?: MxmClientRequestOptions;
+    }): Promise<MxmClientResponse<never>> => {
+      return this.execute({
+        endpoint,
+        method: 'POST',
+        query: input.query ?? {},
+        body: transformBody(input.body),
+        options: input.options,
+      });
+    };
   }
 
-  async artistGet<
-    TQuery extends ArtistGetQuery = ArtistGetQuery,
-    TResponse extends MxmClientArtistGetResponse = MxmClientArtistGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: ARTIST_GET_ENDPOINT,
-      method: ARTIST_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  // --- GET endpoints ---
 
-  async artistSearch<
-    TQuery extends ArtistSearchQuery = ArtistSearchQuery,
-    TResponse extends
-      MxmClientArtistSearchResponse = MxmClientArtistSearchResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: ARTIST_SEARCH_ENDPOINT,
-      method: ARTIST_SEARCH_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly albumGet: UnsafeGetMethod<AlbumGetQuery, MxmClientAlbumGetResponse> =
+    this.createGet(ALBUM_GET_ENDPOINT);
 
-  async artistAlbumsGet<
-    TQuery extends ArtistAlbumsGetQuery = ArtistAlbumsGetQuery,
-    TResponse extends
-      MxmClientArtistAlbumsGetResponse = MxmClientArtistAlbumsGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: ARTIST_ALBUMS_GET_ENDPOINT,
-      method: ARTIST_ALBUMS_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly albumTracksGet: UnsafeGetMethod<
+    AlbumTracksGetQuery,
+    MxmClientAlbumTracksGetResponse
+  > = this.createGet(ALBUM_TRACKS_GET_ENDPOINT);
 
-  async chartTracksGet<
-    TQuery extends ChartTracksGetQuery = ChartTracksGetQuery,
-    TResponse extends
-      MxmClientChartTracksGetResponse = MxmClientChartTracksGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: CHART_TRACKS_GET_ENDPOINT,
-      method: CHART_TRACKS_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly artistGet: UnsafeGetMethod<
+    ArtistGetQuery,
+    MxmClientArtistGetResponse
+  > = this.createGet(ARTIST_GET_ENDPOINT);
 
-  async chartArtistsGet<
-    TQuery extends ChartArtistsGetQuery = ChartArtistsGetQuery,
-    TResponse extends
-      MxmClientChartArtistsGetResponse = MxmClientChartArtistsGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: CHART_ARTISTS_GET_ENDPOINT,
-      method: CHART_ARTISTS_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly artistSearch: UnsafeGetMethod<
+    ArtistSearchQuery,
+    MxmClientArtistSearchResponse
+  > = this.createGet(ARTIST_SEARCH_ENDPOINT);
 
-  async languagesGet<
-    TQuery extends LanguagesGetQuery = LanguagesGetQuery,
-    TResponse extends
-      MxmClientLanguagesGetResponse = MxmClientLanguagesGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: LANGUAGES_GET_ENDPOINT,
-      method: LANGUAGES_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly artistAlbumsGet: UnsafeGetMethod<
+    ArtistAlbumsGetQuery,
+    MxmClientArtistAlbumsGetResponse
+  > = this.createGet(ARTIST_ALBUMS_GET_ENDPOINT);
 
-  async matcherLyricsGet<
-    TQuery extends MatcherLyricsGetQuery = MatcherLyricsGetQuery,
-    TResponse extends
-      MxmClientMatcherLyricsGetResponse = MxmClientMatcherLyricsGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: MATCHER_LYRICS_GET_ENDPOINT,
-      method: MATCHER_LYRICS_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly chartTracksGet: UnsafeGetMethod<
+    ChartTracksGetQuery,
+    MxmClientChartTracksGetResponse
+  > = this.createGet(CHART_TRACKS_GET_ENDPOINT);
 
-  async matcherSubtitleGet<
-    TQuery extends MatcherSubtitleGetQuery = MatcherSubtitleGetQuery,
-    TResponse extends
-      MxmClientMatcherSubtitleGetResponse = MxmClientMatcherSubtitleGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: MATCHER_SUBTITLE_GET_ENDPOINT,
-      method: MATCHER_SUBTITLE_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly chartArtistsGet: UnsafeGetMethod<
+    ChartArtistsGetQuery,
+    MxmClientChartArtistsGetResponse
+  > = this.createGet(CHART_ARTISTS_GET_ENDPOINT);
 
-  async matcherTrackGet<
-    TQuery extends MatcherTrackGetQuery = MatcherTrackGetQuery,
-    TResponse extends
-      MxmClientMatcherTrackGetResponse = MxmClientMatcherTrackGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: MATCHER_TRACK_GET_ENDPOINT,
-      method: MATCHER_TRACK_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly languagesGet: UnsafeGetMethod<
+    LanguagesGetQuery,
+    MxmClientLanguagesGetResponse
+  > = this.createGet(LANGUAGES_GET_ENDPOINT);
 
-  async musicGenresGet<
-    TQuery extends MusicGenresGetQuery = MusicGenresGetQuery,
-    TResponse extends
-      MxmClientMusicGenresGetResponse = MxmClientMusicGenresGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: MUSIC_GENRES_GET_ENDPOINT,
-      method: MUSIC_GENRES_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly matcherLyricsGet: UnsafeGetMethod<
+    MatcherLyricsGetQuery,
+    MxmClientMatcherLyricsGetResponse
+  > = this.createGet(MATCHER_LYRICS_GET_ENDPOINT);
 
-  async trackGet<
-    TQuery extends TrackGetQuery = TrackGetQuery,
-    TResponse extends MxmClientTrackGetResponse = MxmClientTrackGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: TRACK_GET_ENDPOINT,
-      method: TRACK_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly matcherSubtitleGet: UnsafeGetMethod<
+    MatcherSubtitleGetQuery,
+    MxmClientMatcherSubtitleGetResponse
+  > = this.createGet(MATCHER_SUBTITLE_GET_ENDPOINT);
 
-  async trackLyricsGet<
-    TQuery extends TrackLyricsGetQuery = TrackLyricsGetQuery,
-    TResponse extends
-      MxmClientTrackLyricsGetResponse = MxmClientTrackLyricsGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: TRACK_LYRICS_GET_ENDPOINT,
-      method: TRACK_LYRICS_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly matcherTrackGet: UnsafeGetMethod<
+    MatcherTrackGetQuery,
+    MxmClientMatcherTrackGetResponse
+  > = this.createGet(MATCHER_TRACK_GET_ENDPOINT);
 
-  async trackLyricsTranslationGet<
-    TQuery extends
-      TrackLyricsTranslationGetQuery = TrackLyricsTranslationGetQuery,
-    TResponse extends
-      MxmClientTrackLyricsTranslationGetResponse = MxmClientTrackLyricsTranslationGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: TRACK_LYRICS_TRANSLATION_GET_ENDPOINT,
-      method: TRACK_LYRICS_TRANSLATION_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly musicGenresGet: UnsafeGetMethod<
+    MusicGenresGetQuery,
+    MxmClientMusicGenresGetResponse
+  > = this.createGet(MUSIC_GENRES_GET_ENDPOINT);
 
-  async trackSubtitleGet<
-    TQuery extends TrackSubtitleGetQuery = TrackSubtitleGetQuery,
-    TResponse extends
-      MxmClientTrackSubtitleGetResponse = MxmClientTrackSubtitleGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: TRACK_SUBTITLE_GET_ENDPOINT,
-      method: TRACK_SUBTITLE_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly trackGet: UnsafeGetMethod<TrackGetQuery, MxmClientTrackGetResponse> =
+    this.createGet(TRACK_GET_ENDPOINT);
 
-  async trackSubtitleTranslationGet<
-    TQuery extends
-      TrackSubtitleTranslationGetQuery = TrackSubtitleTranslationGetQuery,
-    TResponse extends
-      MxmClientTrackSubtitleTranslationGetResponse = MxmClientTrackSubtitleTranslationGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: TRACK_SUBTITLE_TRANSLATION_GET_ENDPOINT,
-      method: TRACK_SUBTITLE_TRANSLATION_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly trackLyricsGet: UnsafeGetMethod<
+    TrackLyricsGetQuery,
+    MxmClientTrackLyricsGetResponse
+  > = this.createGet(TRACK_LYRICS_GET_ENDPOINT);
 
-  async trackRichSyncGet<
-    TQuery extends TrackRichSyncGetQuery = TrackRichSyncGetQuery,
-    TResponse extends
-      MxmClientTrackRichSyncGetResponse = MxmClientTrackRichSyncGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: TRACK_RICHSYNC_GET_ENDPOINT,
-      method: TRACK_RICHSYNC_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly trackLyricsTranslationGet: UnsafeGetMethod<
+    TrackLyricsTranslationGetQuery,
+    MxmClientTrackLyricsTranslationGetResponse
+  > = this.createGet(TRACK_LYRICS_TRANSLATION_GET_ENDPOINT);
 
-  async trackSearch<
-    TQuery extends TrackSearchQuery = TrackSearchQuery,
-    TResponse extends
-      MxmClientTrackSearchResponse = MxmClientTrackSearchResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: TRACK_SEARCH_ENDPOINT,
-      method: TRACK_SEARCH_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly trackSubtitleGet: UnsafeGetMethod<
+    TrackSubtitleGetQuery,
+    MxmClientTrackSubtitleGetResponse
+  > = this.createGet(TRACK_SUBTITLE_GET_ENDPOINT);
 
-  async trackSnippetGet<
-    TQuery extends TrackSnippetGetQuery = TrackSnippetGetQuery,
-    TResponse extends
-      MxmClientTrackSnippetGetResponse = MxmClientTrackSnippetGetResponse,
-  >(input: {
-    query: TQuery & MxmClientOptionalAPIKey;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: TRACK_SNIPPET_GET_ENDPOINT,
-      method: TRACK_SNIPPET_GET_METHOD,
-      query: input.query,
-      options: input.options,
-    });
-  }
+  readonly trackSubtitleTranslationGet: UnsafeGetMethod<
+    TrackSubtitleTranslationGetQuery,
+    MxmClientTrackSubtitleTranslationGetResponse
+  > = this.createGet(TRACK_SUBTITLE_TRANSLATION_GET_ENDPOINT);
 
-  async trackLyricsFingerprintPost<
-    TQuery extends
-      TrackLyricsFingerprintPostQuery = TrackLyricsFingerprintPostQuery,
-    TBody extends
-      TrackLyricsFingerprintPostBody = TrackLyricsFingerprintPostBody,
-    TResponse extends
-      MxmClientTrackLyricsFingerprintPostResponse = MxmClientTrackLyricsFingerprintPostResponse,
-  >(input: {
-    query?: TQuery & MxmClientOptionalAPIKey;
-    body: TBody;
-    options?: MxmClientRequestOptions;
-  }): Promise<MxmClientResponse<TResponse>> {
-    return this.execute<TResponse>({
-      endpoint: TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT,
-      method: TRACK_LYRICS_FINGERPRINT_POST_METHOD,
-      query: input.query ?? {},
-      body: { data: { text: input.body.text } },
-      options: input.options,
-    });
-  }
+  readonly trackRichSyncGet: UnsafeGetMethod<
+    TrackRichSyncGetQuery,
+    MxmClientTrackRichSyncGetResponse
+  > = this.createGet(TRACK_RICHSYNC_GET_ENDPOINT);
+
+  readonly trackSearch: UnsafeGetMethod<
+    TrackSearchQuery,
+    MxmClientTrackSearchResponse
+  > = this.createGet(TRACK_SEARCH_ENDPOINT);
+
+  readonly trackSnippetGet: UnsafeGetMethod<
+    TrackSnippetGetQuery,
+    MxmClientTrackSnippetGetResponse
+  > = this.createGet(TRACK_SNIPPET_GET_ENDPOINT);
+
+  // --- POST endpoints ---
+
+  readonly trackLyricsFingerprintPost: UnsafePostMethod<
+    TrackLyricsFingerprintPostQuery,
+    TrackLyricsFingerprintPostBody,
+    MxmClientTrackLyricsFingerprintPostResponse
+  > = this.createPost(TRACK_LYRICS_FINGERPRINT_POST_ENDPOINT, (body) => ({
+    data: { text: (body as TrackLyricsFingerprintPostBody).text },
+  }));
 }
