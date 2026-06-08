@@ -372,6 +372,7 @@ const track = await mxmClient.unsafe.trackGet<MyTrackGetQuery, MyTrackGetRespons
 - `trackLyricsFingerprintPost` ([track.lyrics.fingerprint](https://docs.musixmatch.com/enterprise-integration/api-reference/track-lyrics-fingerprint-post))
 
 <!-- Analysis -->
+- `trackLyricsAnalysisGet` ([track.lyrics.analysis.get](https://docs.musixmatch.com/api-reference/analysis/track-lyrics-analysis-get))
 - `trackLyricsAnalysisSearch` ([track.lyrics.analysis.search](https://docs.musixmatch.com/api-reference/analysis/track-lyrics-analysis-search))
 
 ## Examples

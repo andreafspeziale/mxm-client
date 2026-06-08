@@ -132,6 +132,21 @@ export const analysisExplicitnessSchema = z.union([
   z.object({}).strict(),
 ]);
 
+export const analysisLanguageDetectionSchema = z.union([
+  z.object({
+    languages: z.array(
+      z.object({
+        language_iso_code_1: z.string(),
+        language_iso_code_3: z.string(),
+        language_name: z.string(),
+        percentage: z.number(),
+        is_romanized: z.boolean(),
+      }),
+    ),
+  }),
+  z.object({}).strict(),
+]);
+
 export const analysisSchema = z.object({
   meaning: analysisMeaningSchema.optional(),
   themes: analysisThemesSchema.optional(),
@@ -141,4 +156,5 @@ export const analysisSchema = z.object({
   entities: analysisEntitiesSchema.optional(),
   moderation: analysisModerationSchema.optional(),
   explicitness: analysisExplicitnessSchema.optional(),
+  language_detection: analysisLanguageDetectionSchema.optional(),
 });

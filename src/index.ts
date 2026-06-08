@@ -13,6 +13,7 @@ export * from './endpoints/music.genres.get/index.js';
 export * from './endpoints/shared.analysis.js';
 export * from './endpoints/shared.js';
 export * from './endpoints/track.get/index.js';
+export * from './endpoints/track.lyrics.analysis.get/index.js';
 export * from './endpoints/track.lyrics.analysis.search/index.js';
 export * from './endpoints/track.lyrics.fingerprint.post/index.js';
 export * from './endpoints/track.lyrics.get/index.js';

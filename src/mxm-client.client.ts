@@ -107,6 +107,14 @@ import {
   TRACK_GET_ENDPOINT,
 } from './endpoints/track.get/definition.js';
 import type {
+  MxmClientTrackLyricsAnalysisGetResponse,
+  TrackLyricsAnalysisGetQuery,
+} from './endpoints/track.lyrics.analysis.get/definition.js';
+import {
+  mxmClientTrackLyricsAnalysisGetResponseSchema,
+  TRACK_LYRICS_ANALYSIS_GET_ENDPOINT,
+} from './endpoints/track.lyrics.analysis.get/definition.js';
+import type {
   MxmClientTrackLyricsAnalysisSearchResponse,
   TrackLyricsAnalysisSearchBody,
   TrackLyricsAnalysisSearchQuery,
@@ -465,6 +473,14 @@ export class MxmClient {
 
   readonly trackGet: SafeGetMethod<TrackGetQuery, MxmClientTrackGetResponse> =
     this.createGet(TRACK_GET_ENDPOINT, mxmClientTrackGetResponseSchema);
+
+  readonly trackLyricsAnalysisGet: SafeGetMethod<
+    TrackLyricsAnalysisGetQuery,
+    MxmClientTrackLyricsAnalysisGetResponse
+  > = this.createGet(
+    TRACK_LYRICS_ANALYSIS_GET_ENDPOINT,
+    mxmClientTrackLyricsAnalysisGetResponseSchema,
+  );
 
   readonly trackLyricsGet: SafeGetMethod<
     TrackLyricsGetQuery,
