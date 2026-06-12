@@ -59,7 +59,7 @@
   "engines": {
     "node": ">=24.11.0"
   },
-  "packageManager": "pnpm@10.34.2",
+  "packageManager": "pnpm@10.34.3",
   "dependencies": {
     "@standard-schema/spec": "^1.1.0",
     "pino": "^10.1.0",

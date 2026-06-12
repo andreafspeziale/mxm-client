@@ -25,7 +25,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.34.2
+          version: 10.34.3
           run_install: false
       - name: Get pnpm store directory
         id: pnpm-cache
