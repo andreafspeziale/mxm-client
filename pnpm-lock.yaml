@@ -19,10 +19,10 @@ importers:
         version: 7.30.0
       zod:
         specifier: ^4.1.12
-        version: 4.6.5
+        version: 4.6.6
       zod-validation-error:
         specifier: ^5.0.0
-        version: 5.0.0(zod@4.6.5)
+        version: 5.0.0(zod@4.6.6)
     devDependencies:
       '@biomejs/biome':
         specifier: ^2.3.3
@@ -2673,8 +2673,8 @@ packages:
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
 
-  zod@4.6.5:
-    resolution: {integrity: sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q==}
+  zod@4.6.6:
+    resolution: {integrity: sha512-4UmzQUF5fxvfcYHlbjBmejU+w+hbDnWFx4aS8kBx7nPBHcO2SqPbpAG8snbdg+Xse4pRefR98hgjFgIMCI/UhA==}
 
 snapshots:
 
@@ -5331,8 +5331,8 @@ snapshots:
       '@yuku-toolchain/types': 0.18.1
       yuku-core: 0.18.1
 
-  zod-validation-error@5.0.0(zod@4.6.5):
+  zod-validation-error@5.0.0(zod@4.6.6):
     dependencies:
-      zod: 4.6.5
+      zod: 4.6.6
 
-  zod@4.6.5: {}
+  zod@4.6.6: {}
