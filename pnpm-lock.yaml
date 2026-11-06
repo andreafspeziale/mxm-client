@@ -16,7 +16,7 @@ importers:
         version: 10.4.0
       undici:
         specifier: ^7.16.0
-        version: 7.30.1
+        version: 7.30.2
       zod:
         specifier: ^4.1.12
         version: 4.6.7
@@ -2509,8 +2509,8 @@ packages:
     resolution: {integrity: sha512-cRZYrTDwWznlnRiPjggAGxZXanty6M8RV1ff8Wm4LWXBp7/IG8v5DnOm74DtUBp9OONpK75YlPnIjQqX0dBDtA==}
     engines: {node: '>=20.18.1'}
 
-  undici@7.30.1:
-    resolution: {integrity: sha512-03KrMbjIFDWQR5RNPrSw3bd1r12JpyFQl9/yxjUbJtqkjmllqC5lFjZh6ujeuJCKr8EOQvRW872Oy/az+nLYxg==}
+  undici@7.30.2:
+    resolution: {integrity: sha512-mLyPQnHwUxaM/rideoK/+KL8DaAJLRl4aBCfmX444aCSLnIaomqPLtNRe2jdCYcsk5wZzXrDIQC8ZeYNRAYyIA==}
     engines: {node: '>=20.18.1'}
 
   universal-user-agent@7.0.3:
@@ -5192,7 +5192,7 @@ snapshots:
 
   undici@7.28.0: {}
 
-  undici@7.30.1: {}
+  undici@7.30.2: {}
 
   universal-user-agent@7.0.3: {}
 
